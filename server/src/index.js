@@ -9,7 +9,7 @@ const studentRoutes = require("./routes/studentRoutes");
 const authRoutes = require("./routes/authRoutes");
 const teacherRoutes = require("./routes/teacherRoutes");
 const userRoutes = require("./routes/userRoutes");
-
+const path = require("path");
 
 
 dotenv.config();
@@ -24,7 +24,7 @@ app.use("/api/students", studentRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/teachers", teacherRoutes);
 app.use("/api/users", userRoutes);
-
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 // test route
 app.get("/", (req, res) => {

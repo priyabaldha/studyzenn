@@ -11,7 +11,7 @@ const studentSchema = new mongoose.Schema({
   gender: { type: String, required: true },
   guardian: { type: String, required: true },
   guardian_phone: { type: String, required: true },
-  student_image: { type: String },
+  image: { type: String, default: "" },
 });
 
 module.exports = mongoose.model("Student", studentSchema);

@@ -1,48 +1,61 @@
-// src/pages/Students/Profile.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const StudentProfile = () => {
-  const [student, setStudent] = useState(null);
+export default function StudentProfile() {
+  const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const token = localStorage.getItem("studentToken"); // or from cookies
-        const res = await axios.get("http://localhost:5000/api/students/profile", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setStudent(res.data);
+        const token = localStorage.getItem("token");
+        if (!token) {
+          setError("You are not logged in.");
+          setLoading(false);
+          return;
+        }
+
+        const res = await axios.get(
+          "http://localhost:5000/api/students/profile/me",
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        setProfile(res.data);
       } catch (err) {
-        console.error("Error fetching profile:", err);
-        setError("Could not load profile.");
+        console.error("Profile fetch error:", err);
+        setError(err.response?.data?.message || "Failed to load profile.");
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchProfile();
   }, []);
 
-  if (error) return <p>{error}</p>;
-  if (!student) return <p>Loading...</p>;
+  if (loading) return <p>Loading profile...</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
-    <div className="student-profile">
-      <h2>Welcome, {student.name}</h2>
-      <p>Email: {student.email}</p>
-      <p>Roll No: {student.rollNo}</p>
-      <p>Class: {student.class}</p>
-      <p>Age: {student.age}</p>
-      <p>Gender: {student.gender}</p>
-      <p>Guardian: {student.guardian}</p>
-      <p>Guardian Phone: {student.guardian_phone}</p>
-      {student.student_image && (
-        <img src={student.student_image} alt="Student" width="120" />
+    <div style={{ maxWidth: "600px", margin: "2rem auto" }}>
+      <h2>My Profile</h2>
+
+      {profile.image && (
+        <img
+          src={`http://localhost:5000/uploads/students/${profile.image}`}
+          alt="Profile"
+          style={{ width: "120px", borderRadius: "50%", marginBottom: "1rem" }}
+        />
       )}
+
+      <p><strong>Name:</strong> {profile.name}</p>
+      <p><strong>Email:</strong> {profile.email}</p>
+      <p><strong>Roll No:</strong> {profile.rollNo}</p>
+      <p><strong>Class:</strong> {profile.class}</p>
+      <p><strong>Age:</strong> {profile.age}</p>
+      <p><strong>Gender:</strong> {profile.gender}</p>
+      <p><strong>Guardian:</strong> {profile.guardian}</p>
+      <p><strong>Guardian Phone:</strong> {profile.guardian_phone}</p>
     </div>
   );
-};
-
-export default StudentProfile;
+}

@@ -31,6 +31,33 @@ router.post("/signup", async (req, res) => {
 
 
 // Login route
+// router.post("/login", async (req, res) => {
+//   try {
+//     const { email, password } = req.body;
+
+//     const user = await User.findOne({ email });
+//     if (!user) return res.status(401).json({ error: "Invalid credentials" });
+
+//     const isMatch = await bcrypt.compare(password, user.password);
+//     if (!isMatch) return res.status(401).json({ error: "Invalid credentials" });
+
+//     // Create a JWT token with the user ID and role
+//     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
+//       expiresIn: "1d",
+//     });
+
+//     // Send token and user data (including role)
+//     res.json({
+//       token,
+//       user: { name: user.name, email: user.email, role: user.role },
+//     });
+//   } catch (err) {
+//     console.error("Login error:", err);
+//     res.status(500).json({ error: "Login failed" });
+//   }
+// });
+
+// Login route
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -41,20 +68,26 @@ router.post("/login", async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(401).json({ error: "Invalid credentials" });
 
-    // Create a JWT token with the user ID and role
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
-    });
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
 
-    // Send token and user data (including role)
     res.json({
       token,
-      user: { name: user.name, email: user.email, role: user.role },
+      user: {
+        id: user._id,              // ✅ Added this line
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
     });
   } catch (err) {
     console.error("Login error:", err);
     res.status(500).json({ error: "Login failed" });
   }
 });
+
 
 module.exports = router;

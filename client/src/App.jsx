@@ -109,7 +109,7 @@ const App = () => {
           }
         />
         <Route
-          path="/profile"
+          path="/student/profile"
           element={
             <PrivateRoute allowedRoles={["student"]}>
               <StudentProfile />

@@ -32,6 +32,11 @@ const TeachersList = () => {
     }
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditTeacher((prev) => ({ ...prev, [name]: value }));
+  };
+
   return (
     <div>
       <h2>Teachers List</h2>
@@ -87,6 +92,81 @@ const TeachersList = () => {
             ))}
           </tbody>
         </table>
+      )}
+
+      {editTeacher && (
+        <div style={{ marginTop: "20px" }}>
+          <h3>Edit Teacher</h3>
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              try {
+                await axios.put(
+                  `http://localhost:5000/api/teachers/${editTeacher._id}`,
+                  editTeacher
+                );
+                alert("Teacher updated successfully!");
+                setEditTeacher(null);
+                fetchTeachers();
+              } catch (err) {
+                console.error("Update failed:", err);
+                alert("Error updating teacher.");
+              }
+            }}
+          >
+            <input
+              name="name"
+              value={editTeacher.name}
+              onChange={handleChange}
+              placeholder="Name"
+              required
+            />
+            <input
+              name="email"
+              value={editTeacher.email}
+              onChange={handleChange}
+              placeholder="Email"
+              required
+            />
+            <input
+              name="qualification"
+              value={editTeacher.qualification}
+              onChange={handleChange}
+              placeholder="Qualification"
+              required
+            />
+            <input
+              name="age"
+              type="number"
+              value={editTeacher.age}
+              onChange={handleChange}
+              placeholder="Age"
+              required
+            />
+            <select
+              name="gender"
+              value={editTeacher.gender}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+            <input
+              name="teacher_image"
+              value={editTeacher.teacher_image}
+              onChange={handleChange}
+              placeholder="Image URL"
+            />
+            <br />
+            <button type="submit">Save Changes</button>
+            <button type="button" onClick={() => setEditTeacher(null)}>
+              Cancel
+            </button>
+          </form>
+        </div>
       )}
     </div>
   );
