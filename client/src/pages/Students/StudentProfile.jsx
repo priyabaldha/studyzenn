@@ -5,7 +5,9 @@ export default function StudentProfile() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
 
+  // Fetch student profile
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -16,10 +18,9 @@ export default function StudentProfile() {
           return;
         }
 
-        const res = await axios.get(
-          "http://localhost:5000/api/students/profile/me",
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+        const res = await axios.get("http://localhost:5000/api/students/profile/me", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
         setProfile(res.data);
       } catch (err) {
@@ -33,6 +34,34 @@ export default function StudentProfile() {
     fetchProfile();
   }, []);
 
+  // Handle image selection
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
+  // Upload profile image
+  const handleUpload = async () => {
+    if (!selectedFile) return alert("Please select a file first");
+
+    const formData = new FormData();
+    formData.append("student_image", selectedFile);
+
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.post(
+        "http://localhost:5000/api/students/profile/upload-image",
+        formData,
+        { headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" } }
+      );
+
+      setProfile(res.data.student); // Update profile with new image
+      alert("Image uploaded successfully!");
+    } catch (err) {
+      console.error("Upload error:", err);
+      alert(err.response?.data?.message || "Failed to upload image.");
+    }
+  };
+
   if (loading) return <p>Loading profile...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
@@ -40,13 +69,14 @@ export default function StudentProfile() {
     <div style={{ maxWidth: "600px", margin: "2rem auto" }}>
       <h2>My Profile</h2>
 
-      {profile.image && (
-        <img
-          src={`http://localhost:5000/uploads/students/${profile.image}`}
-          alt="Profile"
-          style={{ width: "120px", borderRadius: "50%", marginBottom: "1rem" }}
-        />
-      )}
+      {profile.student_image && (
+  <img
+    src={`http://localhost:5000/uploads/students/${profile.student_image}`}
+    alt="Profile"
+    style={{ width: "120px", borderRadius: "50%", marginBottom: "1rem" }}
+  />
+)}
+
 
       <p><strong>Name:</strong> {profile.name}</p>
       <p><strong>Email:</strong> {profile.email}</p>
@@ -56,6 +86,13 @@ export default function StudentProfile() {
       <p><strong>Gender:</strong> {profile.gender}</p>
       <p><strong>Guardian:</strong> {profile.guardian}</p>
       <p><strong>Guardian Phone:</strong> {profile.guardian_phone}</p>
+
+      <div style={{ marginTop: "1rem" }}>
+        <input type="file" onChange={handleFileChange} />
+        <button onClick={handleUpload} style={{ marginLeft: "10px" }}>
+          Upload Image
+        </button>
+      </div>
     </div>
   );
 }

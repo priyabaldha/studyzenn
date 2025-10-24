@@ -21,6 +21,13 @@ const TeacherDashboard = () => {
         <p>
           <Link to="/teacher/students">📄 View Students</Link>
         </p>
+        <div className="student-links">
+            <p>
+              <Link to="/teacher/profile" className="btn btn-primary m-2">
+                👤 View Profile
+              </Link>
+            </p>
+        </div>
         <li>📝 Manage Students</li>
         <li>📊 View Reports</li>
         <li>📅 Assign Subjects</li>

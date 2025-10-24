@@ -20,6 +20,7 @@ import TeacherViewStudents from "./pages/Teachers/TeacherViewStudents";
 
 import AdminUsers from "./pages/Admin/AdminUsers";
 import StudentProfile from "./pages/Students/StudentProfile";
+import TeacherProfile from "./pages/Teachers/TeacherProfile";
 
 const App = () => {
   return (
@@ -113,6 +114,15 @@ const App = () => {
           element={
             <PrivateRoute allowedRoles={["student"]}>
               <StudentProfile />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/teacher/profile"
+          element={
+            <PrivateRoute allowedRoles={["teacher"]}>
+              <TeacherProfile />
             </PrivateRoute>
           }
         />

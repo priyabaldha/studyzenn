@@ -4,6 +4,65 @@ const bcrypt = require("bcryptjs");
 
 const Teacher = require("../models/Teacher");
 const User = require("../models/User"); // ✅ make sure this exists and is correct
+const auth = require("../middleware/auth");
+const path = require("path");
+const multer = require("multer");
+
+// Multer config for teacher image upload
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/teachers");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({ storage });
+
+// ✅ Update teacher profile (text fields)
+router.put("/profile/update", auth, async (req, res) => {
+  try {
+    const { qualification, age, gender } = req.body;
+
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const teacher = await Teacher.findOneAndUpdate(
+      { email: user.email },
+      { qualification, age, gender },
+      { new: true }
+    ).select("-password");
+
+    if (!teacher) return res.status(404).json({ message: "Teacher not found" });
+
+    res.json({ message: "Profile updated successfully", teacher });
+  } catch (err) {
+    console.error("Update teacher profile error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// ✅ Upload teacher profile image
+router.post("/profile/upload-image", auth, upload.single("teacher_image"), async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const teacher = await Teacher.findOneAndUpdate(
+      { email: user.email },
+      { teacher_image: req.file.filename },
+      { new: true }
+    ).select("-password");
+
+    if (!teacher) return res.status(404).json({ message: "Teacher not found" });
+
+    res.json({ message: "Image uploaded successfully", teacher });
+  } catch (err) {
+    console.error("Upload teacher image error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
 
 // ✅ Create Teacher (and User for login)
 router.post("/", async (req, res) => {
@@ -100,6 +159,24 @@ router.delete("/:id", async (req, res) => {
     res.json({ message: "Teacher and user deleted" });
   } catch (err) {
     res.status(500).json({ error: "Failed to delete teacher" });
+  }
+});
+
+router.get("/profile/me", auth, async (req, res) => {
+  try {
+    // 1️⃣ Get the logged-in user from token
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    // 2️⃣ Find the corresponding teacher
+    const teacher = await Teacher.findOne({ email: user.email }).select("-password");
+    if (!teacher) return res.status(404).json({ message: "Teacher not found" });
+
+    // 3️⃣ Return the teacher profile
+    res.status(200).json(teacher);
+  } catch (err) {
+    console.error("Teacher profile fetch error:", err);
+    res.status(500).json({ error: "Server error" });
   }
 });
 
