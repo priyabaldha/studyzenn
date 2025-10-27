@@ -99,6 +99,21 @@ const AdminDashboard = () => {
                 🎓 Manage Students
               </Link>
             </p>
+            <p>
+              <Link to="/admin/attendance/report" className="btn btn-info m-2">
+                🎓 Student's attendance
+              </Link>
+            </p>
+            <p>
+              <Link to="/admin/assignment/status" className="btn btn-info m-2">
+                🎓 Student's assignment
+              </Link>
+            </p>
+            <p>
+              <Link to="/messages" className="btn btn-info m-2">
+                🎓 Messages
+              </Link>
+            </p>
           </div>
         </div>
       </section>

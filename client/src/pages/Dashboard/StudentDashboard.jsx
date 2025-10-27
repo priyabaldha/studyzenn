@@ -103,6 +103,11 @@ const StudentDashboard = () => {
                 📅 Check Attendance
               </Link>
             </p>
+            <p>
+              <Link to="/messages" className="btn btn-warning m-2">
+                📅 Messages
+              </Link>
+            </p>
           </div>
         </div>
       </section>

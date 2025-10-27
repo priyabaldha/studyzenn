@@ -25,6 +25,11 @@ import TeacherAssignmentUpload from "./pages/Teachers/TeacherAssignmentUpload";
 import StudentAssignments from "./pages/Students/StudentAssignments";
 import StudentAssignmentView from "./pages/Students/StudentAssignmentView";
 import SubmissionReview from "./pages/Teachers/TeacherSubmissionReview";
+import TeacherAttendance from "./pages/Teachers/TeacherAttendance";
+import StudentAttendance from "./pages/Students/StudentAttendance";
+import AdminAttendanceReport from "./pages/Admin/AdminAttendanceReport";
+import AdminAssignmentStatus from "./pages/Admin/AdminAssignmentStatus";
+import UserMessageDashboard from "./pages/Dashboard/UserMessageDashboard";
 
 const App = () => {
   return (
@@ -130,17 +135,62 @@ const App = () => {
             </PrivateRoute>
           }
         />
-        <Route path="/teacher/upload-assignment" element={<TeacherAssignmentUpload/>} />
+        <Route path="/teacher/upload-assignment" element={<TeacherAssignmentUpload />} />
         <Route path="/student/assignments" element={<StudentAssignments />} />
         <Route path="/student/assignments/:id" element={<StudentAssignmentView />} />
 
         <Route
-            path="/teacher/assignments/:id/review" // 🆕 NEW ROUTE
-            element={
-                <PrivateRoute allowedRoles={["teacher"]}>
-                    <SubmissionReview />
-                </PrivateRoute>
-            }
+          path="/teacher/assignments/:id/review" // 🆕 NEW ROUTE
+          element={
+            <PrivateRoute allowedRoles={["teacher"]}>
+              <SubmissionReview />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/teacher/attendance" // You can define your own path here
+          element={
+            <PrivateRoute allowedRoles={["teacher"]}>
+              <TeacherAttendance />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/student/attendance"
+          element={
+            <PrivateRoute allowedRoles={["student"]}>
+              <StudentAttendance />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/admin/attendance/report"
+          element={
+            <PrivateRoute allowedRoles={["admin"]}>
+              <AdminAttendanceReport />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/admin/assignment/status"
+          element={
+            <PrivateRoute allowedRoles={["admin"]}>
+              <AdminAssignmentStatus />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/messages"
+          element={
+            <PrivateRoute allowedRoles={["admin", "teacher", "student"]}>
+              <UserMessageDashboard />
+            </PrivateRoute>
+          }
         />
 
 

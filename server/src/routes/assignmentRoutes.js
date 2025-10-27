@@ -219,6 +219,65 @@ router.get("/:id", auth, async (req, res) => {
   }
 });
 
+router.get("/admin/status/:assignmentId", auth, async (req, res) => {
+    try {
+        const { assignmentId } = req.params;
+
+        // 1. Role Check
+        if (req.user.role !== 'admin') {
+            return res.status(403).json({ message: "Access denied. Only administrators can view this report." });
+        }
+
+        // 2. Find the target assignment to get the class criteria
+        const assignment = await Giving_Assignments.findById(assignmentId);
+        if (!assignment) {
+            return res.status(404).json({ message: "Assignment not found." });
+        }
+        const { semester, division } = assignment;
+
+        // 3. Get all students for that class
+        const students = await Student.find({ semester, division }).select('_id name rollNo');
+        const studentIds = students.map(s => s._id);
+
+        // 4. Get all submissions for this assignment
+        const submissions = await Student_Submission.find({ 
+            assignmentId: assignmentId,
+            studentId: { $in: studentIds }
+        }).select('studentId submitted_file isGraded');
+        
+        // Convert submissions into a quick lookup map
+        const submissionMap = submissions.reduce((map, sub) => {
+            map[sub.studentId.toString()] = { 
+                submitted: !!sub.submitted_file, // True if a file exists
+                isGraded: sub.isGraded 
+            };
+            return map;
+        }, {});
+
+        // 5. Combine student list with submission status
+        const report = students.map(student => {
+            const status = submissionMap[student._id.toString()] || {};
+            
+            return {
+                id: student._id,
+                name: student.name,
+                rollNo: student.rollNo,
+                submitted: status.submitted || false,
+                isGraded: status.isGraded || false
+            };
+        });
+
+        res.status(200).json({ 
+            assignmentDetails: { subject: assignment.subject, semester, division },
+            report 
+        });
+
+    } catch (error) {
+        console.error("Admin submission status report error:", error);
+        res.status(500).json({ message: "Failed to generate submission status report." });
+    }
+});
+
 
 // ❌ REMOVED THIS REDUNDANT ROUTE: The logic is now in router.post("/student/upload/:assignmentId") above.
 // router.post( "/student/upload/:id", ... )

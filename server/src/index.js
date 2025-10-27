@@ -11,6 +11,8 @@ const teacherRoutes = require("./routes/teacherRoutes");
 const userRoutes = require("./routes/userRoutes");
 const path = require("path");
 const assignmentRoutes = require("./routes/assignmentRoutes");
+const attendanceRoutes = require('./routes/attendanceRoutes');
+const messageRoutes = require('./routes/messageRoutes');
 
 dotenv.config();
 connectDB();
@@ -27,6 +29,8 @@ app.use("/api/users", userRoutes);
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 app.use("/api/assignments", assignmentRoutes);
 app.use("/uploads", express.static("uploads"));
+app.use('/api/attendance', attendanceRoutes);
+app.use('/api/messages', messageRoutes);
 
 // test route
 app.get("/", (req, res) => {
