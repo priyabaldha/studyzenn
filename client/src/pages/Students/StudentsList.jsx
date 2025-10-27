@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+// Define possible values to ensure consistency across forms (Teacher/Admin)
+const SEMESTER_OPTIONS = ["1st", "2nd", "3rd", "4th", "5th", "6th"];
+const DIVISION_OPTIONS = ["A", "B", "C", "D"];
+
 const StudentsList = () => {
   const [students, setStudents] = useState([]);
   const [editStudent, setEditStudent] = useState(null);
@@ -40,13 +44,29 @@ const StudentsList = () => {
     setEditStudent((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.put(
+        `http://localhost:5000/api/students/${editStudent._id}`,
+        editStudent
+      );
+      alert("Student updated!");
+      setEditStudent(null);
+      fetchStudents();
+    } catch (err) {
+      console.error("Update failed:", err.response?.data || err);
+      alert("Error updating student.");
+    }
+  };
+
   return (
     <div>
       <h2>Student List</h2>
 
       <button
         style={{ marginBottom: "15px" }}
-        onClick={() => navigate("/admin/students")}
+        onClick={() => navigate("/admin/students/add")}
       >
         ➕ Add Student
       </button>
@@ -57,7 +77,8 @@ const StudentsList = () => {
             <th>Name</th>
             <th>Email</th>
             <th>Roll No</th>
-            <th>Class</th>
+            <th>Semester</th>
+            <th>Division</th>
             <th>Age</th>
             <th>Gender</th>
             <th>Guardian</th>
@@ -69,7 +90,7 @@ const StudentsList = () => {
         <tbody>
           {students.length === 0 ? (
             <tr>
-              <td colSpan="10">No students found.</td>
+              <td colSpan="11">No students found.</td>
             </tr>
           ) : (
             students.map((student) => (
@@ -77,7 +98,8 @@ const StudentsList = () => {
                 <td>{student.name}</td>
                 <td>{student.email}</td>
                 <td>{student.rollNo}</td>
-                <td>{student.class}</td>
+                <td>{student.semester}</td>
+                <td>{student.division}</td>
                 <td>{student.age}</td>
                 <td>{student.gender}</td>
                 <td>{student.guardian}</td>
@@ -85,7 +107,7 @@ const StudentsList = () => {
                 <td>
                   {student.student_image ? (
                     <img
-                      src={student.student_image}
+                      src={`http://localhost:5000/uploads/students/${student.student_image}`}
                       alt="student"
                       style={{ width: "50px", height: "50px", objectFit: "cover" }}
                     />
@@ -105,28 +127,39 @@ const StudentsList = () => {
 
       {editStudent && (
         <div style={{ marginTop: "20px" }}>
-          <h3>Edit Student</h3>
-          <form
-            onSubmit={async (e) => {
-              e.preventDefault();
-              try {
-                await axios.put(
-                  `http://localhost:5000/api/students/${editStudent._id}`,
-                  editStudent
-                );
-                alert("Student updated!");
-                setEditStudent(null);
-                fetchStudents();
-              } catch (err) {
-                console.error("Update failed:", err);
-                alert("Error updating student.");
-              }
-            }}
-          >
+          <h3>Edit Student: {editStudent.name}</h3>
+          <form onSubmit={handleUpdate}>
+            {/* Standard Input Fields */}
             <input name="name" value={editStudent.name} onChange={handleChange} placeholder="Name" required />
             <input name="email" value={editStudent.email} onChange={handleChange} placeholder="Email" required />
             <input name="rollNo" value={editStudent.rollNo} onChange={handleChange} placeholder="Roll No" required />
-            <input name="class" value={editStudent.class} onChange={handleChange} placeholder="Class" required />
+            
+            {/* 🔄 Dropdown for Semester */}
+            <select 
+              name="semester" 
+              value={editStudent.semester} 
+              onChange={handleChange} 
+              required
+            >
+              <option value="" disabled>Select Semester</option>
+              {SEMESTER_OPTIONS.map(sem => (
+                <option key={sem} value={sem}>{sem}</option>
+              ))}
+            </select>
+            
+            {/* 🔄 Dropdown for Division */}
+            <select 
+              name="division" 
+              value={editStudent.division} 
+              onChange={handleChange} 
+              required
+            >
+              <option value="" disabled>Select Division</option>
+              {DIVISION_OPTIONS.map(div => (
+                <option key={div} value={div}>Division {div}</option>
+              ))}
+            </select>
+            
             <input name="age" type="number" value={editStudent.age} onChange={handleChange} placeholder="Age" required />
             <select name="gender" value={editStudent.gender} onChange={handleChange} required>
               <option value="">Select Gender</option>

@@ -70,7 +70,7 @@ router.post("/profile/upload-image", auth, upload.single("student_image"), async
   }
 });
 
-// ✅ Student CRUD routes
+// ✅ Student CRUD routes (NO CHANGE NEEDED HERE)
 router.post("/", addStudent);
 router.get("/", getAllStudents);
 router.get("/:id", getStudentById);

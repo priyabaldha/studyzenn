@@ -21,6 +21,10 @@ import TeacherViewStudents from "./pages/Teachers/TeacherViewStudents";
 import AdminUsers from "./pages/Admin/AdminUsers";
 import StudentProfile from "./pages/Students/StudentProfile";
 import TeacherProfile from "./pages/Teachers/TeacherProfile";
+import TeacherAssignmentUpload from "./pages/Teachers/TeacherAssignmentUpload";
+import StudentAssignments from "./pages/Students/StudentAssignments";
+import StudentAssignmentView from "./pages/Students/StudentAssignmentView";
+import SubmissionReview from "./pages/Teachers/TeacherSubmissionReview";
 
 const App = () => {
   return (
@@ -42,7 +46,7 @@ const App = () => {
           }
         />
         <Route
-          path="/admin/students"
+          path="/admin/students/add"
           element={
             <PrivateRoute allowedRoles={["admin"]}>
               <StudentForm />
@@ -126,6 +130,19 @@ const App = () => {
             </PrivateRoute>
           }
         />
+        <Route path="/teacher/upload-assignment" element={<TeacherAssignmentUpload/>} />
+        <Route path="/student/assignments" element={<StudentAssignments />} />
+        <Route path="/student/assignments/:id" element={<StudentAssignmentView />} />
+
+        <Route
+            path="/teacher/assignments/:id/review" // 🆕 NEW ROUTE
+            element={
+                <PrivateRoute allowedRoles={["teacher"]}>
+                    <SubmissionReview />
+                </PrivateRoute>
+            }
+        />
+
 
         {/* Fallback */}
         <Route path="/unauthorized" element={<h2>🚫 Unauthorized Access</h2>} />
