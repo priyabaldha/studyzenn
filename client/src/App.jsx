@@ -30,6 +30,7 @@ import StudentAttendance from "./pages/Students/StudentAttendance";
 import AdminAttendanceReport from "./pages/Admin/AdminAttendanceReport";
 import AdminAssignmentStatus from "./pages/Admin/AdminAssignmentStatus";
 import UserMessageDashboard from "./pages/Dashboard/UserMessageDashboard";
+import AdminSubjectManager from "./pages/Admin/AdminSubjectManager";
 
 const App = () => {
   return (
@@ -192,7 +193,14 @@ const App = () => {
             </PrivateRoute>
           }
         />
-
+        <Route
+          path="/admin/subjects"
+          element={
+            <PrivateRoute allowedRoles={["admin"]}>
+              <AdminSubjectManager />
+            </PrivateRoute>
+          }
+        />
 
         {/* Fallback */}
         <Route path="/unauthorized" element={<h2>🚫 Unauthorized Access</h2>} />

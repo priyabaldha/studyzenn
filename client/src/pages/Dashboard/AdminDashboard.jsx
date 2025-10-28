@@ -114,6 +114,11 @@ const AdminDashboard = () => {
                 🎓 Messages
               </Link>
             </p>
+            <p>
+              <Link to="/admin/subjects" className="btn btn-info m-2">
+                🎓 Subjects
+              </Link>
+            </p>
           </div>
         </div>
       </section>

@@ -13,6 +13,7 @@ const path = require("path");
 const assignmentRoutes = require("./routes/assignmentRoutes");
 const attendanceRoutes = require('./routes/attendanceRoutes');
 const messageRoutes = require('./routes/messageRoutes');
+const subjectRoutes = require('./routes/subjectRoutes');
 
 dotenv.config();
 connectDB();
@@ -31,6 +32,7 @@ app.use("/api/assignments", assignmentRoutes);
 app.use("/uploads", express.static("uploads"));
 app.use('/api/attendance', attendanceRoutes);
 app.use('/api/messages', messageRoutes);
+app.use('/api/subjects', subjectRoutes);
 
 // test route
 app.get("/", (req, res) => {
