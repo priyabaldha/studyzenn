@@ -43,6 +43,16 @@ const TeacherDashboard = () => {
                 👤 Messages
               </Link>
             </p>
+            <p>
+              <Link to="/teacher/schedule-exam" className="btn btn-primary m-2">
+                👤 Schedule-exam
+              </Link>
+            </p>
+            <p>
+              <Link to="/teacher/result-entry" className="btn btn-primary m-2">
+                👤 Result-entry
+              </Link>
+            </p>
             
         </div>
         <li>📝 Manage Students</li>

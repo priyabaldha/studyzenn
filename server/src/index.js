@@ -14,6 +14,7 @@ const assignmentRoutes = require("./routes/assignmentRoutes");
 const attendanceRoutes = require('./routes/attendanceRoutes');
 const messageRoutes = require('./routes/messageRoutes');
 const subjectRoutes = require('./routes/subjectRoutes');
+const examResultRoutes = require('./routes/examResultRoutes');
 
 dotenv.config();
 connectDB();
@@ -33,6 +34,7 @@ app.use("/uploads", express.static("uploads"));
 app.use('/api/attendance', attendanceRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/subjects', subjectRoutes);
+app.use('/api', examResultRoutes);
 
 // test route
 app.get("/", (req, res) => {

@@ -31,6 +31,10 @@ import AdminAttendanceReport from "./pages/Admin/AdminAttendanceReport";
 import AdminAssignmentStatus from "./pages/Admin/AdminAssignmentStatus";
 import UserMessageDashboard from "./pages/Dashboard/UserMessageDashboard";
 import AdminSubjectManager from "./pages/Admin/AdminSubjectManager";
+import ExamScheduler from "./pages/Admin/ExamScheduler";
+import StudentExamSchedule from "./pages/Students/StudentExamSchedule";
+import ResultEntry from "./pages/Teachers/ResultEntry";
+import StudentResults from "./pages/Students/StudentResults";
 
 const App = () => {
   return (
@@ -198,6 +202,51 @@ const App = () => {
           element={
             <PrivateRoute allowedRoles={["admin"]}>
               <AdminSubjectManager />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/admin/schedule-exam"
+          element={
+            <PrivateRoute allowedRoles={["admin"]}>
+              <ExamScheduler />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/teacher/schedule-exam"
+          element={
+            <PrivateRoute allowedRoles={["teacher"]}>
+              <ExamScheduler />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/student/exam-schedule"
+          element={
+            <PrivateRoute allowedRoles={["student"]}>
+              <StudentExamSchedule />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/teacher/result-entry"
+          element={
+            <PrivateRoute allowedRoles={["teacher"]}>
+              <ResultEntry />
+            </PrivateRoute>
+          }
+        />\
+
+        <Route
+          path="/student/results"
+          element={
+            <PrivateRoute allowedRoles={["student"]}>
+              <StudentResults />
             </PrivateRoute>
           }
         />
