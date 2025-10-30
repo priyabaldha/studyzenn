@@ -1,7 +1,7 @@
 // pages/Teachers/TeacherAssignmentUpload.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom"; // Assuming Link is used for navigation
+import { Link } from "react-router-dom"; 
 
 // Define options (keep these consistent)
 const SEMESTER_OPTIONS = ["1st", "2nd", "3rd", "4th", "5th", "6th"];
@@ -9,15 +9,15 @@ const DIVISION_OPTIONS = ["A", "B", "C", "D"];
 
 export default function TeacherAssignmentUpload() {
     const [form, setForm] = useState({
-        subject: "", // This will hold the selected subject name
+        subject: "", 
         semester: SEMESTER_OPTIONS[0] || "",
         division: DIVISION_OPTIONS[0] || "",
         category: "Theory",
     });
     const [file, setFile] = useState(null);
-    const [assignments, setAssignments] = useState([]);
+    const [assignments, setAssignments] = useState([]); // Assignments fetched from API
     const [message, setMessage] = useState("");
-    const [availableSubjects, setAvailableSubjects] = useState([]); // 🆕 NEW STATE
+    const [availableSubjects, setAvailableSubjects] = useState([]); 
 
     const token = localStorage.getItem("token");
 
@@ -29,18 +29,16 @@ export default function TeacherAssignmentUpload() {
         setFile(e.target.files[0]);
     };
 
-    // 🆕 Effect to fetch subjects whenever the SEMESTER changes
+    // Effect 1: Fetch subjects whenever the SEMESTER changes
     useEffect(() => {
         const fetchAvailableSubjects = async () => {
             if (!form.semester) return;
             try {
-                // Fetch subjects filtered by the selected semester
                 const res = await axios.get(
                     `http://localhost:5000/api/subjects?semester=${form.semester}`,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
                 setAvailableSubjects(res.data);
-                // Reset selected subject if it no longer exists for this semester
                 if (!res.data.find(sub => sub.name === form.subject)) {
                     setForm(prev => ({ ...prev, subject: res.data.length > 0 ? res.data[0].name : "" }));
                 }
@@ -50,10 +48,12 @@ export default function TeacherAssignmentUpload() {
             }
         };
         fetchAvailableSubjects();
-    }, [form.semester, token]); // Runs whenever the semester filter changes
+    }, [form.semester, token]); 
 
+    // Effect 2: Fetch all assignments for the list
     const fetchAssignments = async () => {
         try {
+            // API: GET /api/assignments (Fetch all assignments)
             const res = await axios.get("http://localhost:5000/api/assignments", {
                 headers: { Authorization: `Bearer ${token}` },
             });
@@ -83,17 +83,16 @@ export default function TeacherAssignmentUpload() {
             formData.append("category", form.category);
             if (file) formData.append("assignment_file_q", file);
 
-            const res = await axios.post(
+            await axios.post(
                 "http://localhost:5000/api/assignments/upload",
                 formData,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
 
-            setMessage(res.data.message);
-            // Reset form (keep class selectors but clear subject/file)
+            setMessage("Assignment uploaded successfully!");
             setForm(prev => ({ ...prev, subject: availableSubjects.length > 0 ? availableSubjects[0].name : "", category: "Theory" }));
             setFile(null);
-            fetchAssignments();
+            fetchAssignments(); // Refresh the list
         } catch (err) {
             console.error("Upload Error:", err);
             setMessage(err.response?.data?.message || "Upload failed");
@@ -104,14 +103,13 @@ export default function TeacherAssignmentUpload() {
         <div style={{ maxWidth: "800px", margin: "2rem auto" }}>
             <h2>Upload Assignment</h2>
             {message && <p style={{ color: message.includes('success') ? 'green' : 'red' }}>{message}</p>}
+            
+            {/* ... Form Section (unchanged) ... */}
             <form onSubmit={handleSubmit}>
-                
-                {/* 1. SEMESTER DROPDOWN (Filters Subjects) */}
                 <select name="semester" value={form.semester} onChange={handleChange} required>
                     {SEMESTER_OPTIONS.map(sem => (<option key={sem} value={sem}>{sem}</option>))}
                 </select>
                 
-                {/* 🆕 2. SUBJECT DROPDOWN (Dynamic based on semester) */}
                 <select name="subject" value={form.subject} onChange={handleChange} required disabled={availableSubjects.length === 0}>
                     {availableSubjects.length === 0 ? (
                         <option value="">No Subjects for {form.semester}</option>
@@ -122,12 +120,10 @@ export default function TeacherAssignmentUpload() {
                     )}
                 </select>
 
-                {/* 3. DIVISION DROPDOWN */}
                 <select name="division" value={form.division} onChange={handleChange} required>
                     {DIVISION_OPTIONS.map(div => (<option key={div} value={div}>Division {div}</option>))}
                 </select>
                 
-                {/* 4. CATEGORY DROPDOWN */}
                 <select name="category" value={form.category} onChange={handleChange}>
                     <option value="Theory">Theory</option>
                     <option value="Practical">Practical</option>
@@ -139,9 +135,38 @@ export default function TeacherAssignmentUpload() {
 
             </form>
 
-            {/* Uploaded Assignments List */}
+            {/* ✅ FIXED: Uploaded Assignments List with Review Link */}
             <h3 style={{ marginTop: '30px' }}>Uploaded Assignments</h3>
-            {/* ... (The rest of the assignment list rendering remains the same) ... */}
+            
+            {assignments.length === 0 ? (
+                <p>No assignments uploaded yet.</p>
+            ) : (
+                <ul style={{ listStyleType: 'none', padding: 0 }}>
+                    {assignments.map((a) => (
+                        <li key={a._id} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span style={{ flexGrow: 1 }}>
+                                <strong>{a.subject}</strong> ({a.semester} / {a.division}) - {a.category}{" "}
+                            </span>
+                            <div style={{ display: 'flex', gap: '10px' }}>
+                                {/* Link to download the question file */}
+                                {a.assignment_file_q && (
+                                    <a href={`http://localhost:5000/uploads/assignments/teacher/${a.assignment_file_q}`} target="_blank" rel="noreferrer" style={{ textDecoration: 'none', padding: '5px', border: '1px solid #007bff', color: '#007bff' }}>
+                                        View Question
+                                    </a>
+                                )}
+                                
+                                {/* Link to the grading page */}
+                                <Link 
+                                    to={`/teacher/assignments/${a._id}/review`} 
+                                    style={{ textDecoration: 'none', padding: '5px 10px', backgroundColor: '#dc3545', color: 'white', borderRadius: '4px' }}
+                                >
+                                    Grade Submissions
+                                </Link>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            )}
         </div>
     );
 }

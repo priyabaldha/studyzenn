@@ -35,6 +35,7 @@ import ExamScheduler from "./pages/Admin/ExamScheduler";
 import StudentExamSchedule from "./pages/Students/StudentExamSchedule";
 import ResultEntry from "./pages/Teachers/ResultEntry";
 import StudentResults from "./pages/Students/StudentResults";
+import StudentReportCard from "./pages/Students/StudentReportCard";
 
 const App = () => {
   return (
@@ -247,6 +248,15 @@ const App = () => {
           element={
             <PrivateRoute allowedRoles={["student"]}>
               <StudentResults />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/student/report-card"
+          element={
+            <PrivateRoute allowedRoles={["student"]}>
+              <StudentReportCard />
             </PrivateRoute>
           }
         />

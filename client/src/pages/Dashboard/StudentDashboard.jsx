@@ -93,11 +93,11 @@ const StudentDashboard = () => {
                 📚 View Assignments
               </Link>
             </p>
-            <p>
+            {/* <p>
               <Link to="/student/marks" className="btn btn-info m-2">
                 🧾 View Marks
               </Link>
-            </p>
+            </p> */}
             <p>
               <Link to="/student/attendance" className="btn btn-warning m-2">
                 📅 Check Attendance
@@ -116,6 +116,11 @@ const StudentDashboard = () => {
             <p>
               <Link to="/student/results" className="btn btn-warning m-2">
                 📅 Results
+              </Link>
+            </p>
+            <p>
+              <Link to="/student/report-card" className="btn btn-warning m-2">
+                📅 Report-card
               </Link>
             </p>
           </div>

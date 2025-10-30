@@ -32,6 +32,11 @@ const TeacherDashboard = () => {
                 👤 Upload-assignment
               </Link>
             </p>
+            {/* <p>
+              <Link to="/teacher/assignments/:id/review" className="btn btn-primary m-2">
+                👤 assignment review
+              </Link>
+            </p> */}
         
             <p>
               <Link to="/teacher/attendance" className="btn btn-primary m-2">
@@ -53,6 +58,7 @@ const TeacherDashboard = () => {
                 👤 Result-entry
               </Link>
             </p>
+            
             
         </div>
         <li>📝 Manage Students</li>
