@@ -1,65 +1,299 @@
 // pages/Students/StudentExamSchedule.jsx
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function StudentExamSchedule() {
-    const [schedule, setSchedule] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
-    const token = localStorage.getItem('token');
+  const [schedule, setSchedule] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-    useEffect(() => {
-        const fetchSchedule = async () => {
-            try {
-                // Call the new dedicated student route
-                const res = await axios.get(
-                    'http://localhost:5000/api/exams/student/me', 
-                    { headers: { Authorization: `Bearer ${token}` } }
-                );
-                setSchedule(res.data);
-            } catch (err) {
-                console.error('Fetch schedule error:', err);
-                setError(err.response?.data?.message || 'Failed to load schedule.');
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchSchedule();
-    }, [token]);
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate();
 
-    if (loading) return <p>Loading exam schedule...</p>;
-    if (error) return <p style={{ color: 'red' }}>{error}</p>;
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
 
-    return (
-        <div style={{ maxWidth: '900px', margin: '2rem auto', padding: '20px' }}>
-            <h2>📅 My Exam Schedule</h2>
-            
-            {schedule.length === 0 ? (
-                <p>No exams currently scheduled for your class.</p>
-            ) : (
-                <table border="1" cellPadding="10" width="100%">
-                    <thead>
-                        <tr style={{ backgroundColor: '#f2f2f2' }}>
-                            <th>Date</th>
-                            <th>Subject</th>
-                            <th>Title</th>
-                            <th>Max Marks</th>
-                            <th>Duration</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {schedule.map(exam => (
-                            <tr key={exam._id}>
-                                <td>{new Date(exam.examDate).toLocaleDateString()}</td>
-                                <td>{exam.subjectId.name} ({exam.subjectId.code})</td>
-                                <td>{exam.title}</td>
-                                <td>{exam.maxMarks}</td>
-                                <td>{exam.duration}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            )}
+  useEffect(() => {
+    const fetchSchedule = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:5000/api/exams/student/me",
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setSchedule(res.data);
+      } catch (err) {
+        console.error("Fetch schedule error:", err);
+        setError(
+          err.response?.data?.message || "Failed to load exam schedule."
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSchedule();
+  }, [token]);
+
+  if (loading) return <p>Loading exam schedule...</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
+
+  return (
+    <>
+      {/* ================ Start Header Area ================= */}
+      {token && user && (
+        <header className="default-header">
+          <nav className="navbar navbar-expand-lg navbar-light">
+            <div className="container">
+              <Link className="navbar-brand" to="/">
+                <img src="/img/logo.png" alt="Logo" />
+              </Link>
+
+              <button
+                className="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span className="lnr lnr-menu"></span>
+              </button>
+
+              <div
+                className="collapse navbar-collapse justify-content-end align-items-center"
+                id="navbarSupportedContent"
+              >
+                <ul className="navbar-nav">
+                  <li>
+                    <Link to="/dashboard/student">Home</Link>
+                  </li>
+                  <li>
+                    <Link to="/student/assignments">Assignments</Link>
+                  </li>
+                  <li>
+                    <Link to="/student/attendance">Attendance</Link>
+                  </li>
+                  <li>
+                    <Link to="/messages">Notice</Link>
+                  </li>
+
+                  <li className="dropdown">
+                    <a
+                      className="dropdown-toggle"
+                      href="#"
+                      data-bs-toggle="dropdown"
+                    >
+                      Exam
+                    </a>
+                    <div className="dropdown-menu">
+                      <Link
+                        className="dropdown-item"
+                        to="/student/exam-schedule"
+                      >
+                        Exam Schedule
+                      </Link>
+                      <Link className="dropdown-item" to="/student/results">
+                        Exam Results
+                      </Link>
+                      <Link className="dropdown-item" to="/student/report-card">
+                        Report-card
+                      </Link>
+                    </div>
+                  </li>
+
+                  <li>
+                    <Link to="/student/profile">Profile</Link>
+                  </li>
+
+                  <li className="nav-item d-flex align-items-center ms-3">
+                    👋 Welcome,&nbsp;
+                    <strong>{user.name}</strong>&nbsp;[{user.role}]
+                  </li>
+
+                  <li className="nav-item ms-2">
+                    <button
+                      onClick={handleLogout}
+                      className="btn btn-outline-light btn-sm"
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </header>
+      )}
+      {/* ================ End Header Area ================= */}
+
+      {/* ================ Start Banner Area ================= */}
+      <section
+        className="banner-area"
+        style={{
+          position: "relative",
+          backgroundImage: "url('/img/banner-bg.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          padding: "120px 0",
+          overflow: "hidden",
+        }}
+      >
+        <div
+          className="container"
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "flex-end",
+            height: "350px",
+          }}
+        >
+          <div
+            className="banner-right"
+            style={{
+              textAlign: "right",
+              maxWidth: "500px",
+              color: "#fff",
+              marginRight: "80px", // small shift to right
+            }}
+          >
+            <h1
+              className="text-white"
+              style={{
+                color: "#fff",
+                fontWeight: "bold",
+                fontSize: "48px",
+                marginBottom: "10px",
+              }}
+            >
+              Exam Schedule
+            </h1>
+
+            <p
+              className="mx-auto text-white mt-20 mb-40"
+              style={{
+                color: "#fff",
+                fontSize: "18px",
+                marginTop: "10px",
+                marginBottom: "30px",
+              }}
+            >
+              Stay updated with your upcoming exams and plan your studies.
+            </p>
+
+            <div className="link-nav">
+              <span className="box" style={{ color: "#fff" }}>
+                <Link
+                  to="/"
+                  style={{
+                    color: "#fff",
+                    textDecoration: "none",
+                    marginRight: "8px",
+                  }}
+                >
+                  Home
+                </Link>
+                <i className="lnr lnr-arrow-right" style={{ margin: "0 8px" }}></i>
+                <Link
+                  to="/student/exam-schedule"
+                  style={{ color: "#fff", textDecoration: "none" }}
+                >
+                  Exam Schedule
+                </Link>
+              </span>
+            </div>
+          </div>
         </div>
-    );
+      </section>
+      {/* ================ End Banner Area ================= */}
+
+      {/* ================ Exam Schedule Section ================= */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "40vh",
+          width: "100vw",
+          backgroundColor: "white",
+          flexDirection: "column",
+        }}
+      >
+        <div
+          style={{
+            width: "90%",
+            maxWidth: "900px",
+            padding: "40px",
+            backgroundColor: "white",
+            borderRadius: "12px",
+            boxShadow: "0 4px 16px rgba(0,0,0,0.15)",
+            textAlign: "center",
+          }}
+        >
+          <h2 style={{ marginBottom: "20px" }}>📅 My Exam Schedule</h2>
+
+          {schedule.length === 0 ? (
+            <p>No exams currently scheduled for your class.</p>
+          ) : (
+            <div style={{ overflowX: "auto" }}>
+              <table
+                border="1"
+                cellPadding="10"
+                width="100%"
+                style={{
+                  borderCollapse: "collapse",
+                  textAlign: "center",
+                }}
+              >
+                <thead style={{ backgroundColor: "#007bff", color: "white" }}>
+                  <tr>
+                    <th>Date</th>
+                    <th>Subject</th>
+                    <th>Title</th>
+                    <th>Max Marks</th>
+                    <th>Duration</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {schedule.map((exam) => (
+                    <tr key={exam._id}>
+                      <td>{new Date(exam.examDate).toLocaleDateString()}</td>
+                      <td>
+                        {exam.subjectId?.name} ({exam.subjectId?.code})
+                      </td>
+                      <td>{exam.title}</td>
+                      <td>{exam.maxMarks}</td>
+                      <td>{exam.duration}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ================ Start Footer Area ================= */}
+      <footer className="footer-area section-gap">
+        <div className="container">
+          <div className="footer-bottom row align-items-center">
+            <p className="footer-text m-0 col-lg-8 col-md-12">
+              Copyright © {new Date().getFullYear()} All rights reserved | Made
+              with <i className="fa fa-heart-o"></i> by{" "}
+              <a href="https://colorlib.com" target="_blank" rel="noreferrer">
+                Colorlib
+              </a>
+            </p>
+          </div>
+        </div>
+      </footer>
+      {/* ================ End Footer Area ================= */}
+    </>
+  );
 }

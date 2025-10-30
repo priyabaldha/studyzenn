@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Signup from "./pages/Auth/Signup";
 import Login from "./pages/Auth/Login";
-import Header from "./components/Header";
 import PrivateRoute from "./components/PrivateRoute";
 
 import AdminDashboard from "./pages/Dashboard/AdminDashboard";
@@ -40,7 +39,6 @@ import StudentReportCard from "./pages/Students/StudentReportCard";
 const App = () => {
   return (
     <Router>
-      <Header />
 
       <Routes>
         {/* Public routes */}
@@ -215,7 +213,7 @@ const App = () => {
             </PrivateRoute>
           }
         />
-
+        
         <Route
           path="/teacher/schedule-exam"
           element={
@@ -260,10 +258,11 @@ const App = () => {
             </PrivateRoute>
           }
         />
-
+        
         {/* Fallback */}
         <Route path="/unauthorized" element={<h2>🚫 Unauthorized Access</h2>} />
         <Route path="*" element={<h2>404 - Page not found</h2>} />
+        
       </Routes>
     </Router>
   );

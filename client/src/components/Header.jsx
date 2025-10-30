@@ -43,57 +43,7 @@ const Header = () => {
               id="navbarSupportedContent"
             >
               <ul className="navbar-nav">
-                <li>
-                  <Link to="/">Home</Link>
-                </li>
-                <li>
-                  <Link to="/about">About</Link>
-                </li>
-                <li>
-                  <Link to="/courses">Courses</Link>
-                </li>
-
-                {/* Dropdown: Pages */}
-                <li className="dropdown">
-                  <a
-                    className="dropdown-toggle"
-                    href="#"
-                    data-bs-toggle="dropdown"
-                  >
-                    Pages
-                  </a>
-                  <div className="dropdown-menu">
-                    <Link className="dropdown-item" to="/elements">
-                      Elements
-                    </Link>
-                    <Link className="dropdown-item" to="/course-details">
-                      Course Details
-                    </Link>
-                  </div>
-                </li>
-
-                {/* Dropdown: Blog */}
-                <li className="dropdown">
-                  <a
-                    className="dropdown-toggle"
-                    href="#"
-                    data-bs-toggle="dropdown"
-                  >
-                    Blog
-                  </a>
-                  <div className="dropdown-menu">
-                    <Link className="dropdown-item" to="/blog-home">
-                      Blog Home
-                    </Link>
-                    <Link className="dropdown-item" to="/blog-single">
-                      Blog Details
-                    </Link>
-                  </div>
-                </li>
-
-                <li>
-                  <Link to="/contacts">Contacts</Link>
-                </li>
+                
 
                 {/* Welcome + Logout */}
                 <li className="nav-item d-flex align-items-center ms-3">

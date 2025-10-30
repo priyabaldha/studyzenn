@@ -1,144 +1,437 @@
 // pages/Students/StudentReportCard.jsx
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import html2pdf from 'html2pdf.js'; // 🆕 You must install this: npm install html2pdf.js
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import html2pdf from "html2pdf.js";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function StudentReportCard() {
-    const [report, setReport] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
-    const token = localStorage.getItem('token');
+  const [report, setReport] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [showSearch, setShowSearch] = useState(false);
 
-    const fetchReport = async () => {
-        try {
-            // API: GET /api/reports/student/performance
-            const res = await axios.get(
-                'http://localhost:5000/api/reports/student/performance', 
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
-            setReport(res.data);
-        } catch (err) {
-            setError(err.response?.data?.message || 'Failed to load report.');
-            console.error('Report fetch error:', err);
-        } finally {
-            setLoading(false);
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate();
+
+  // Fetch Report Data
+  const fetchReport = async () => {
+    try {
+      const res = await axios.get(
+        "http://localhost:5000/api/reports/student/performance",
+        {
+          headers: { Authorization: `Bearer ${token}` },
         }
+      );
+      setReport(res.data);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to load report.");
+      console.error("Report fetch error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchReport();
+  }, [token]);
+
+  // Download Report Card as PDF
+  const handleDownloadPDF = () => {
+    if (!report) return;
+
+    const element = document.getElementById("report-card-content");
+    const filename = `ReportCard_${report.profile.rollNo}_${report.profile.semester}.pdf`;
+
+    const opt = {
+      margin: 0.5,
+      filename,
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
     };
 
-    useEffect(() => {
-        fetchReport();
-    }, [token]);
+    html2pdf().set(opt).from(element).save();
+  };
 
-    const handleDownloadPDF = () => {
-        if (!report) return;
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
 
-        const element = document.getElementById('report-card-content');
-        const filename = `ReportCard_${report.profile.rollNo}_${report.profile.semester}.pdf`;
+  const gradeCalc = (obtained, max) => {
+    if (!max) return "N/A";
+    const p = (obtained / max) * 100;
+    if (p >= 90) return "A+";
+    if (p >= 75) return "B";
+    if (p >= 50) return "C";
+    return "F";
+  };
 
-        const opt = {
-            margin: 0.5,
-            filename: filename,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-        };
+  if (loading) return <p>Generating performance report...</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
+  if (!report) return <p>No data available to generate report.</p>;
 
-        // Use the imported library to generate PDF from the specific div
-        html2pdf().set(opt).from(element).save();
-    };
+  const { profile, attendance, examResults, assignmentStatus } = report;
 
-    if (loading) return <p>Generating performance report...</p>;
-    if (error) return <p style={{ color: 'red' }}>{error}</p>;
-    if (!report) return <p>No data available to generate report.</p>;
+  return (
+    <>
+      {/* ================ Header ================= */}
+      {token && user && (
+        <header className="default-header">
+          <nav className="navbar navbar-expand-lg navbar-light">
+            <div className="container">
+              <Link className="navbar-brand" to="/">
+                <img src="/img/logo.png" alt="Logo" />
+              </Link>
 
-    const gradeCalc = (obtained, max) => {
-        if (!max) return 'N/A';
-        const p = (obtained / max) * 100;
-        if (p >= 90) return 'A+';
-        if (p >= 75) return 'B';
-        if (p >= 50) return 'C';
-        return 'F';
-    };
-    
-    const { profile, attendance, examResults, assignmentStatus } = report;
+              <button
+                className="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span className="lnr lnr-menu"></span>
+              </button>
 
-    return (
-        <div style={{ maxWidth: '900px', margin: '2rem auto', padding: '20px' }}>
-            <h2>📚 Combined Performance Report</h2>
-            
-            <button onClick={handleDownloadPDF} style={{ padding: '10px 20px', backgroundColor: '#dc3545', color: 'white', marginBottom: '20px' }}>
-                ⬇️ Download Report Card (PDF)
-            </button>
+              <div
+                className="collapse navbar-collapse justify-content-end align-items-center"
+                id="navbarSupportedContent"
+              >
+                <ul className="navbar-nav">
+                  <li><Link to="/dashboard/student">Home</Link></li>
+                  <li><Link to="/student/assignments">Assignments</Link></li>
+                  <li><Link to="/student/attendance">Attendance</Link></li>
+                  <li><Link to="/messages">Notice</Link></li>
 
-            <div id="report-card-content" style={{ padding: '30px', border: '1px solid #333', backgroundColor: 'white' }}>
-                <h1 style={{ textAlign: 'center', borderBottom: '2px solid #333', paddingBottom: '10px' }}>STUDENT REPORT CARD</h1>
-                
-                {/* Profile and Class Details */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px', fontSize: '1.1em' }}>
-                    <p><strong>Name:</strong> {profile.name}</p>
-                    <p><strong>Roll No:</strong> {profile.rollNo}</p>
-                    <p><strong>Class:</strong> {profile.semester} / {profile.division}</p>
-                </div>
+                  <li className="dropdown">
+                    <a
+                      className="dropdown-toggle"
+                      href="#"
+                      data-bs-toggle="dropdown"
+                    >
+                      Exam
+                    </a>
+                    <div className="dropdown-menu">
+                      <Link
+                        className="dropdown-item"
+                        to="/student/exam-schedule"
+                      >
+                        Exam Schedule
+                      </Link>
+                      <Link className="dropdown-item" to="/student/results">
+                        Exam Results
+                      </Link>
+                      <Link className="dropdown-item" to="/student/report-card">
+                        Report-card
+                      </Link>
+                    </div>
+                  </li>
 
-                {/* Section 1: Attendance Summary */}
-                <h3 style={{ borderBottom: '1px solid #ccc', paddingBottom: '5px', marginTop: '30px' }}>Attendance Summary</h3>
-                <div style={{ display: 'flex', justifyContent: 'space-around', padding: '10px 0' }}>
-                    <p><strong>Total Days Recorded:</strong> {attendance.totalDays}</p>
-                    <p><strong>Days Present/Late:</strong> {attendance.presentDays}</p>
-                    <p><strong>Percentage:</strong> <span style={{ fontWeight: 'bold', color: attendance.percentage < 75 ? 'red' : 'green' }}>{attendance.percentage}%</span></p>
-                </div>
-                
-                {/* Section 2: Exam Results */}
-                <h3 style={{ borderBottom: '1px solid #ccc', paddingBottom: '5px', marginTop: '30px' }}>Exam Performance</h3>
-                {examResults.length > 0 ? (
-                    <table border="1" cellPadding="10" width="100%" style={{ borderCollapse: 'collapse' }}>
-                        <thead>
-                            <tr style={{ backgroundColor: '#f2f2f2' }}>
-                                <th>Subject</th>
-                                <th>Exam Title</th>
-                                <th>Marks Obtained</th>
-                                <th>Max Marks</th>
-                                <th>Grade</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {examResults.map(r => (
-                                <tr key={r._id}>
-                                    <td>{r.examId.subjectId.name}</td>
-                                    <td>{r.examId.title}</td>
-                                    <td>{r.marksObtained}</td>
-                                    <td>{r.examId.maxMarks}</td>
-                                    <td>{gradeCalc(r.marksObtained, r.examId.maxMarks)}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                ) : <p>No published exam results found.</p>}
+                  <li><Link to="/student/profile">Profile</Link></li>
 
-                {/* Section 3: Assignment Submission Status */}
-                <h3 style={{ borderBottom: '1px solid #ccc', paddingBottom: '5px', marginTop: '30px' }}>Assignment Status</h3>
-                {assignmentStatus.length > 0 ? (
-                    <table border="1" cellPadding="10" width="100%" style={{ borderCollapse: 'collapse' }}>
-                        <thead>
-                            <tr style={{ backgroundColor: '#f2f2f2' }}>
-                                <th>Subject</th>
-                                <th>Submission Status</th>
-                                <th>Grading Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {assignmentStatus.map((a, index) => (
-                                <tr key={index}>
-                                    <td>{a.subject} ({a.title})</td>
-                                    <td style={{ color: a.submitted ? 'green' : 'red' }}>{a.submitted ? 'Submitted' : 'Missing'}</td>
-                                    <td style={{ color: a.isGraded ? 'blue' : 'gray' }}>{a.isGraded ? 'Graded' : 'Pending'}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                ) : <p>No assignments found for this class.</p>}
-                
+                  <li className="nav-item d-flex align-items-center ms-3">
+                    👋 Welcome,&nbsp;<strong>{user.name}</strong>&nbsp;[{user.role}]
+                  </li>
+
+                  <li className="nav-item ms-2">
+                    <button
+                      onClick={handleLogout}
+                      className="btn btn-outline-light btn-sm"
+                    >
+                      Logout
+                    </button>
+                  </li>
+
+                  <li>
+                    <button
+                      className="search"
+                      onClick={() => setShowSearch(true)}
+                    >
+                      <span className="lnr lnr-magnifier" id="search"></span>
+                    </button>
+                  </li>
+                </ul>
+              </div>
             </div>
+          </nav>
+
+          {showSearch && (
+            <div className="search-input" id="search-input-box">
+              <div className="container">
+                <form
+                  className="d-flex justify-content-between"
+                  onSubmit={(e) => e.preventDefault()}
+                >
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Search Here"
+                  />
+                  <button type="submit" className="btn"></button>
+                  <span
+                    className="lnr lnr-cross"
+                    title="Close Search"
+                    onClick={() => setShowSearch(false)}
+                  ></span>
+                </form>
+              </div>
+            </div>
+          )}
+        </header>
+      )}
+      {/* ================ End Header ================= */}
+
+      {/* ================ Banner ================= */}
+      <section
+        className="banner-area"
+        style={{
+          position: "relative",
+          backgroundImage: "url('/img/banner-bg.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          padding: "120px 0",
+          overflow: "hidden",
+        }}
+      >
+        <div
+          className="container"
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "flex-end",
+            height: "350px",
+          }}
+        >
+          <div
+            className="banner-right"
+            style={{
+              textAlign: "right",
+              maxWidth: "500px",
+              color: "#fff",
+              marginRight: "80px",
+            }}
+          >
+            <h1
+              className="text-white"
+              style={{
+                color: "#fff",
+                fontWeight: "bold",
+                fontSize: "48px",
+                marginBottom: "10px",
+              }}
+            >
+              Report Card
+            </h1>
+
+            <p
+              className="mx-auto text-white mt-20 mb-40"
+              style={{
+                color: "#fff",
+                fontSize: "18px",
+                marginTop: "10px",
+                marginBottom: "30px",
+              }}
+            >
+              Review your academic performance with ease.
+            </p>
+
+            <div className="link-nav">
+              <span className="box" style={{ color: "#fff" }}>
+                <Link
+                  to="/"
+                  style={{
+                    color: "#fff",
+                    textDecoration: "none",
+                    marginRight: "8px",
+                  }}
+                >
+                  Home
+                </Link>
+                <i className="lnr lnr-arrow-right" style={{ margin: "0 8px" }}></i>
+                <Link
+                  to="/student/report-card"
+                  style={{ color: "#fff", textDecoration: "none" }}
+                >
+                  Report Card
+                </Link>
+              </span>
+            </div>
+          </div>
         </div>
-    );
+      </section>
+      {/* ================ End Banner ================= */}
+
+      {/* ================ Report Section ================= */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "15vh",
+          width: "100vw",
+          backgroundColor: "white",
+          flexDirection: "column",
+        }}
+      >
+        <div
+          style={{
+            width: "90%",
+            maxWidth: "900px",
+            padding: "40px",
+            backgroundColor: "white",
+            borderRadius: "12px",
+            boxShadow: "0 4px 16px rgba(0,0,0,0.15)",
+          }}
+        >
+          <h2>📚 Combined Performance Report</h2>
+
+          <button
+            onClick={handleDownloadPDF}
+            style={{
+              padding: "10px 20px",
+              backgroundColor: "#dc3545",
+              color: "white",
+              border: "none",
+              borderRadius: "6px",
+              marginBottom: "20px",
+              cursor: "pointer",
+            }}
+          >
+            ⬇️ Download Report Card (PDF)
+          </button>
+
+          <div
+            id="report-card-content"
+            style={{
+              padding: "30px",
+              border: "1px solid #333",
+              backgroundColor: "white",
+            }}
+          >
+            <h1
+              style={{
+                textAlign: "center",
+                borderBottom: "2px solid #333",
+                paddingBottom: "10px",
+              }}
+            >
+              STUDENT REPORT CARD
+            </h1>
+
+            {/* Profile Details */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginBottom: "20px",
+                fontSize: "1.1em",
+              }}
+            >
+              <p><strong>Name:</strong> {profile.name}</p>
+              <p><strong>Roll No:</strong> {profile.rollNo}</p>
+              <p><strong>Class:</strong> {profile.semester} / {profile.division}</p>
+            </div>
+
+            {/* Attendance Summary */}
+            <h3 style={{ borderBottom: "1px solid #ccc", paddingBottom: "5px", marginTop: "30px" }}>
+              Attendance Summary
+            </h3>
+            <div style={{ display: "flex", justifyContent: "space-around", padding: "10px 0" }}>
+              <p><strong>Total Days:</strong> {attendance.totalDays}</p>
+              <p><strong>Present:</strong> {attendance.presentDays}</p>
+              <p>
+                <strong>Percentage:</strong>{" "}
+                <span style={{ fontWeight: "bold", color: attendance.percentage < 75 ? "red" : "green" }}>
+                  {attendance.percentage}%
+                </span>
+              </p>
+            </div>
+
+            {/* Exam Results */}
+            <h3 style={{ borderBottom: "1px solid #ccc", paddingBottom: "5px", marginTop: "30px" }}>
+              Exam Performance
+            </h3>
+            {examResults.length > 0 ? (
+              <table border="1" cellPadding="10" width="100%" style={{ borderCollapse: "collapse" }}>
+                <thead>
+                  <tr style={{ backgroundColor: "#f2f2f2" }}>
+                    <th>Subject</th>
+                    <th>Exam Title</th>
+                    <th>Marks</th>
+                    <th>Max Marks</th>
+                    <th>Grade</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {examResults.map((r) => (
+                    <tr key={r._id}>
+                      <td>{r.examId.subjectId.name}</td>
+                      <td>{r.examId.title}</td>
+                      <td>{r.marksObtained}</td>
+                      <td>{r.examId.maxMarks}</td>
+                      <td>{gradeCalc(r.marksObtained, r.examId.maxMarks)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>No published exam results found.</p>
+            )}
+
+            {/* Assignment Status */}
+            <h3 style={{ borderBottom: "1px solid #ccc", paddingBottom: "5px", marginTop: "30px" }}>
+              Assignment Status
+            </h3>
+            {assignmentStatus.length > 0 ? (
+              <table border="1" cellPadding="10" width="100%" style={{ borderCollapse: "collapse" }}>
+                <thead>
+                  <tr style={{ backgroundColor: "#f2f2f2" }}>
+                    <th>Subject</th>
+                    <th>Submission Status</th>
+                    <th>Grading Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {assignmentStatus.map((a, i) => (
+                    <tr key={i}>
+                      <td>{a.subject} ({a.title})</td>
+                      <td style={{ color: a.submitted ? "green" : "red" }}>
+                        {a.submitted ? "Submitted" : "Missing"}
+                      </td>
+                      <td style={{ color: a.isGraded ? "blue" : "gray" }}>
+                        {a.isGraded ? "Graded" : "Pending"}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>No assignments found for this class.</p>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* ================ Footer ================= */}
+      <footer className="footer-area section-gap">
+        <div className="container">
+          <div className="footer-bottom row align-items-center">
+            <p className="footer-text m-0 col-lg-8 col-md-12">
+              Copyright © {new Date().getFullYear()} All rights reserved | Made
+              with <i className="fa fa-heart-o"></i> by{" "}
+              <a href="https://colorlib.com" target="_blank" rel="noreferrer">
+                Colorlib
+              </a>
+            </p>
+          </div>
+        </div>
+      </footer>
+    </>
+  );
 }

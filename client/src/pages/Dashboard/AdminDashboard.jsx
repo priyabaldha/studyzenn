@@ -1,6 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { hasRole } from "../../utils/roleCheck";
+import AdminSlidebar from "../Admin/components/AdminSlidebar";
 
 const AdminDashboard = () => {
   if (!hasRole(["admin"])) {
@@ -9,125 +9,153 @@ const AdminDashboard = () => {
 
   return (
     <>
-      {/* ================ Start Banner Area ================= */}
-      <section className="home-banner-area">
-        <div className="container">
-          <div className="row justify-content-center fullscreen align-items-center">
-            <div className="col-lg-5 col-md-8 home-banner-left">
-              <h1 className="text-white">
-                Take the first step <br />
-                to manage effectively
-              </h1>
-              <p className="mx-auto text-white mt-20 mb-40">
-                Welcome to the Admin Dashboard. Manage users, teachers, and
-                students all in one place efficiently.
-              </p>
-            </div>
-            <div className="offset-lg-2 col-lg-5 col-md-12 home-banner-right">
-              <img className="img-fluid" src="/img/header-img.png" alt="Admin Banner" />
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* ================ End Banner Area ================= */}
+      <AdminSlidebar />
 
-      {/* ================ Start Feature Area ================= */}
-      <section className="feature-area">
-        <div className="container-fluid">
-          <div className="feature-inner row">
-            <div className="col-lg-2 col-md-6">
-              <div className="feature-item d-flex">
-                <i className="ti-book"></i>
-                <div className="ml-20">
-                  <h4>New Classes</h4>
-                  <p>
-                    In the history of modern astronomy, there is probably no one
-                    greater leap forward.
-                  </p>
+      <div className="main-content">
+        <section className="section">
+          <div className="section-body">
+            <div className="row">
+              {/* Card 1 */}
+              <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                <div className="card">
+                  <div className="card-statistic-4">
+                    <div className="align-items-center justify-content-between">
+                      <div className="row">
+                        <div className="col-6 pr-0 pt-3">
+                          <div className="card-content">
+                            <h5 className="font-15">New Booking</h5>
+                            <h2 className="mb-3 font-18">258</h2>
+                            <p className="mb-0">
+                              <span className="col-green">10%</span> Increase
+                            </p>
+                          </div>
+                        </div>
+                        <div className="col-6 pl-0">
+                          <div className="banner-img">
+                            <img src="assets/img/banner/1.png" alt="booking" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="col-lg-2 col-md-6">
-              <div className="feature-item d-flex">
-                <i className="ti-cup"></i>
-                <div className="ml-20">
-                  <h4>Top Courses</h4>
-                  <p>
-                    In the history of modern astronomy, there is probably no one
-                    greater leap forward.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-2 col-md-6">
-              <div className="feature-item d-flex border-right-0">
-                <i className="ti-desktop"></i>
-                <div className="ml-20">
-                  <h4>Full E-Books</h4>
-                  <p>
-                    In the history of modern astronomy, there is probably no one
-                    greater leap forward.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* ================ End Feature Area ================= */}
 
-      {/* ================ Start Logical Admin Section ================= */}
-      <section className="admin-dashboard-section mt-5 mb-5 text-center">
-        <div className="container">
-          <h1>👋 Welcome to Admin Dashboard</h1>
-          <p className="lead mb-4">
-            Use the options below to manage your platform efficiently.
-          </p>
-          <div className="admin-links">
-            <p>
-              <Link to="/admin/users" className="btn btn-primary m-2">
-                👥 View All Users
-              </Link>
-            </p>
-            <p>
-              <Link to="/teachers" className="btn btn-success m-2">
-                📚 Manage Teachers
-              </Link>
-            </p>
-            <p>
-              <Link to="/students" className="btn btn-info m-2">
-                🎓 Manage Students
-              </Link>
-            </p>
-            <p>
-              <Link to="/admin/attendance/report" className="btn btn-info m-2">
-                🎓 Student's attendance
-              </Link>
-            </p>
-            <p>
-              <Link to="/admin/assignment/status" className="btn btn-info m-2">
-                🎓 Student's assignment
-              </Link>
-            </p>
-            <p>
-              <Link to="/messages" className="btn btn-info m-2">
-                🎓 Messages
-              </Link>
-            </p>
-            <p>
-              <Link to="/admin/subjects" className="btn btn-info m-2">
-                🎓 Subjects
-              </Link>
-            </p>
-            <p>
-              <Link to="/admin/schedule-exam" className="btn btn-info m-2">
-                🎓 Schedule-exam
-              </Link>
-            </p>
+              {/* Card 2 */}
+              <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                <div className="card">
+                  <div className="card-statistic-4">
+                    <div className="align-items-center justify-content-between">
+                      <div className="row">
+                        <div className="col-6 pr-0 pt-3">
+                          <div className="card-content">
+                            <h5 className="font-15">Customers</h5>
+                            <h2 className="mb-3 font-18">1,287</h2>
+                            <p className="mb-0">
+                              <span className="col-orange">09%</span> Decrease
+                            </p>
+                          </div>
+                        </div>
+                        <div className="col-6 pl-0">
+                          <div className="banner-img">
+                            <img src="assets/img/banner/2.png" alt="customers" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 3 */}
+              <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                <div className="card">
+                  <div className="card-statistic-4">
+                    <div className="align-items-center justify-content-between">
+                      <div className="row">
+                        <div className="col-6 pr-0 pt-3">
+                          <div className="card-content">
+                            <h5 className="font-15">New Project</h5>
+                            <h2 className="mb-3 font-18">128</h2>
+                            <p className="mb-0">
+                              <span className="col-green">18%</span> Increase
+                            </p>
+                          </div>
+                        </div>
+                        <div className="col-6 pl-0">
+                          <div className="banner-img">
+                            <img src="assets/img/banner/3.png" alt="projects" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 4 */}
+              <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                <div className="card">
+                  <div className="card-statistic-4">
+                    <div className="align-items-center justify-content-between">
+                      <div className="row">
+                        <div className="col-6 pr-0 pt-3">
+                          <div className="card-content">
+                            <h5 className="font-15">Revenue</h5>
+                            <h2 className="mb-3 font-18">$48,697</h2>
+                            <p className="mb-0">
+                              <span className="col-green">42%</span> Increase
+                            </p>
+                          </div>
+                        </div>
+                        <div className="col-6 pl-0">
+                          <div className="banner-img">
+                            <img src="assets/img/banner/4.png" alt="revenue" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Chart Row */}
+            <div className="row">
+              <div className="col-lg-4 col-md-12 col-sm-12 col-12">
+                <div className="card">
+                  <div className="card-header">
+                    <h4>Chart</h4>
+                  </div>
+                  <div className="card-body">
+                    <div id="chart1" className="chartsh"></div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-4 col-md-12 col-sm-12 col-12">
+                <div className="card">
+                  <div className="card-header">
+                    <h4>Chart</h4>
+                  </div>
+                  <div className="card-body">
+                    <div id="chart2" className="chartsh"></div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-4 col-md-12 col-sm-12 col-12">
+                <div className="card">
+                  <div className="card-header">
+                    <h4>Chart</h4>
+                  </div>
+                  <div className="card-body">
+                    <div id="chart3" className="chartsh"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
-      {/* ================ End Logical Admin Section ================= */}
+        </section>
+      </div>
     </>
   );
 };
