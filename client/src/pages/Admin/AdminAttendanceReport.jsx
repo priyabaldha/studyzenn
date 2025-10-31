@@ -1,6 +1,8 @@
 // pages/Admin/AdminAttendanceReport.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
+import AdminHeader from "../Admin/components/AdminHeader";
+import AdminSlidebar from "../Admin/components/AdminSlidebar";
 
 const SEMESTER_OPTIONS = ["1st", "2nd", "3rd", "4th", "5th", "6th"];
 const DIVISION_OPTIONS = ["A", "B", "C", "D"];
@@ -98,6 +100,9 @@ export default function AdminAttendanceReport() {
     };
 
     return (
+        <div>
+        <AdminHeader />
+        <AdminSlidebar />
         <div style={{ maxWidth: '1000px', margin: '2rem auto', padding: '20px', border: '1px solid #ddd' }}>
             <h2>Admin Attendance Report 📊</h2>
             
@@ -167,5 +172,6 @@ export default function AdminAttendanceReport() {
                 </table>
             )}
         </div>
+    </div>
     );
 }

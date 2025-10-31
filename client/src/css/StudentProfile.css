@@ -1,0 +1,96 @@
+/* === Student Profile Container === */
+.student-profile-container {
+  max-width: 750px;
+  margin: 3rem auto;
+  padding: 2rem 2.5rem;
+  background: linear-gradient(135deg, #ffffff 60%, #e3f2fd);
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.student-profile-container:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(30, 144, 255, 0.3);
+}
+
+/* === Title === */
+.student-profile-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0d47a1;
+  margin-bottom: 1.5rem;
+  border-bottom: 3px solid #64b5f6;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+/* === Profile Image === */
+.student-profile-image {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #64b5f6;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 15px rgba(100, 181, 246, 0.5);
+}
+
+/* === Upload Form === */
+.student-upload-form {
+  margin-bottom: 1.2rem;
+}
+
+.student-upload-form input[type="file"] {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0.5rem;
+  width: 70%;
+  margin-top: 0.6rem;
+  background-color: #f8faff;
+  transition: border-color 0.3s ease;
+}
+
+.student-upload-form input[type="file"]:hover {
+  border-color: #64b5f6;
+}
+
+/* === Buttons === */
+.student-btn {
+  padding: 0.7rem 1.5rem;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  margin: 0.4rem;
+  transition: all 0.3s ease;
+}
+
+.student-btn.upload {
+  background: linear-gradient(90deg, #42a5f5, #478ed1);
+}
+.student-btn.upload:hover {
+  background: linear-gradient(90deg, #1e88e5, #1565c0);
+}
+
+/* === Info Box === */
+.student-info {
+  text-align: left;
+  background: #f9f9ff;
+  padding: 1.2rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.05);
+  margin-top: 1.5rem;
+}
+
+.student-info p {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  color: #333;
+}
+
+.student-info strong {
+  color: #0d47a1;
+}

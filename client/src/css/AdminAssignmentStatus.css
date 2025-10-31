@@ -1,0 +1,118 @@
+/* AdminAssignmentStatus.css */
+
+/* Main Container */
+.assignment-container {
+  margin-left: 260px;
+  padding: 100px 60px;
+  min-height: 100vh;
+  background-color: #f8f9fa; /* Slight gray to match dashboard */
+  font-family: "Poppins", sans-serif;
+  color: #222; /* ✅ Dark text for visibility */
+}
+
+/* Page Title */
+.assignment-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111; /* Dark text */
+  text-align: center;
+  border-bottom: 3px solid #111;
+  display: inline-block;
+  padding-bottom: 6px;
+  margin: 0 auto 30px;
+}
+
+/* Filter Section */
+.assignment-filter {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+/* Dropdown */
+.assignment-filter select {
+  padding: 10px 14px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font-size: 15px;
+  background: #fff;
+  color: #222;
+  width: 280px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.assignment-filter select:hover {
+  border-color: #111;
+}
+
+/* Buttons */
+.btn-view {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s ease;
+  background-color: #111;
+  color: #fff;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-view:hover {
+  background-color: #333;
+  transform: translateY(-1px);
+}
+
+/* Messages */
+.assignment-message {
+  text-align: center;
+  font-size: 16px;
+  color: #444;
+  margin-bottom: 20px;
+}
+
+.assignment-message.success {
+  color: green;
+  font-weight: 600;
+}
+
+/* Subtitle */
+.assignment-subtitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 25px;
+  text-align: center;
+  color: #222;
+}
+
+/* Table */
+.assignment-table {
+  width: 90%;
+  margin: 30px auto;
+  border-collapse: collapse;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  text-align: center;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.assignment-table th {
+  background-color: #111;
+  color: #fff;
+  padding: 14px;
+  font-size: 15px;
+}
+
+.assignment-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  color: #222;
+}
+
+.assignment-table tr:hover {
+  background-color: #f4f4f4;
+}

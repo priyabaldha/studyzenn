@@ -1,0 +1,123 @@
+/* AdminAttendanceReport.css */
+
+.attendance-container {
+  margin-left: 260px;
+  padding: 100px 60px;
+  min-height: 100vh;
+  background-color: #fff;
+  font-family: "Poppins", sans-serif;
+}
+
+.attendance-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111;
+  text-align: center;
+  border-bottom: 3px solid black;
+  display: inline-block;
+  padding-bottom: 6px;
+  margin-bottom: 30px;
+}
+
+.attendance-filter {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.attendance-filter select {
+  padding: 8px 12px;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+.btn-generate,
+.btn-download {
+  padding: 9px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.btn-generate {
+  background-color: #111;
+  color: #fff;
+}
+
+.btn-generate:hover {
+  background-color: #333;
+}
+
+.btn-download {
+  background-color: #198754;
+  color: #fff;
+}
+
+.btn-download:hover {
+  background-color: #157347;
+}
+
+.attendance-message {
+  text-align: center;
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.attendance-message.success {
+  color: green;
+}
+
+.attendance-table {
+  width: 90%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  text-align: center;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.attendance-table th {
+  background-color: #111;
+  color: #fff;
+  padding: 12px;
+  font-size: 15px;
+}
+
+.attendance-table td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.attendance-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.present {
+  color: green;
+}
+
+.late {
+  color: orange;
+}
+
+.absent {
+  color: red;
+}
+
+.good {
+  color: green;
+  font-weight: bold;
+}
+
+.bad {
+  color: red;
+  font-weight: bold;
+}

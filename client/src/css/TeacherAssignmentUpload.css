@@ -1,0 +1,169 @@
+.teacher-upload-wrapper {
+  display: flex;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.upload-container {
+  flex-grow: 1;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-card {
+  width: 100%;
+  max-width: 700px;
+  background: linear-gradient(135deg, #fefefe, #f2f7ff);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 40px;
+  text-align: center;
+  border: 1px solid #e0e0e0;
+  transition: transform 0.3s ease;
+}
+
+.upload-card:hover {
+  transform: translateY(-5px);
+}
+
+.upload-title {
+  background: linear-gradient(90deg, #007bff, #6f42c1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+  margin-bottom: 25px;
+  font-size: 2rem;
+}
+
+.message {
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: #28a745;
+}
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: left;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #333;
+}
+
+.form-group select,
+.form-group input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  outline: none;
+  font-size: 15px;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+.form-group select:focus,
+.form-group input[type="file"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
+}
+
+.upload-btn {
+  background: linear-gradient(90deg, #007bff, #6610f2);
+  color: white;
+  border: none;
+  padding: 12px 0;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: all 0.3s ease;
+}
+
+.upload-btn:hover {
+  background: linear-gradient(90deg, #6610f2, #007bff);
+  transform: scale(1.02);
+}
+
+/* Uploaded List */
+.uploaded-list {
+  width: 100%;
+  max-width: 850px;
+  background: #fff;
+  border-radius: 18px;
+  margin-top: 40px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+}
+
+.uploaded-list h3 {
+  color: #333;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.assignment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f7f9fc;
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border-left: 4px solid #007bff;
+  transition: background 0.3s ease;
+}
+
+.assignment-item:hover {
+  background: #eef3ff;
+}
+
+.assignment-info {
+  font-size: 15px;
+  color: #333;
+}
+
+.assignment-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.view-btn,
+.grade-btn {
+  text-decoration: none;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.view-btn {
+  color: #007bff;
+  border: 1px solid #007bff;
+}
+
+.view-btn:hover {
+  background: #007bff;
+  color: white;
+}
+
+.grade-btn {
+  background: #dc3545;
+  color: white;
+}
+
+.grade-btn:hover {
+  background: #c82333;
+}
+
+.no-data {
+  color: #777;
+  text-align: center;
+  font-style: italic;
+}

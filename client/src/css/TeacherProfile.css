@@ -1,0 +1,141 @@
+/* === Container Styling === */
+.profile-container {
+  max-width: 750px;
+  margin: 3rem auto;
+  padding: 2rem 2.5rem;
+  background: linear-gradient(135deg, #ffffff 60%, #eef2ff);
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-container:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(102, 126, 234, 0.3);
+}
+
+/* === Title === */
+.profile-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #3b3b98;
+  margin-bottom: 1.5rem;
+  border-bottom: 3px solid #7f7fd5;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+/* === Profile Image === */
+.profile-image {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #7f7fd5;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 15px rgba(127, 127, 213, 0.4);
+}
+
+/* === Upload Form === */
+.image-form {
+  margin-bottom: 1.2rem;
+}
+
+.image-form input[type="file"] {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0.4rem;
+  width: 70%;
+  margin-top: 0.6rem;
+  background-color: #f8faff;
+  transition: border-color 0.3s ease;
+}
+
+.image-form input[type="file"]:hover {
+  border-color: #7f7fd5;
+}
+
+/* === Buttons === */
+.profile-btn {
+  padding: 0.7rem 1.5rem;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  margin: 0.4rem;
+  transition: all 0.3s ease;
+}
+
+/* Gradient button themes */
+.profile-btn.upload {
+  background: linear-gradient(90deg, #4e54c8, #8f94fb);
+}
+.profile-btn.upload:hover {
+  background: linear-gradient(90deg, #3e43b2, #6e72ff);
+}
+
+.profile-btn.edit {
+  background: linear-gradient(90deg, #43cea2, #185a9d);
+}
+.profile-btn.edit:hover {
+  background: linear-gradient(90deg, #2c7b87, #144c87);
+}
+
+.profile-btn.save {
+  background: linear-gradient(90deg, #43cea2, #38a3a5);
+}
+.profile-btn.save:hover {
+  background: linear-gradient(90deg, #2d9a92, #2b8a88);
+}
+
+.profile-btn.cancel {
+  background: linear-gradient(90deg, #ff5f6d, #ffc371);
+}
+.profile-btn.cancel:hover {
+  background: linear-gradient(90deg, #f44b5d, #ffae42);
+}
+
+/* === Info Box === */
+.profile-info {
+  text-align: left;
+  background: #f9f9ff;
+  padding: 1.2rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.05);
+  margin-top: 1.5rem;
+}
+
+.profile-info p {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  color: #444;
+}
+
+.profile-info strong {
+  color: #1a1a40;
+}
+
+/* === Edit Form === */
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.profile-input {
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background: #fafbff;
+  transition: all 0.3s ease;
+}
+
+.profile-input:focus {
+  outline: none;
+  border-color: #7f7fd5;
+  box-shadow: 0 0 6px rgba(127, 127, 213, 0.4);
+}

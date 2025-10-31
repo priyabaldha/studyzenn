@@ -1,0 +1,206 @@
+/* === General Page Layout === */
+.students-page-container {
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.students-content {
+  margin-left: 260px;
+  padding-top: 120px;
+  padding-bottom: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* === Card Container === */
+.students-card {
+  width: 100%;
+  max-width: 1300px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.08);
+  padding: 30px 40px;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.students-card h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  color: #111;
+  border-bottom: 3px solid #000;
+  display: inline-block;
+  margin-bottom: 30px;
+  padding-bottom: 4px;
+}
+
+/* === Add Student Button === */
+.add-student-btn {
+  background-color: #000;
+  color: white;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 35px; /* ✅ Added proper spacing between button and table */
+}
+
+.add-student-btn:hover {
+  background-color: #333;
+  transform: scale(1.05);
+}
+
+/* === Table Styling === */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.students-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "Poppins", sans-serif;
+}
+
+.students-table thead {
+  background-color: #000;
+  color: #fff;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  border-radius: 10px 10px 0 0;
+}
+
+.students-table th,
+.students-table td {
+  padding: 14px;
+  text-align: center;
+}
+
+.students-table tbody tr {
+  transition: all 0.3s ease;
+  border-bottom: 1px solid #eee;
+}
+
+.students-table tbody tr:hover {
+  background-color: #f7f7f7;
+}
+
+.students-table img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #000;
+}
+
+/* === Action Buttons (Edit + Delete) === */
+.students-table td:last-child {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* ✅ Equal spacing between buttons */
+}
+
+.action-btn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  transition: 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.edit-btn {
+  background-color: #000;
+}
+
+.edit-btn:hover {
+  background-color: #333;
+  transform: scale(1.05);
+}
+
+.delete-btn {
+  background-color: #e60000;
+}
+
+.delete-btn:hover {
+  background-color: #c70000;
+  transform: scale(1.05);
+}
+
+/* === Edit Form Styling === */
+.edit-form-container {
+  margin-top: 40px;
+  background-color: #fafafa;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.edit-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.edit-input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 220px;
+  transition: 0.3s ease;
+}
+
+.edit-input:focus {
+  border-color: #000;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.save-btn,
+.cancel-btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #fff;
+}
+
+.save-btn {
+  background-color: #28a745;
+}
+
+.save-btn:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+.cancel-btn {
+  background-color: #6c757d;
+}
+
+.cancel-btn:hover {
+  background-color: #5a6268;
+  transform: scale(1.05);
+}
+
+/* === No Students Text === */
+.no-students {
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+  color: #888;
+}

@@ -1,0 +1,131 @@
+.result-container {
+  max-width: 950px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f3f2ff 60%, #e4e1ff);
+  border-radius: 18px;
+  box-shadow: 0 6px 22px rgba(90, 80, 200, 0.25);
+  font-family: 'Poppins', sans-serif;
+}
+
+.result-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #4e54c8;
+  border-bottom: 3px solid #8f94fb;
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  padding-bottom: 5px;
+}
+
+.exam-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.2rem;
+}
+
+.exam-selector label {
+  font-weight: 600;
+  color: #3b3b98;
+}
+
+.exam-selector select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #aaa;
+  font-size: 1rem;
+  background: #8383d7;
+}
+
+.exam-details {
+  background: #f0efff;
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  box-shadow: inset 0 0 10px rgba(130, 130, 255, 0.2);
+  margin-bottom: 1.5rem;
+}
+
+.result-message {
+  font-weight: 600;
+  color: #4e54c8;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(127, 127, 213, 0.2);
+}
+
+.result-table th {
+  background: linear-gradient(90deg, #8f94fb, #4e54c8);
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+.result-table td {
+  background: #fff;
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.result-table input {
+  width: 70px;
+  text-align: center;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  padding: 4px;
+  transition: 0.2s;
+}
+
+.result-table input:focus {
+  border-color: #8f94fb;
+  box-shadow: 0 0 5px rgba(127, 127, 213, 0.3);
+  outline: none;
+}
+
+.result-buttons {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 0 10px;
+  transition: all 0.3s ease;
+}
+
+.save-btn {
+  background: linear-gradient(90deg, #4e54c8, #8f94fb);
+}
+
+.save-btn:hover {
+  background: linear-gradient(90deg, #3e43b2, #6e72ff);
+}
+
+.publish-btn {
+  background: linear-gradient(90deg, #8f94fb, #4e54c8);
+}
+
+.publish-btn:hover {
+  background: linear-gradient(90deg, #6c70d8, #3d4098);
+}
+
+.no-students {
+  color: #ff8c00;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 1rem;
+}
