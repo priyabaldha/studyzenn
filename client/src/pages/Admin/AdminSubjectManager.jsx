@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import AdminHeader from "../Admin/components/AdminHeader";
 import AdminSlidebar from "../Admin/components/AdminSlidebar";
-import "../../css/AdminSubjectManager.css"; // Import the external CSS
+import "../../css/AdminSubjectManager.css";
 
 const SEMESTER_OPTIONS = ["1st", "2nd", "3rd", "4th", "5th", "6th"];
 
@@ -93,41 +93,19 @@ export default function AdminSubjectManager() {
     <div>
       <AdminHeader />
       <AdminSlidebar />
-      <div
-        style={{
-          marginLeft: "260px", // ✅ Added spacing to push content right
-          padding: "40px 60px",
-          paddingTop: "120px",
-          maxWidth: "1100px",
-          backgroundColor: "#fff",
-        }}
-      >
-        <h2 style={{ marginBottom: "20px", fontWeight: "bold" }}>
-          Subject Management
-        </h2>
+      <div className="subject-manager-container">
+        <h2 className="page-title">Subject Management</h2>
 
-        {/* Add/Edit Form */}
-        <div
-          style={{
-            border: "1px solid #ccc",
-            padding: "20px",
-            borderRadius: "8px",
-            marginBottom: "30px",
-            boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
-          }}
-        >
-          <h3 style={{ marginBottom: "15px" }}>
-            {editingId ? "Edit Subject" : "Add New Subject"}
-          </h3>
+        <div className="form-card">
+          <h3>{editingId ? "Edit Subject" : "Add New Subject"}</h3>
           <form onSubmit={handleFormSubmit}>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+            <div className="form-row">
               <input
                 name="name"
                 placeholder="Name (e.g., Computer Science)"
                 value={form.name}
                 onChange={handleChange}
                 required
-                style={{ flex: "1", minWidth: "220px", padding: "8px" }}
               />
               <input
                 name="code"
@@ -135,14 +113,12 @@ export default function AdminSubjectManager() {
                 value={form.code}
                 onChange={handleChange}
                 required
-                style={{ flex: "1", minWidth: "120px", padding: "8px" }}
               />
               <select
                 name="semester"
                 value={form.semester}
                 onChange={handleChange}
                 required
-                style={{ flex: "1", minWidth: "120px", padding: "8px" }}
               >
                 <option value="">Select Semester</option>
                 {SEMESTER_OPTIONS.map((sem) => (
@@ -158,32 +134,16 @@ export default function AdminSubjectManager() {
               placeholder="Description"
               value={form.description}
               onChange={handleChange}
-              style={{
-                width: "100%",
-                marginTop: "10px",
-                padding: "10px",
-                borderRadius: "6px",
-              }}
             />
 
-            <div style={{ marginTop: "15px" }}>
-              <button
-                type="submit"
-                style={{
-                  backgroundColor: editingId ? "orange" : "green",
-                  color: "white",
-                  border: "none",
-                  padding: "10px 15px",
-                  borderRadius: "5px",
-                  marginRight: "10px",
-                  cursor: "pointer",
-                }}
-              >
+            <div className="button-row">
+              <button type="submit" className={editingId ? "btn-edit" : "btn-add"}>
                 {editingId ? "Update Subject" : "Add Subject"}
               </button>
               {editingId && (
                 <button
                   type="button"
+                  className="btn-cancel"
                   onClick={() => {
                     setEditingId(null);
                     setForm({
@@ -193,14 +153,6 @@ export default function AdminSubjectManager() {
                       description: "",
                     });
                   }}
-                  style={{
-                    backgroundColor: "#6c757d",
-                    color: "white",
-                    border: "none",
-                    padding: "10px 15px",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                  }}
                 >
                   Cancel
                 </button>
@@ -209,14 +161,12 @@ export default function AdminSubjectManager() {
           </form>
         </div>
 
-        {/* Subject List */}
-        <h3 style={{ marginBottom: "15px" }}>Available Subjects</h3>
-        <div style={{ marginBottom: "15px" }}>
-          Filter by Semester:{" "}
+        <h3>Available Subjects</h3>
+        <div className="filter-row">
+          Filter by Semester:
           <select
             value={filterSemester}
             onChange={(e) => setFilterSemester(e.target.value)}
-            style={{ padding: "5px 10px" }}
           >
             <option value="">View All</option>
             {SEMESTER_OPTIONS.map((sem) => (
@@ -227,18 +177,9 @@ export default function AdminSubjectManager() {
           </select>
         </div>
 
-        <table
-          border="1"
-          cellPadding="10"
-          width="100%"
-          style={{
-            borderCollapse: "collapse",
-            backgroundColor: "#fff",
-            boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
-          }}
-        >
+        <table className="subject-table">
           <thead>
-            <tr style={{ backgroundColor: "#f2f2f2" }}>
+            <tr>
               <th>Name</th>
               <th>Code</th>
               <th>Semester</th>
@@ -256,30 +197,13 @@ export default function AdminSubjectManager() {
                   <td>{subject.name}</td>
                   <td>{subject.code}</td>
                   <td>{subject.semester}</td>
-                  <td style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
-                    <button
-                      onClick={() => handleEdit(subject)}
-                      style={{
-                        backgroundColor: "#000",
-                        color: "white",
-                        padding: "5px 12px",
-                        border: "none",
-                        borderRadius: "5px",
-                        cursor: "pointer",
-                      }}
-                    >
+                  <td className="action-buttons">
+                    <button onClick={() => handleEdit(subject)} className="btn-black">
                       Edit
                     </button>
                     <button
                       onClick={() => handleDelete(subject._id)}
-                      style={{
-                        backgroundColor: "red",
-                        color: "white",
-                        padding: "5px 12px",
-                        border: "none",
-                        borderRadius: "5px",
-                        cursor: "pointer",
-                      }}
+                      className="btn-red"
                     >
                       Delete
                     </button>

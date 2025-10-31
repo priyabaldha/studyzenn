@@ -1,0 +1,106 @@
+/* === Wrapper: Full-page center layout === */
+.student-form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #dfe9f3, #ffffff);
+  min-height: 100vh;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  padding: 2rem;
+}
+
+/* === Container (Card) === */
+.student-form-container {
+  width: 100%;
+  max-width: 550px;
+  background: #fff;
+  border-radius: 18px;
+  padding: 2rem 2.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.student-form-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(127, 127, 213, 0.3);
+}
+
+/* === Title === */
+.student-form-title {
+  text-align: center;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #4e54c8;
+  margin-bottom: 1.8rem;
+  border-bottom: 3px solid #8f94fb;
+  display: inline-block;
+  padding-bottom: 6px;
+}
+
+/* === Form Grid === */
+.student-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  gap: 1rem;
+}
+
+.form-group input,
+.form-group select {
+  flex: 1;
+}
+
+/* === Input & Select Styles === */
+.student-form input,
+.student-form select {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background: #f8faff;
+  font-size: 0.95rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.student-form input:focus,
+.student-form select:focus {
+  border-color: #7f7fd5;
+  box-shadow: 0 0 8px rgba(127, 127, 213, 0.4);
+  outline: none;
+}
+
+/* === Button === */
+.student-form-btn {
+  width: 100%;
+  padding: 0.9rem;
+  margin-top: 0.5rem;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #4e54c8, #8f94fb);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.student-form-btn:hover {
+  background: linear-gradient(90deg, #3e43b2, #6e72ff);
+  transform: scale(1.04);
+  box-shadow: 0 8px 18px rgba(127, 127, 213, 0.35);
+}
+
+/* === Responsive === */
+@media (max-width: 600px) {
+  .form-group {
+    flex-direction: column;
+  }
+
+  .student-form-container {
+    padding: 1.5rem;
+  }
+}

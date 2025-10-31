@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import TeacherSlidebar from "../Teachers/components/TeacherSlidebar";
+import "../../css/TeacherProfile.css";
 
 const TeacherProfile = () => {
   const [profile, setProfile] = useState(null);
@@ -12,9 +14,12 @@ const TeacherProfile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/teachers/profile/me", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(
+          "http://localhost:5000/api/teachers/profile/me",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setProfile(res.data);
         setForm({
           qualification: res.data.qualification || "",
@@ -29,7 +34,8 @@ const TeacherProfile = () => {
   }, [token]);
 
   // Handle text input change
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
   // Handle image selection
   const handleImageChange = (e) => setImage(e.target.files[0]);
@@ -38,9 +44,13 @@ const TeacherProfile = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.put("http://localhost:5000/api/teachers/profile/update", form, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.put(
+        "http://localhost:5000/api/teachers/profile/update",
+        form,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       alert("Profile updated successfully!");
       setIsEditing(false);
       window.location.reload(); // Refresh to show updated info
@@ -57,9 +67,16 @@ const TeacherProfile = () => {
     try {
       const formData = new FormData();
       formData.append("teacher_image", image);
-      await axios.post("http://localhost:5000/api/teachers/profile/upload-image", formData, {
-        headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
-      });
+      await axios.post(
+        "http://localhost:5000/api/teachers/profile/upload-image",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       alert("Image uploaded successfully!");
       window.location.reload();
     } catch (err) {
@@ -71,137 +88,95 @@ const TeacherProfile = () => {
   if (!profile) return <p>Loading profile...</p>;
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.title}>Teacher Profile</h2>
+    <div>
+      <TeacherSlidebar />
 
-      {profile.teacher_image && (
-        <img
-          src={`http://localhost:5000/uploads/teachers/${profile.teacher_image}`}
-          alt="Profile"
-          style={styles.image}
-        />
-      )}
+      <div className="profile-container">
+        <h2 className="profile-title">Teacher Profile</h2>
 
-      <form onSubmit={handleUploadImage} style={styles.imageForm}>
-        <input type="file" onChange={handleImageChange} accept="image/*" />
-        <button type="submit" style={styles.button}>
-          Upload Image
-        </button>
-      </form>
+        {profile.teacher_image && (
+          <img
+            src={`http://localhost:5000/uploads/teachers/${profile.teacher_image}`}
+            alt="Profile"
+            className="profile-image"
+          />
+        )}
 
-      {!isEditing ? (
-        <div style={styles.infoBox}>
-          <p><strong>Name:</strong> {profile.name}</p>
-          <p><strong>Email:</strong> {profile.email}</p>
-          <p><strong>Qualification:</strong> {profile.qualification}</p>
-          <p><strong>Age:</strong> {profile.age}</p>
-          <p><strong>Gender:</strong> {profile.gender}</p>
-          <button onClick={() => setIsEditing(true)} style={styles.editBtn}>
-            Edit Profile
+        <form onSubmit={handleUploadImage} className="image-form">
+          <input type="file" onChange={handleImageChange} accept="image/*" />
+          <button type="submit" className="profile-btn upload">
+            Upload Image
           </button>
-        </div>
-      ) : (
-        <form onSubmit={handleUpdate} style={styles.form}>
-          <input
-            type="text"
-            name="qualification"
-            placeholder="Qualification"
-            value={form.qualification}
-            onChange={handleChange}
-            required
-            style={styles.input}
-          />
-          <input
-            type="number"
-            name="age"
-            placeholder="Age"
-            value={form.age}
-            onChange={handleChange}
-            style={styles.input}
-          />
-          <input
-            type="text"
-            name="gender"
-            placeholder="Gender"
-            value={form.gender}
-            onChange={handleChange}
-            style={styles.input}
-          />
-          <div>
-            <button type="submit" style={styles.saveBtn}>
-              Save Changes
-            </button>
+        </form>
+
+        {!isEditing ? (
+          <div className="profile-info">
+            <p>
+              <strong>Name:</strong> {profile.name}
+            </p>
+            <p>
+              <strong>Email:</strong> {profile.email}
+            </p>
+            <p>
+              <strong>Qualification:</strong> {profile.qualification}
+            </p>
+            <p>
+              <strong>Age:</strong> {profile.age}
+            </p>
+            <p>
+              <strong>Gender:</strong> {profile.gender}
+            </p>
             <button
-              type="button"
-              onClick={() => setIsEditing(false)}
-              style={styles.cancelBtn}
+              onClick={() => setIsEditing(true)}
+              className="profile-btn edit"
             >
-              Cancel
+              Edit Profile
             </button>
           </div>
-        </form>
-      )}
+        ) : (
+          <form onSubmit={handleUpdate} className="profile-form">
+            <input
+              type="text"
+              name="qualification"
+              placeholder="Qualification"
+              value={form.qualification}
+              onChange={handleChange}
+              required
+              className="profile-input"
+            />
+            <input
+              type="number"
+              name="age"
+              placeholder="Age"
+              value={form.age}
+              onChange={handleChange}
+              className="profile-input"
+            />
+            <input
+              type="text"
+              name="gender"
+              placeholder="Gender"
+              value={form.gender}
+              onChange={handleChange}
+              className="profile-input"
+            />
+            <div>
+              <button type="submit" className="profile-btn save">
+                Save Changes
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsEditing(false)}
+                className="profile-btn cancel"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        )}
+      </div>
     </div>
   );
-};
-
-// 🎨 Inline styles
-const styles = {
-  container: {
-    maxWidth: "600px",
-    margin: "2rem auto",
-    padding: "1.5rem",
-    border: "1px solid #ccc",
-    borderRadius: "12px",
-    background: "#f9f9f9",
-    textAlign: "center",
-  },
-  title: { marginBottom: "1rem", color: "#333" },
-  image: { width: "120px", borderRadius: "50%", marginBottom: "1rem" },
-  infoBox: { textAlign: "left", marginTop: "1rem" },
-  form: { display: "flex", flexDirection: "column", gap: "0.5rem" },
-  input: {
-    padding: "0.6rem",
-    borderRadius: "8px",
-    border: "1px solid #ccc",
-    fontSize: "1rem",
-  },
-  button: {
-    padding: "0.5rem 1rem",
-    backgroundColor: "#007bff",
-    color: "white",
-    border: "none",
-    borderRadius: "6px",
-    cursor: "pointer",
-    marginTop: "0.5rem",
-  },
-  editBtn: {
-    padding: "0.5rem 1rem",
-    backgroundColor: "#28a745",
-    color: "white",
-    border: "none",
-    borderRadius: "6px",
-    cursor: "pointer",
-    marginTop: "1rem",
-  },
-  saveBtn: {
-    padding: "0.5rem 1rem",
-    backgroundColor: "#28a745",
-    color: "white",
-    border: "none",
-    borderRadius: "6px",
-    cursor: "pointer",
-    marginRight: "0.5rem",
-  },
-  cancelBtn: {
-    padding: "0.5rem 1rem",
-    backgroundColor: "#dc3545",
-    color: "white",
-    border: "none",
-    borderRadius: "6px",
-    cursor: "pointer",
-  },
-  imageForm: { marginBottom: "1rem" },
 };
 
 export default TeacherProfile;

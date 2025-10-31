@@ -1,150 +1,199 @@
-/* === General Page Layout === */
+/* ===============================
+   Students Page (Unified Gradient Theme)
+   =============================== */
+
 .students-page-container {
-  background-color: #f9f9f9;
   min-height: 100vh;
+  background: linear-gradient(135deg, #ffffff 60%, #eef2ff);
   display: flex;
   flex-direction: column;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+  animation: fadeIn 0.6s ease-in-out;
 }
 
+/* ===== Content Wrapper ===== */
 .students-content {
   margin-left: 260px;
   padding-top: 120px;
-  padding-bottom: 50px;
+  padding-bottom: 60px;
+  width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
-/* === Card Container === */
+/* ===== Card Container ===== */
 .students-card {
   width: 100%;
   max-width: 1300px;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.08);
-  padding: 30px 40px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 40px 50px;
+  box-shadow: 0 8px 28px rgba(127, 127, 213, 0.2);
   text-align: center;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease;
 }
 
+.students-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 32px rgba(127, 127, 213, 0.3);
+}
+
+/* ===== Title ===== */
 .students-card h2 {
   font-size: 2rem;
   font-weight: 700;
-  text-align: center;
-  color: #111;
-  border-bottom: 3px solid #000;
+  color: #4e54c8;
+  border-bottom: 3px solid #8f94fb;
   display: inline-block;
-  margin-bottom: 30px;
-  padding-bottom: 4px;
+  margin-bottom: 35px;
+  padding-bottom: 6px;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
 }
 
-/* === Add Student Button === */
+.students-card h2:hover {
+  color: #3e43b2;
+  transform: scale(1.03);
+}
+
+/* ===== Add Student Button ===== */
 .add-student-btn {
-  background-color: #000;
-  color: white;
-  padding: 12px 28px;
+  background: linear-gradient(90deg, #4e54c8, #8f94fb);
+  color: #fff;
+  padding: 12px 30px;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  margin-bottom: 35px; /* ✅ Added proper spacing between button and table */
+  box-shadow: 0 6px 16px rgba(127, 127, 213, 0.3);
+  margin-bottom: 35px;
 }
 
 .add-student-btn:hover {
-  background-color: #333;
+  background: linear-gradient(90deg, #3e43b2, #6e72ff);
   transform: scale(1.05);
+  box-shadow: 0 8px 22px rgba(127, 127, 213, 0.4);
 }
 
-/* === Table Styling === */
+/* ===== Table Container ===== */
 .table-container {
   width: 100%;
   overflow-x: auto;
-  border-radius: 10px;
+  border-radius: 16px;
   background: #fff;
+  box-shadow: 0 6px 20px rgba(127, 127, 213, 0.15);
+  transition: all 0.3s ease;
 }
 
+.table-container:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(127, 127, 213, 0.25);
+}
+
+/* ===== Table Styling ===== */
 .students-table {
   width: 100%;
   border-collapse: collapse;
   font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  text-align: center;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .students-table thead {
-  background-color: #000;
+  background: linear-gradient(90deg, #4e54c8, #8f94fb);
   color: #fff;
   font-size: 16px;
-  letter-spacing: 0.5px;
-  border-radius: 10px 10px 0 0;
 }
 
 .students-table th,
 .students-table td {
   padding: 14px;
-  text-align: center;
+  border-bottom: 1px solid #e6e6fa;
+  transition: all 0.3s ease;
 }
 
-.students-table tbody tr {
-  transition: all 0.3s ease;
-  border-bottom: 1px solid #eee;
+.students-table tbody tr:nth-child(even) {
+  background-color: #f8faff;
 }
 
 .students-table tbody tr:hover {
-  background-color: #f7f7f7;
+  background-color: #eef2ff;
+  transform: scale(1.01);
+  box-shadow: 0 0 10px rgba(127, 127, 213, 0.2);
 }
 
 .students-table img {
-  width: 50px;
-  height: 50px;
+  width: 55px;
+  height: 55px;
   object-fit: cover;
   border-radius: 50%;
-  border: 2px solid #000;
+  border: 2px solid #4e54c8;
+  transition: all 0.3s ease;
 }
 
-/* === Action Buttons (Edit + Delete) === */
+.students-table img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 8px rgba(127, 127, 213, 0.3);
+}
+
+/* ===== Action Buttons ===== */
 .students-table td:last-child {
   display: flex;
   justify-content: center;
-  gap: 10px; /* ✅ Equal spacing between buttons */
+  gap: 10px;
 }
 
 .action-btn {
-  padding: 6px 14px;
+  padding: 7px 16px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   font-weight: 600;
-  cursor: pointer;
   color: #fff;
-  transition: 0.3s ease;
+  cursor: pointer;
+  transition: all 0.3s ease;
   font-size: 0.9rem;
 }
 
+/* Edit Button */
 .edit-btn {
-  background-color: #000;
+  background: linear-gradient(90deg, #43cea2, #185a9d);
+  box-shadow: 0 3px 10px rgba(67, 206, 162, 0.25);
 }
-
 .edit-btn:hover {
-  background-color: #333;
+  background: linear-gradient(90deg, #2c7b87, #144c87);
   transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(67, 206, 162, 0.35);
 }
 
+/* Delete Button */
 .delete-btn {
-  background-color: #e60000;
+  background: linear-gradient(90deg, #ff5f6d, #ffc371);
+  box-shadow: 0 3px 10px rgba(255, 95, 109, 0.25);
 }
-
 .delete-btn:hover {
-  background-color: #c70000;
+  background: linear-gradient(90deg, #f44b5d, #ffae42);
   transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(255, 95, 109, 0.35);
 }
 
-/* === Edit Form Styling === */
+/* ===== Edit Form Section ===== */
 .edit-form-container {
   margin-top: 40px;
-  background-color: #fafafa;
+  background: #fff;
   padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(127, 127, 213, 0.2);
+  transition: all 0.3s ease;
+}
+
+.edit-form-container:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(127, 127, 213, 0.3);
 }
 
 .edit-form {
@@ -155,52 +204,57 @@
 }
 
 .edit-input {
-  padding: 10px;
+  padding: 10px 12px;
   border-radius: 8px;
   border: 1px solid #ccc;
   width: 220px;
-  transition: 0.3s ease;
+  transition: all 0.3s ease;
+  background: #f8faff;
+  font-family: "Poppins", sans-serif;
 }
 
 .edit-input:focus {
-  border-color: #000;
+  border-color: #4e54c8;
+  box-shadow: 0 0 6px rgba(127, 127, 213, 0.4);
   outline: none;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
-.save-btn,
-.cancel-btn {
-  padding: 10px 18px;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  color: #fff;
-}
-
+/* ===== Save & Cancel Buttons ===== */
 .save-btn {
-  background-color: #28a745;
+  background: linear-gradient(90deg, #43cea2, #185a9d);
 }
-
 .save-btn:hover {
-  background-color: #218838;
+  background: linear-gradient(90deg, #2c7b87, #144c87);
   transform: scale(1.05);
 }
 
 .cancel-btn {
-  background-color: #6c757d;
+  background: linear-gradient(90deg, #ff5f6d, #ffc371);
 }
-
 .cancel-btn:hover {
-  background-color: #5a6268;
+  background: linear-gradient(90deg, #f44b5d, #ffae42);
   transform: scale(1.05);
 }
 
-/* === No Students Text === */
+/* ===== Empty State ===== */
 .no-students {
   text-align: center;
-  padding: 20px;
+  padding: 25px;
   font-style: italic;
-  color: #888;
+  color: #777;
+  background: #f9f9ff;
+  border-radius: 12px;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.05);
+}
+
+/* ===== Animation ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

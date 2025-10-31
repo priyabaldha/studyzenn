@@ -1,0 +1,215 @@
+/* === Page Layout === */
+
+.teacher-view-container {
+
+  display: flex;
+
+  width: 100%;
+
+}
+
+
+
+.teacher-view-main {
+
+  flex-grow: 1;
+
+  min-height: 100vh;
+
+  background: linear-gradient(135deg, #ffffff 60%, #eef2ff);
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 60px 0;
+
+}
+
+
+
+/* === Card === */
+
+.teacher-view-card {
+
+  width: 100%;
+
+  max-width: 1100px;
+
+  background: linear-gradient(135deg, #ffffff 70%, #f3f4ff);
+
+  border-radius: 20px;
+
+  box-shadow: 0 10px 30px rgba(127, 127, 213, 0.2);
+
+  padding: 40px 35px;
+
+  text-align: center;
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+
+
+.teacher-view-card:hover {
+
+  transform: translate(-6px);
+
+  box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+
+}
+
+
+
+/* === Title === */
+
+.teacher-view-title {
+
+  font-weight: 700;
+
+  font-size: 32px;
+
+  color: #3b3b98;
+
+  margin-bottom: 20px;
+
+  border-bottom: 4px solid #7f7fd5;
+
+  display: inline-block;
+
+  padding-bottom: 6px;
+
+  letter-spacing: 0.5px;
+
+}
+
+
+
+/* === Table === */
+
+.teacher-view-table-container {
+
+  overflow-x: auto;
+
+  display: flex;
+
+  justify-content: center;
+
+}
+
+
+
+.teacher-view-table {
+
+  width: 100%;
+
+  border-collapse: collapse;
+
+  font-family: "Poppins", sans-serif;
+
+  border-radius: 12px;
+
+  overflow: hidden;
+
+  max-width: 1000px;
+
+  box-shadow: 0 0 10px rgba(127, 127, 213, 0.15);
+
+}
+
+
+
+/* Table Header */
+
+.teacher-view-table thead tr {
+
+  background: linear-gradient(90deg, #4e54c8, #8f94fb);
+
+  color: #fff;
+
+  font-size: 15px;
+
+}
+
+
+
+.teacher-view-table th {
+
+  padding: 14px;
+
+  text-align: center;
+
+}
+
+
+
+/* Table Rows */
+
+.teacher-view-table td {
+
+  padding: 12px;
+
+  text-align: center;
+
+  color: #333;
+
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+}
+
+
+
+.teacher-view-table tbody tr {
+
+  background-color: #ffffff;
+
+  border-bottom: 1px solid #ddd;
+
+}
+
+
+
+.teacher-view-table tbody tr:hover {
+
+  background-color: #f0f1ff;
+
+}
+
+
+
+/* === Empty Message === */
+
+.teacher-view-empty {
+
+  text-align: center;
+
+  padding: 20px;
+
+  font-style: italic;
+
+  color: #555;
+
+}
+
+
+
+/* === Student Image === */
+
+.teacher-view-image {
+
+  width: 45px;
+
+  height: 45px;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+
+  border: 3px solid #7f7fd5;
+
+  box-shadow: 0 0 10px rgba(127, 127, 213, 0.3);
+
+}

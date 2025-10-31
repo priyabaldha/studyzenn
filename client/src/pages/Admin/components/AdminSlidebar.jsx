@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// components/AdminSidebar.jsx
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AdminNavbar from "./AdminHeader";
 import {
@@ -10,15 +11,17 @@ import {
   Bell,
   CheckSquare,
   Edit3,
-  Layers,
 } from "lucide-react";
 
 const AdminSidebar = () => {
   const navigate = useNavigate();
 
-  // Single Link Item
+  // Reusable Link Component
   const NavItem = ({ to, icon: Icon, label, isActive }) => (
-    <li className={`dropdown ${isActive ? "active" : ""}`}>
+    <li
+      className={`dropdown ${isActive ? "active" : ""}`}
+      style={{ listStyle: "none" }}
+    >
       <Link
         to={to}
         className="nav-link"
@@ -26,9 +29,14 @@ const AdminSidebar = () => {
           display: "flex",
           alignItems: "center",
           gap: "10px",
-          padding: "10px 15px",
+          padding: "12px 18px",
           textDecoration: "none",
+          color: isActive ? "#007bff" : "#333",
+          fontWeight: isActive ? "600" : "400",
+          transition: "background 0.3s ease, color 0.3s ease",
         }}
+        onMouseEnter={(e) => (e.currentTarget.style.background = "#f2f2f2")}
+        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
       >
         <Icon size={18} />
         <span>{label}</span>
@@ -55,27 +63,54 @@ const AdminSidebar = () => {
         }}
       >
         <aside id="sidebar-wrapper" style={{ height: "100%" }}>
+          {/* ---- LOGO AREA ---- */}
           <div
             className="sidebar-brand"
             style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-start",
               padding: "15px",
-              textAlign: "center",
               borderBottom: "1px solid #ddd",
+              cursor: "pointer",
             }}
+            onClick={() => navigate("/dashboard/admin")}
           >
-            <a href="#" onClick={() => navigate("/teacher")}>
-              <img
-                alt="logo"
-                src="/assets/img/logo.png"
-                className="header-logo"
-                style={{ height: "40px", marginBottom: "5px" }}
-              />
-              <div style={{ fontWeight: "bold", fontSize: "18px" }}>Admin</div>
-            </a>
+            <img
+              alt="logo"
+              src="/assets/img/logo.png"
+              className="header-logo"
+              style={{
+                width: "35px",
+                height: "35px",
+                marginRight: "10px",
+              }}
+            />
+            <span
+              className="logo-name"
+              style={{
+                fontWeight: "bold",
+                fontSize: "18px",
+                letterSpacing: "1px",
+                color: "#000",
+              }}
+            >
+              ADMIN
+            </span>
           </div>
 
-          <ul className="sidebar-menu" style={{ listStyle: "none", padding: 0 }}>
-            <li className="menu-header" style={{ padding: "10px 15px", color: "#666" }}>
+          {/* ---- MENU ---- */}
+          <ul className="sidebar-menu" style={{ padding: 0, marginTop: "10px" }}>
+            <li
+              className="menu-header"
+              style={{
+                padding: "10px 18px",
+                color: "#666",
+                fontWeight: "bold",
+                textTransform: "uppercase",
+                fontSize: "13px",
+              }}
+            >
               Main
             </li>
 
@@ -97,19 +132,31 @@ const AdminSidebar = () => {
             <NavItem to="/teachers" icon={Users} label="Teachers" />
 
             {/* Schedule */}
-            <NavItem to="/admin/schedule-exam" icon={CalendarDays} label="Schedule" />
+            <NavItem
+              to="/admin/schedule-exam"
+              icon={CalendarDays}
+              label="Schedule Exam"
+            />
 
             {/* Subjects */}
             <NavItem to="/admin/subjects" icon={BookOpen} label="Subjects" />
 
             {/* Attendance */}
-            <NavItem to="/admin/attendance/report" icon={CheckSquare} label="Attendance" />
+            <NavItem
+              to="/admin/attendance/report"
+              icon={CheckSquare}
+              label="Attendance"
+            />
 
             {/* Assignments */}
-            <NavItem to="/admin/assignment/status" icon={Edit3} label="Assignments" />
+            <NavItem
+              to="/admin/assignment/status"
+              icon={Edit3}
+              label="Assignments"
+            />
 
             {/* Notice */}
-            <NavItem to="/messages" icon={Bell} label="Notice" />
+            <NavItem to="/admin/notice" icon={Bell} label="Notice Board" />
           </ul>
         </aside>
       </div>
