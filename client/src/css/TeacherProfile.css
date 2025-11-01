@@ -132,6 +132,11 @@
   font-size: 1rem;
   background: #fafbff;
   transition: all 0.3s ease;
+  color: #000; /* ✅ Make input text clearly visible */
+}
+
+.profile-input::placeholder {
+  color: #555; /* ✅ Make placeholder readable too */
 }
 
 .profile-input:focus {

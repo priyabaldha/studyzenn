@@ -1,106 +1,60 @@
-import React from "react";
-
-const Footer = () => {
-  return (
-    <footer className="footer-area bg-gray-900 text-gray-300 py-12">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-          {/* Top Products */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4 text-white">Top Products</h4>
-            <ul className="space-y-2">
-              <li><a href="#" className="hover:text-white">Managed Website</a></li>
-              <li><a href="#" className="hover:text-white">Manage Reputation</a></li>
-              <li><a href="#" className="hover:text-white">Power Tools</a></li>
-              <li><a href="#" className="hover:text-white">Marketing Service</a></li>
-            </ul>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4 text-white">Quick Links</h4>
-            <ul className="space-y-2">
-              <li><a href="#" className="hover:text-white">Jobs</a></li>
-              <li><a href="#" className="hover:text-white">Brand Assets</a></li>
-              <li><a href="#" className="hover:text-white">Investor Relations</a></li>
-              <li><a href="#" className="hover:text-white">Terms of Service</a></li>
-            </ul>
-          </div>
-
-          {/* Features */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4 text-white">Features</h4>
-            <ul className="space-y-2">
-              <li><a href="#" className="hover:text-white">Jobs</a></li>
-              <li><a href="#" className="hover:text-white">Brand Assets</a></li>
-              <li><a href="#" className="hover:text-white">Investor Relations</a></li>
-              <li><a href="#" className="hover:text-white">Terms of Service</a></li>
-            </ul>
-          </div>
-
-          {/* Resources */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4 text-white">Resources</h4>
-            <ul className="space-y-2">
-              <li><a href="#" className="hover:text-white">Guides</a></li>
-              <li><a href="#" className="hover:text-white">Research</a></li>
-              <li><a href="#" className="hover:text-white">Experts</a></li>
-              <li><a href="#" className="hover:text-white">Agencies</a></li>
-            </ul>
-          </div>
-
-          {/* Newsletter */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4 text-white">Newsletter</h4>
-            <p className="mb-4">You can trust us. We only send promo offers.</p>
-            <form
-              target="_blank"
-              action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-              method="get"
-              className="flex flex-col sm:flex-row gap-2"
-            >
-              <input
-                type="email"
-                name="EMAIL"
-                placeholder="Your Email Address"
-                required
-                className="w-full px-3 py-2 rounded-md text-gray-900 focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md uppercase"
-              >
-                Subscribe
-              </button>
-            </form>
-          </div>
-        </div>
-
-        {/* Footer Bottom */}
-        <div className="border-t border-gray-700 mt-10 pt-6 flex flex-col md:flex-row items-center justify-between">
-          <p className="text-sm text-gray-400 text-center md:text-left">
-            Copyright &copy; {new Date().getFullYear()} All rights reserved | This template is
-            made with <i className="fa fa-heart-o text-red-500"></i> by{" "}
-            <a
-              href="https://colorlib.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-400 hover:underline"
-            >
-              Colorlib
-            </a>
-          </p>
-
-          <div className="flex space-x-4 mt-4 md:mt-0">
-            <a href="#" className="hover:text-white"><i className="fa fa-facebook"></i></a>
-            <a href="#" className="hover:text-white"><i className="fa fa-twitter"></i></a>
-            <a href="#" className="hover:text-white"><i className="fa fa-dribbble"></i></a>
-            <a href="#" className="hover:text-white"><i className="fa fa-behance"></i></a>
-          </div>
-        </div>
+{/* ================ Start Footer Area ================= */}
+<footer className="footer-area section-gap">
+  <div className="container">
+    <div className="row">
+      <div className="col-lg-3 col-md-6 single-footer-widget">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Dashboard</a></li>
+          <li><a href="#">Support</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
       </div>
-    </footer>
-  );
-};
 
-export default Footer;
+      <div className="col-lg-3 col-md-6 single-footer-widget">
+        <h4>Features</h4>
+        <ul>
+          <li><a href="#">Assignments</a></li>
+          <li><a href="#">Grades</a></li>
+          <li><a href="#">Attendance</a></li>
+          <li><a href="#">Reports</a></li>
+        </ul>
+      </div>
+
+      <div className="col-lg-3 col-md-6 single-footer-widget">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">User Guide</a></li>
+          <li><a href="#">Teacher Portal</a></li>
+          <li><a href="#">Student Guide</a></li>
+        </ul>
+      </div>
+
+      <div className="col-lg-3 col-md-6 single-footer-widget">
+        <h4>Stay Updated</h4>
+        <p>Get StudyZen news and updates.</p>
+        <form className="d-flex align-items-center">
+          <input
+            className="form-control me-2"
+            type="email"
+            placeholder="Your Email"
+            required
+            style={{ flex: 1, minWidth: "0" }}
+          />
+          <button className="click-btn btn btn-default text-uppercase" type="submit">
+            SUBSCRIBE
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div className="footer-bottom row align-items-center mt-4">
+      <p className="footer-text m-0 col-lg-12 text-center">
+        © {new Date().getFullYear()} StudyZen | Empowering education with ❤️ by the StudyZen Team.
+      </p>
+    </div>
+  </div>
+</footer>
+{/* ================ End Footer Area ================= */}

@@ -1,118 +1,207 @@
-/* AdminAssignmentStatus.css */
+/* === Admin Assignment Status (Refined with Unified Modern Theme) === */
 
-/* Main Container */
+/* === Page Container === */
 .assignment-container {
   margin-left: 260px;
   padding: 100px 60px;
+  background: linear-gradient(135deg, #ffffff 60%, #eef2ff);
   min-height: 100vh;
-  background-color: #f8f9fa; /* Slight gray to match dashboard */
-  font-family: "Poppins", sans-serif;
-  color: #222; /* ✅ Dark text for visibility */
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeIn 0.6s ease-in-out;
 }
 
-/* Page Title */
+/* === Main Title === */
 .assignment-title {
-  font-size: 28px;
   font-weight: 700;
-  color: #111; /* Dark text */
+  font-size: 2.6rem;
+  color: #3b3b98;
   text-align: center;
-  border-bottom: 3px solid #111;
-  display: inline-block;
-  padding-bottom: 6px;
-  margin: 0 auto 30px;
+  border-bottom: 3px solid #7f7fd5;
+  padding-bottom: 8px;
+  margin-bottom: 50px;
+  letter-spacing: 1px;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
-/* Filter Section */
+.assignment-title:hover {
+  color: #3434b0;
+  transform: scale(1.03);
+}
+
+/* === Filter Section === */
 .assignment-filter {
   display: flex;
+  flex-wrap: wrap;
   gap: 15px;
   justify-content: center;
   align-items: center;
   margin-bottom: 25px;
 }
 
-/* Dropdown */
 .assignment-filter select {
   padding: 10px 14px;
-  border: 1px solid #bbb;
-  border-radius: 6px;
-  font-size: 15px;
-  background: #fff;
-  color: #222;
-  width: 280px;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #f8faff;
+  color: #000;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.assignment-filter select:hover {
-  border-color: #111;
+.assignment-filter select:focus {
+  border-color: #7f7fd5;
+  box-shadow: 0 0 6px rgba(127, 127, 213, 0.4);
+  outline: none;
 }
 
-/* Buttons */
+/* === View Button === */
 .btn-view {
-  padding: 10px 16px;
+  background: linear-gradient(90deg, #4e54c8, #8f94fb);
+  color: white;
   border: none;
-  border-radius: 6px;
+  padding: 12px 24px;
+  border-radius: 10px;
   cursor: pointer;
   font-weight: 600;
-  transition: 0.3s ease;
-  background-color: #111;
-  color: #fff;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(127, 127, 213, 0.2);
 }
 
 .btn-view:hover {
-  background-color: #333;
-  transform: translateY(-1px);
+  background: linear-gradient(90deg, #3e43b2, #6e72ff);
+  transform: scale(1.05);
+  box-shadow: 0 5px 14px rgba(127, 127, 213, 0.3);
 }
 
-/* Messages */
-.assignment-message {
+/* === White Card for Assignment Report === */
+.assignment-box {
+  width: 100%;
+  max-width: 1100px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(127, 127, 213, 0.25);
+  padding: 40px 50px;
+  margin-top: 40px;
+  transition: all 0.3s ease;
   text-align: center;
-  font-size: 16px;
-  color: #444;
-  margin-bottom: 20px;
+}
+
+.assignment-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(127, 127, 213, 0.35);
+}
+
+/* === Message Section === */
+.assignment-message {
+  margin: 15px 0 25px;
+  font-size: 1rem;
+  color: #555;
 }
 
 .assignment-message.success {
-  color: green;
+  color: #2d8a2d;
   font-weight: 600;
 }
 
-/* Subtitle */
+/* === Subtitle (Optional) === */
 .assignment-subtitle {
-  font-size: 18px;
+  font-size: 1.3rem;
   font-weight: 600;
-  margin-top: 25px;
-  text-align: center;
-  color: #222;
+  color: #4e54c8;
+  border-bottom: 2px solid #8f94fb;
+  display: inline-block;
+  padding-bottom: 5px;
+  margin-bottom: 25px;
 }
 
-/* Table */
+/* === Assignment Table === */
 .assignment-table {
-  width: 90%;
-  margin: 30px auto;
+  width: 100%;
   border-collapse: collapse;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  background-color: #fff;
-  text-align: center;
-  border-radius: 10px;
+  margin-top: 20px;
+  border-radius: 12px;
   overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
 .assignment-table th {
-  background-color: #111;
-  color: #fff;
+  background: linear-gradient(90deg, #4e54c8, #8f94fb);
+  color: white;
   padding: 14px;
-  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
 }
 
 .assignment-table td {
   padding: 12px;
   border-bottom: 1px solid #eee;
-  color: #222;
+  text-align: center;
+  color: #333;
+}
+
+.assignment-table tr:nth-child(even) {
+  background-color: #f9f9ff;
 }
 
 .assignment-table tr:hover {
-  background-color: #f4f4f4;
+  background-color: #eef2ff;
+}
+
+/* === Download / Action Buttons === */
+.btn-download {
+  background: #29c46a;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+.btn-download:hover {
+  background: #22aa5c;
+  transform: scale(1.05);
+}
+
+/* === Animation === */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+  .assignment-container {
+    padding: 80px 20px;
+  }
+
+  .assignment-title {
+    font-size: 2rem;
+  }
+
+  .assignment-box {
+    padding: 30px 20px;
+  }
+
+  .assignment-filter {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .assignment-table th,
+  .assignment-table td {
+    font-size: 0.9rem;
+  }
 }

@@ -1,30 +1,64 @@
+/* === Page Container === */
 .subject-manager-container {
   margin-left: 260px;
-  padding: 40px 60px;
-  padding-top: 120px;
-  max-width: 1100px;
-  background-color: #fff;
+  padding: 100px 60px;
+  background: linear-gradient(135deg, #ffffff 60%, #eef2ff);
+  min-height: 100vh;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+/* === Main Title === */
 .page-title {
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #222;
+  font-weight: 700;
+  font-size: 2.6rem;
+  color: #3b3b98; /* Purple-blue color */
+  text-align: center;
+  border-bottom: 3px solid #7f7fd5;
+  padding-bottom: 8px;
+  margin-bottom: 50px; /* Space below title */
+  letter-spacing: 1px;
 }
 
+/* === Section Titles (Add New Subject & Available Subjects) === */
+.form-card h3,
+.subject-section h3 {
+  color: #3b3b98; /* Same color as main title */
+  font-weight: 700;
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: 25px;
+  letter-spacing: 0.5px;
+}
+
+/* === Form Card === */
 .form-card {
+  width: 100%;
+  max-width: 1100px;
   border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 30px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  background-color: #fafafa;
+  padding: 30px;
+  border-radius: 16px;
+  margin-bottom: 50px;
+  box-shadow: 0 8px 24px rgba(127, 127, 213, 0.25);
+  background: #fff;
+  transition: all 0.3s ease;
 }
 
+.form-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(127, 127, 213, 0.35);
+}
+
+/* === Form Rows === */
 .form-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 15px;
 }
 
 .form-row input,
@@ -32,84 +66,90 @@
 textarea {
   flex: 1;
   min-width: 200px;
-  padding: 10px;
-  border-radius: 6px;
+  padding: 12px;
+  border-radius: 10px;
   border: 1px solid #ccc;
+  background-color: #f8faff;
+  color: #000; /* ✅ Black text inside inputs */
+  transition: border-color 0.3s ease;
 }
 
 textarea {
   width: 100%;
-  margin-top: 10px;
   resize: vertical;
 }
 
-.button-row {
-  margin-top: 15px;
+.form-row input:focus,
+.form-row select:focus,
+textarea:focus {
+  border-color: #7f7fd5;
+  box-shadow: 0 0 6px rgba(127, 127, 213, 0.4);
+  outline: none;
 }
 
-.btn-add,
-.btn-edit,
-.btn-cancel {
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-right: 10px;
-  transition: 0.3s ease;
+/* === Buttons === */
+.button-row {
+  text-align: center;
+  margin-top: 20px;
 }
 
 .btn-add {
-  background-color: green;
-}
-
-.btn-edit {
-  background-color: orange;
-}
-
-.btn-cancel {
-  background-color: #6c757d;
+  background: linear-gradient(90deg, #4e54c8, #8f94fb);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
 .btn-add:hover {
-  background-color: #0f7a0f;
+  background: linear-gradient(90deg, #3e43b2, #6e72ff);
+  transform: scale(1.05);
 }
 
-.btn-edit:hover {
-  background-color: #d98300;
-}
-
-.btn-cancel:hover {
-  background-color: #555;
-}
-
+/* === Filter Section === */
 .filter-row {
-  margin-bottom: 15px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .filter-row select {
-  margin-left: 10px;
-  padding: 6px 10px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  color: #000;
+  background-color: #f8faff;
 }
 
+/* === Subject Table === */
 .subject-table {
   width: 100%;
+  max-width: 1100px;
   border-collapse: collapse;
-  background-color: #fff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-}
-
-.subject-table th,
-.subject-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: left;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  margin-bottom: 50px;
 }
 
 .subject-table th {
-  background-color: #f2f2f2;
+  background: linear-gradient(90deg, #4e54c8, #8f94fb);
+  color: white;
+  padding: 14px;
+  font-weight: 600;
 }
 
+.subject-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+  color: #333;
+}
+
+/* === Action Buttons === */
 .action-buttons {
   display: flex;
   justify-content: center;
@@ -119,19 +159,21 @@ textarea {
 .btn-black {
   background-color: #000;
   color: white;
-  padding: 5px 12px;
+  padding: 6px 14px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
 
 .btn-red {
-  background-color: red;
+  background-color: #ff5f6d;
   color: white;
-  padding: 5px 12px;
+  padding: 6px 14px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
 
 .btn-black:hover {
@@ -139,5 +181,5 @@ textarea {
 }
 
 .btn-red:hover {
-  background-color: #cc0000;
+  background-color: #e04646;
 }

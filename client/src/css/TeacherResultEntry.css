@@ -1,0 +1,227 @@
+/* === Result Page (Unified with Subject Management Theme) === */
+
+.result-container {
+  margin-left: 260px;
+  padding: 100px 60px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ffffff 60%, #eef2ff);
+  font-family: "Poppins", sans-serif;
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+/* === Title === */
+.result-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #4e54c8;
+  text-align: center;
+  border-bottom: 3px solid #8f94fb;
+  display: inline-block;
+  padding-bottom: 6px;
+  margin: 0 auto 40px;
+  transition: all 0.3s ease;
+}
+
+.result-title:hover {
+  color: #3e43b2;
+  transform: scale(1.03);
+}
+
+/* === Exam Selector === */
+.exam-selector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.exam-selector label {
+  font-weight: 600;
+  color: #4e54c8;
+  font-size: 1rem;
+}
+
+.exam-selector select {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  background-color: #f8faff;
+  color: #333;
+  width: 250px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.exam-selector select:focus {
+  border-color: #8f94fb;
+  box-shadow: 0 0 6px rgba(127, 127, 213, 0.4);
+}
+
+/* === Exam Details Box === */
+.exam-details {
+  background: #fff;
+  padding: 20px 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(127, 127, 213, 0.25);
+  border-left: 4px solid #7f7fd5;
+  width: 80%;
+  max-width: 900px;
+  margin-bottom: 30px;
+}
+
+.result-message {
+  font-weight: 600;
+  color: #4e54c8;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* === Table === */
+.result-table {
+  width: 90%;
+  margin: 0 auto 30px;
+  border-collapse: collapse;
+  box-shadow: 0 8px 28px rgba(127, 127, 213, 0.25);
+  background-color: #fff;
+  text-align: center;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.result-table:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px rgba(127, 127, 213, 0.3);
+}
+
+.result-table th {
+  background: linear-gradient(90deg, #4e54c8, #8f94fb);
+  color: #fff;
+  padding: 14px;
+  font-size: 15px;
+}
+
+.result-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  color: #333;
+  background-color: #fff;
+}
+
+.result-table tr:nth-child(even) {
+  background-color: #f8faff;
+}
+
+.result-table tr:hover {
+  background-color: #eef2ff;
+}
+
+/* === Input Fields === */
+.result-table input {
+  width: 70px;
+  text-align: center;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  padding: 6px;
+  transition: all 0.3s ease;
+  font-family: "Poppins", sans-serif;
+}
+
+.result-table input:focus {
+  border-color: #8f94fb;
+  box-shadow: 0 0 6px rgba(127, 127, 213, 0.4);
+  outline: none;
+}
+
+/* === Buttons === */
+.result-buttons {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 0 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(127, 127, 213, 0.2);
+}
+
+/* Save Button */
+.save-btn {
+  background: linear-gradient(90deg, #4e54c8, #8f94fb);
+}
+
+.save-btn:hover {
+  background: linear-gradient(90deg, #3e43b2, #6e72ff);
+  transform: scale(1.05);
+  box-shadow: 0 5px 14px rgba(127, 127, 213, 0.3);
+}
+
+/* Publish Button */
+.publish-btn {
+  background: linear-gradient(90deg, #8f94fb, #4e54c8);
+}
+
+.publish-btn:hover {
+  background: linear-gradient(90deg, #6c70d8, #3d4098);
+  transform: scale(1.05);
+  box-shadow: 0 5px 14px rgba(127, 127, 213, 0.3);
+}
+
+/* === No Students Message === */
+.no-students {
+  color: #ff8c00;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 1rem;
+  font-style: italic;
+}
+
+/* === Animation === */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+  .result-container {
+    padding: 80px 25px;
+  }
+
+  .exam-details {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .result-table {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .btn {
+    padding: 8px 14px;
+    font-size: 14px;
+  }
+
+  .exam-selector {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

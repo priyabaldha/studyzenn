@@ -3,43 +3,39 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import UserSendMessage from '../../components/UserSendMessage'; 
 import { jwtDecode } from 'jwt-decode';
+// import TeacherSlidebar from "../Teachers/components/TeacherSlidebar";
+import '../../css/UserMessageDashboard.css';
 
 export default function UserMessageDashboard() {
     const [inbox, setInbox] = useState([]);
     const [sent, setSent] = useState([]);
-    const [view, setView] = useState('inbox'); // 'inbox', 'sent', or 'single'
+    const [view, setView] = useState('inbox');
     const [selectedMessage, setSelectedMessage] = useState(null);
     const [loading, setLoading] = useState(true);
 
     const token = localStorage.getItem('token');
-    // State to hold the role reliably after token check
     const [currentUserRole, setCurrentUserRole] = useState(localStorage.getItem('role') || 'student'); 
-
 
     const fetchMessages = async () => {
         setLoading(true);
         try {
-            // 1. CONFIRM ROLE: Decode token to confirm user role
             let userRoleFromToken = currentUserRole;
             if (token) {
-                 try {
-                     const decoded = jwtDecode(token);
-                     userRoleFromToken = decoded.role;
-                     setCurrentUserRole(decoded.role); // Update state with confirmed role
-                 } catch (e) {
-                     // Token might be malformed or expired; rely on current state for now
-                     console.warn("JWT Decode failed, relying on stored role.", e);
-                 }
+                try {
+                    const decoded = jwtDecode(token);
+                    userRoleFromToken = decoded.role;
+                    setCurrentUserRole(decoded.role);
+                } catch (e) {
+                    console.warn("JWT Decode failed, relying on stored role.", e);
+                }
             }
-            
-            // 2. Fetch Inbox (hybrid)
+
             const inboxRes = await axios.get(
                 'http://localhost:5000/api/messages/inbox',
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             setInbox(inboxRes.data);
 
-            // 3. Fetch Sent messages (only if they can compose)
             if (userRoleFromToken !== 'student') {
                 const sentRes = await axios.get(
                     'http://localhost:5000/api/messages/sent',
@@ -58,7 +54,6 @@ export default function UserMessageDashboard() {
         fetchMessages();
     }, [token]);
 
-
     const handleViewMessage = async (msg) => {
         try {
             const res = await axios.get(
@@ -67,19 +62,16 @@ export default function UserMessageDashboard() {
             );
             setSelectedMessage(res.data);
             setView('single');
-            
-            if (view === 'inbox' && !msg.readStatus) {
-                fetchMessages();
-            }
+            if (view === 'inbox' && !msg.readStatus) fetchMessages();
         } catch (err) {
             console.error('Failed to fetch message details:', err);
         }
     };
 
     const renderMessageList = (messages, type) => (
-        <table border="1" cellPadding="10" width="100%">
+        <table className="message-table">
             <thead>
-                <tr style={{ backgroundColor: '#212529', color: 'white' }}>
+                <tr>
                     <th>{type === 'inbox' ? 'From' : 'To Target'}</th>
                     <th>Subject</th>
                     <th>Date</th>
@@ -87,10 +79,10 @@ export default function UserMessageDashboard() {
             </thead>
             <tbody>
                 {messages.length === 0 ? (
-                    <tr><td colSpan="3">No messages in {type}.</td></tr>
+                    <tr><td colSpan="3" className="empty-msg">No messages in {type}.</td></tr>
                 ) : (
                     messages.map(msg => {
-                        const correspondent = type === 'inbox' ? msg.senderId : msg; 
+                        const correspondent = type === 'inbox' ? msg.senderId : msg;
                         const isUnread = type === 'inbox' && !msg.readStatus;
 
                         const getTargetLabel = (m) => {
@@ -102,14 +94,9 @@ export default function UserMessageDashboard() {
 
                         return (
                             <tr 
-                                key={msg._id} 
+                                key={msg._id}
                                 onClick={() => handleViewMessage(msg)}
-                                style={{ 
-                                    cursor: 'pointer', 
-                                    fontWeight: isUnread ? 'bold' : 'normal', 
-                                    backgroundColor: isUnread ? '#e9ecef' : 'white', 
-                                    transition: 'background-color 0.2s'
-                                }}
+                                className={isUnread ? 'unread-row' : ''}
                             >
                                 <td>{type === 'inbox' ? `${correspondent.name} (${correspondent.role})` : getTargetLabel(msg)}</td>
                                 <td>{msg.subject}</td>
@@ -124,26 +111,20 @@ export default function UserMessageDashboard() {
 
     const renderSingleMessage = () => (
         selectedMessage && (
-            <div style={{ border: '1px solid #adb5bd', padding: '20px', marginTop: '20px', backgroundColor: '#f8f9fa' }}>
-                <button 
-                    onClick={() => setView(selectedMessage.senderId._id === selectedMessage.recipientId?._id ? 'sent' : 'inbox')} 
-                    style={{ backgroundColor: '#6c757d', color: 'white', border: 'none', padding: '8px 15px', cursor: 'pointer', marginBottom: '15px' }}
-                >
+            <div className="single-message">
+                <button className="back-btn" onClick={() => setView('inbox')}>
                     &larr; Back to List
                 </button>
                 <h3>Subject: {selectedMessage.subject}</h3>
-                
                 <p><strong>From:</strong> {selectedMessage.senderId.name} ({selectedMessage.senderId.role})</p>
-                
                 {selectedMessage.recipientId ? (
                     <p><strong>To:</strong> {selectedMessage.recipientId.name} ({selectedMessage.recipientId.role})</p>
                 ) : (
                     <p><strong>Target:</strong> {selectedMessage.targetRole ? selectedMessage.targetRole.toUpperCase() : `${selectedMessage.targetSemester} / ${selectedMessage.targetDivision}`}</p>
                 )}
-                
                 <p><strong>Date Sent:</strong> {new Date(selectedMessage.sentDate).toLocaleString()}</p>
-                <hr style={{ borderColor: '#adb5bd' }}/>
-                <p style={{ whiteSpace: 'pre-wrap' }}>{selectedMessage.body}</p>
+                <hr />
+                <p className="message-body">{selectedMessage.body}</p>
             </div>
         )
     );
@@ -151,19 +132,30 @@ export default function UserMessageDashboard() {
     const canCompose = currentUserRole !== 'student'; 
 
     return (
-        <div style={{ maxWidth: '1000px', margin: '2rem auto', padding: '20px' }}>
-            <h2>Messaging Dashboard</h2>
-            <div style={{ marginBottom: '20px', display: 'flex', gap: '10px' }}>
-                <button onClick={() => setView('inbox')} style={{ fontWeight: view === 'inbox' ? 'bold' : 'normal', backgroundColor: view === 'inbox' ? '#007bff' : '#f0f0f0', color: view === 'inbox' ? 'white' : 'black', border: '1px solid #007bff' }}>
+        <div className="teacher-upload-wrapper">
+        {/* ✅ Sidebar added */}
+        {/* <TeacherSlidebar /> */}
+        <div className="message-dashboard-container">
+            <h2 className="page-title">Messaging Dashboard</h2>
+            <div className="message-nav">
+                <button 
+                    onClick={() => setView('inbox')}
+                    className={`nav-btn ${view === 'inbox' ? 'active' : ''}`}
+                >
                     Inbox ({inbox.filter(m => !m.readStatus).length} Unread)
                 </button>
-                
                 {canCompose && (
                     <>
-                        <button onClick={() => setView('sent')} style={{ fontWeight: view === 'sent' ? 'bold' : 'normal', backgroundColor: view === 'sent' ? '#007bff' : '#f0f0f0', color: view === 'sent' ? 'white' : 'black', border: '1px solid #007bff' }}>
+                        <button 
+                            onClick={() => setView('sent')}
+                            className={`nav-btn ${view === 'sent' ? 'active' : ''}`}
+                        >
                             Sent
                         </button>
-                        <button onClick={() => setView('compose')} style={{ fontWeight: view === 'compose' ? 'bold' : 'normal', backgroundColor: '#28a745', color: 'white', border: '1px solid #28a745' }}>
+                        <button 
+                            onClick={() => setView('compose')}
+                            className="nav-btn compose-btn"
+                        >
                             Compose Message
                         </button>
                     </>
@@ -171,7 +163,7 @@ export default function UserMessageDashboard() {
             </div>
 
             {loading ? (
-                <p>Loading messages...</p>
+                <p className="loading">Loading messages...</p>
             ) : view === 'inbox' ? (
                 renderMessageList(inbox, 'inbox')
             ) : view === 'sent' ? (
@@ -181,6 +173,7 @@ export default function UserMessageDashboard() {
             ) : (
                 renderSingleMessage()
             )}
+        </div>
         </div>
     );
 }

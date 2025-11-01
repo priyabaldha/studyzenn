@@ -1,44 +1,27 @@
 // components/TeacherSlidebar.jsx
-import React, { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import TeacherHeader from "./TeacherHeader";
+import {
+  Home,
+  User,
+  Users,
+  Upload,
+  CheckSquare,
+  MessageCircle,
+  CalendarDays,
+  FileText,
+} from "lucide-react";
 
 const TeacherSlidebar = () => {
   const navigate = useNavigate();
-  const [collapsed, setCollapsed] = useState(false);
 
-  const toggleSidebar = () => setCollapsed(!collapsed);
-
-  const SidebarDropdown = ({ iconName, label, children, menuKey }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const toggleDropdown = (e) => {
-      e.preventDefault();
-      setIsOpen(!isOpen);
-    };
-
-    return (
-      <li className={`dropdown ${isOpen ? "active" : ""}`} key={menuKey}>
-        <a
-          href="#"
-          className="menu-toggle nav-link has-dropdown"
-          onClick={toggleDropdown}
-          style={{ display: "flex", alignItems: "center", gap: "10px" }}
-        >
-          <i data-feather={iconName} style={{ minWidth: "20px" }}></i>
-          {!collapsed && <span>{label}</span>}
-        </a>
-        <ul
-          className="dropdown-menu"
-          style={{ display: isOpen ? "block" : "none" }}
-        >
-          {children}
-        </ul>
-      </li>
-    );
-  };
-
-  const NavItem = ({ to, iconName, label, isActive }) => (
-    <li className={`dropdown ${isActive ? "active" : ""}`}>
+  // Reusable Link Component
+  const NavItem = ({ to, icon: Icon, label, isActive }) => (
+    <li
+      className={`dropdown ${isActive ? "active" : ""}`}
+      style={{ listStyle: "none" }}
+    >
       <Link
         to={to}
         className="nav-link"
@@ -46,14 +29,31 @@ const TeacherSlidebar = () => {
           display: "flex",
           alignItems: "center",
           gap: "10px",
-          transition: "background 0.3s",
+          padding: "12px 18px",
+          textDecoration: "none",
+          color: isActive ? "#4e54c8" : "#333",
+          fontWeight: isActive ? "600" : "400",
+          transition: "background 0.3s ease, color 0.3s ease",
         }}
+        onMouseEnter={(e) => (e.currentTarget.style.background = "#f2f2f2")}
+        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
       >
-        <i data-feather={iconName} style={{ minWidth: "20px" }}></i>
-        {!collapsed && <span>{label}</span>}
+        <Icon size={18} />
+        <span>{label}</span>
       </Link>
     </li>
   );
+
+  // Menu items
+  const menuItems = [
+    { to: "/dashboard/teacher", icon: Home, label: "Dashboard", isActive: true },
+    { to: "/teacher/profile", icon: User, label: "Profile" },
+    { to: "/teacher/students", icon: Users, label: "Students" },
+    { to: "/teacher/upload-assignment", icon: Upload, label: "Upload Assignment" },
+    { to: "/teacher/attendance", icon: CheckSquare, label: "Attendance" },
+    { to: "/teacher/schedule-exam", icon: CalendarDays, label: "Schedule Exam" },
+    { to: "/teacher/result-entry", icon: FileText, label: "Result Entry" },
+  ];
 
   return (
     <>
@@ -68,109 +68,66 @@ const TeacherSlidebar = () => {
           height: "100vh",
           overflowY: "auto",
           zIndex: 1030,
-          width: collapsed ? "80px" : "250px",
-          transition: "width 0.3s ease",
+          width: "250px",
           background: "#fff",
           borderRight: "1px solid #ddd",
         }}
       >
         <aside id="sidebar-wrapper" style={{ height: "100%" }}>
-          {/* Logo + Collapse Button */}
+          {/* ---- LOGO AREA ---- */}
           <div
             className="sidebar-brand"
             style={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "space-between",
+              justifyContent: "flex-start",
               padding: "15px",
               borderBottom: "1px solid #ddd",
+              cursor: "pointer",
             }}
+            onClick={() => navigate("/dashboard/teacher")}
           >
-            <div
-              onClick={() => navigate("/dashboard/teacher")}
+            <img
+              alt="logo"
+              src="/assets/img/logo.png"
+              className="header-logo"
               style={{
-                display: "flex",
-                alignItems: "center",
-                cursor: "pointer",
+                width: "35px",
+                height: "35px",
+                marginRight: "10px",
               }}
-            >
-              <img
-                alt="logo"
-                src="/assets/img/logo.png"
-                className="header-logo"
-                style={{
-                  width: "35px",
-                  height: "35px",
-                  marginRight: collapsed ? "0" : "10px",
-                  transition: "margin 0.3s ease",
-                }}
-              />
-              {!collapsed && (
-                <span
-                  className="logo-name"
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "18px",
-                    letterSpacing: "1px",
-                  }}
-                >
-                  TEACHER
-                </span>
-              )}
-            </div>
-
-            {/* Collapse Button */}
-            <button
-              onClick={toggleSidebar}
+            />
+            <span
+              className="logo-name"
               style={{
-                background: "transparent",
-                border: "none",
-                color: "#333",
+                fontWeight: "bold",
                 fontSize: "18px",
-                cursor: "pointer",
-                marginLeft: "10px",
+                letterSpacing: "1px",
+                color: "#4e54c8",
               }}
-              title={collapsed ? "Expand Sidebar" : "Collapse Sidebar"}
             >
-              {collapsed ? "»" : "«"}
-            </button>
+              TEACHER
+            </span>
           </div>
 
-          {/* Navigation */}
-          <ul className="sidebar-menu" style={{ padding: "10px" }}>
-            <li className="menu-header" style={{ fontWeight: "bold", color: "#666" }}>
+          {/* ---- MENU ---- */}
+          <ul className="sidebar-menu" style={{ padding: 0, marginTop: "10px" }}>
+            <li
+              className="menu-header"
+              style={{
+                padding: "10px 18px",
+                color: "#666",
+                fontWeight: "bold",
+                textTransform: "uppercase",
+                fontSize: "13px",
+              }}
+            >
               Main
             </li>
 
-            <NavItem
-              to="/dashboard/teacher"
-              iconName="home"
-              label="Dashboard"
-              isActive={true}
-            />
-            <NavItem to="/teacher/profile" iconName="user" label="Profile" />
-            <NavItem to="/teacher/students" iconName="users" label="Students" />
-            <NavItem
-              to="/teacher/upload-assignment"
-              iconName="upload"
-              label="Upload Assignment"
-            />
-            <NavItem
-              to="/teacher/attendance"
-              iconName="check-square"
-              label="Attendance"
-            />
-            <NavItem to="/messages" iconName="message-circle" label="Messages" />
-            <NavItem
-              to="/teacher/schedule-exam"
-              iconName="calendar"
-              label="Schedule Exam"
-            />
-            <NavItem
-              to="/teacher/result-entry"
-              iconName="file-text"
-              label="Result Entry"
-            />
+            {menuItems.map((item, index) => (
+              <NavItem key={index} {...item} />
+            ))}
           </ul>
         </aside>
       </div>

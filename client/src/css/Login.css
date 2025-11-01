@@ -1,110 +1,162 @@
-/* --- Global Body Styles --- */
-/* Set a light background for the whole page and use Flexbox to center the content */
+/* ================ FULL PAGE WRAPPER ================ */
+.login-fullpage-wrapper {
+  width: 100vw;
+  display: block;
+}
+
+/* =================================================== */
 body {
-    background-color: #f8f9fa; /* Very light grey background */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    font-family: Arial, sans-serif;
+  background-color: #ffffff;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
 }
 
-/* --- Login Form Wrapper Styling --- */
-/* This centers the form content */
+/* Center form under banner */
 .login-page-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: -30px;
+  padding-bottom: -10px;
 }
 
-.login-form-wrapper {
-    /* The form container itself, matching the clean look */
-    background-color: #ffffff;
-    padding: 40px 60px; /* More horizontal padding makes it look cleaner */
-    border-radius: 8px;
-    max-width: 450px;
-    width: 100%;
-    text-align: center;
-    /* Removed box-shadow to match the clean, focused look of the image */
+/* ============ Banner Section ============ */
+.banner-area {
+  width: 100%;
+  position: relative;
+  background-image: url('/img/banner-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 60px 0 160px 0;
+  overflow: hidden;
 }
 
-/* --- Form Title Styling --- */
+.banner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  height: 150px;
+}
+
+.banner-center {
+  text-align: center;
+  color: #fff;
+  margin-top: 0;
+}
+
+.banner-center h1 {
+  font-weight: 700;
+  font-size: 52px;
+  color: #fff;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.banner-center p {
+  font-size: 18px;
+  color: #fff;
+  opacity: 0.9;
+  margin-top: 12px;
+}
+
+/* Gradient background form */
+.gradient-form {
+  background: linear-gradient(135deg, #8A2BE2, #A64DFF);
+  color: #fff;
+  padding: 40px 50px;
+  border-radius: 12px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0px 8px 25px rgba(138, 43, 226, 0.3);
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.gradient-form:hover {
+  transform: translateY(-5px);
+}
+
+/* Title white and bold */
 .login-title {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 40px;
-    color: #343a40; /* Dark text color */
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #fff;
 }
 
-/* --- Form Group & Input Styling --- */
-.login-form .form-group {
-    margin-bottom: 20px;
-}
-
+/* Inputs with subtle transparency */
 .login-form input {
-    width: 100%;
-    padding: 15px;
-    border: 1px solid #dee2e6; /* Subtle border for the white background */
-    border-radius: 4px;
-    font-size: 16px;
-    color: #343a40;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
 }
 
 .login-form input::placeholder {
-    color: #adb5bd;
+  color: #e6dfff;
 }
 
-/* --- Forgot Password Link --- */
+.login-form input:focus {
+  outline: 2px solid #fff;
+}
+
+/* Forgot Password */
 .forgot-password-link {
-    text-align: left;
-    margin-bottom: 30px;
+  text-align: left;
+  margin-bottom: 25px;
 }
 
 .forgot-password-link .text-muted {
-    color: #6c757d; 
-    text-decoration: none;
-    font-size: 14px;
+  color: #ffffff !important;
+  opacity: 1 !important;
+  text-decoration: none;
+  font-size: 14px;
 }
 
 .forgot-password-link .text-muted:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
-/* --- Login Button Styling (Gradient) --- */
-.login-form .login-button {
-    width: 100%;
-    padding: 15px;
-    border: none;
-    border-radius: 4px;
-    font-size: 18px;
-    font-weight: 600;
-    color: #ffffff;
-    cursor: pointer;
-    /* The gradient matching the image: Deep Purple to Pink/Magenta */
-    background-image: linear-gradient(to right, #8A2BE2, #FF1493); 
-    transition: opacity 0.3s;
-    letter-spacing: 1px;
+/* Login Button */
+.login-button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #8A2BE2;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.login-form .login-button:hover {
-    opacity: 0.9;
+.login-button:hover {
+  background-color: #f0e6ff;
+  transform: scale(1.02);
 }
 
-/* --- Register Link Styling --- */
+/* Register link */
 .register-text {
-    margin-top: 30px;
-    font-size: 14px;
-    color: #6c757d;
+  margin-top: 25px;
+  font-size: 14px;
+  color: #fff;
 }
 
 .register-link {
-    color: #007bff; /* Bright blue for the link */
-    text-decoration: none;
-    font-weight: bold;
+  color: #00f5ff;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .register-link:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }

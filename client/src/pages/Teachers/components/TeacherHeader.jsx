@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import feather from "feather-icons";
+import { useNavigate } from "react-router-dom";
 
 const TeacherHeader = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     feather.replace();
@@ -16,7 +18,6 @@ const TeacherHeader = () => {
 
   // 🔍 Highlight matching text anywhere on the page
   useEffect(() => {
-    // 1️⃣ Remove old highlights
     const oldMarks = document.querySelectorAll(".highlight-search");
     oldMarks.forEach((mark) => {
       const parent = mark.parentNode;
@@ -28,19 +29,22 @@ const TeacherHeader = () => {
 
     if (!searchTerm.trim()) return;
 
-    // 2️⃣ Walk through text nodes and highlight matches
-    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    const walker = document.createTreeWalker(
+      document.body,
+      NodeFilter.SHOW_TEXT,
+      null,
+      false
+    );
     const regex = new RegExp(searchTerm, "gi");
 
     let node;
     while ((node = walker.nextNode())) {
       const text = node.textContent;
       if (regex.test(text)) {
-        // Replace matching parts with highlighted HTML
         const newHTML = text.replace(
           regex,
           (match) =>
-            <span class="highlight-search" style="background:yellow;font-weight:bold">${match}</span>
+            `<span class="highlight-search" style="background:yellow;font-weight:bold">${match}</span>`
         );
 
         const temp = document.createElement("span");
@@ -95,7 +99,11 @@ const TeacherHeader = () => {
                   onChange={handleSearchChange}
                   style={{ width: "200px", border: "1px solid #ddd" }}
                 />
-                <button className="btn" type="submit" style={{ color: "#34395e" }}>
+                <button
+                  className="btn"
+                  type="submit"
+                  style={{ color: "#34395e" }}
+                >
                   <i className="fas fa-search" />
                 </button>
               </div>
@@ -106,7 +114,9 @@ const TeacherHeader = () => {
 
       <ul className="navbar-nav navbar-right align-items-center">
         <li className="nav-item mr-3">
+          {/* 🔗 Added navigate to /messages */}
           <button
+            onClick={() => navigate("/messages")}
             className="nav-link nav-link-lg btn btn-link"
             style={{ color: "#34395e", position: "relative" }}
           >
@@ -129,13 +139,21 @@ const TeacherHeader = () => {
           </button>
         </li>
         <li className="nav-item mr-3">
-          <button className="nav-link nav-link-lg btn btn-link" style={{ color: "#34395e" }}>
+          <button
+            className="nav-link nav-link-lg btn btn-link"
+            style={{ color: "#34395e" }}
+          >
             <i data-feather="bell" />
           </button>
         </li>
         <li className="nav-item dropdown">
-          <button className="btn btn-link d-flex align-items-center" style={{ color: "#34395e" }}>
-            <span className="ml-2 d-sm-none d-lg-inline-block">Welcome, Admin</span>
+          <button
+            className="btn btn-link d-flex align-items-center"
+            style={{ color: "#34395e" }}
+          >
+            <span className="ml-2 d-sm-none d-lg-inline-block">
+              Welcome, Teacher
+            </span>
           </button>
         </li>
         <li className="nav-item ml-3">

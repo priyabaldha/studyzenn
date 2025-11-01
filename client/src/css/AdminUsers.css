@@ -65,6 +65,7 @@
   overflow: hidden;
 }
 
+/* Changed header color here */
 .admin-users-table thead tr {
   background: linear-gradient(90deg, #4e54c8, #8f94fb);
   color: #fff;

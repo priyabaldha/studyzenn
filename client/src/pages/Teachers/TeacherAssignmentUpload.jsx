@@ -96,7 +96,7 @@ export default function TeacherAssignmentUpload() {
 
       <div className="upload-container">
         <div className="upload-card">
-          <h2 className="upload-title">📤 Upload Assignment</h2>
+          <h2 className="upload-title">Upload Assignment</h2>
           {message && <p className="message">{message}</p>}
 
           <form onSubmit={handleSubmit} className="upload-form">

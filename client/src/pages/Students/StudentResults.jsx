@@ -62,9 +62,9 @@ export default function StudentResults() {
         <header className="default-header">
           <nav className="navbar navbar-expand-lg navbar-light">
             <div className="container">
-              <Link className="navbar-brand" to="/">
-                <img src="/img/logo.png" alt="Logo" />
-              </Link>
+              <h1 className="navbar-brand mb-0" style={{ color: "#ffffff", fontWeight: "700" }}>
+                STUDYZEN
+              </h1>
 
               <button
                 className="navbar-toggler"
@@ -202,7 +202,7 @@ export default function StudentResults() {
             <div className="link-nav">
               <span className="box" style={{ color: "#fff" }}>
                 <Link
-                  to="/"
+                  to="/dashboard/student"
                   style={{
                     color: "#fff",
                     textDecoration: "none",
@@ -234,6 +234,7 @@ export default function StudentResults() {
           width: "100vw",
           backgroundColor: "white",
           flexDirection: "column",
+          paddingBottom: "50px", 
         }}
       >
         <div
@@ -305,89 +306,66 @@ export default function StudentResults() {
         </div>
       </div>
 
-      {/* ================ Footer ================= */}
+      {/* ================ Start Footer Area ================= */}
       <footer className="footer-area section-gap">
         <div className="container">
           <div className="row">
-            <div className="col-lg-2 col-md-6 single-footer-widget">
-              <h4>Top Products</h4>
-              <ul>
-                <li><a href="#">Managed Website</a></li>
-                <li><a href="#">Manage Reputation</a></li>
-                <li><a href="#">Power Tools</a></li>
-                <li><a href="#">Marketing Service</a></li>
-              </ul>
-            </div>
-
-            <div className="col-lg-2 col-md-6 single-footer-widget">
+            <div className="col-lg-3 col-md-6 single-footer-widget">
               <h4>Quick Links</h4>
               <ul>
-                <li><a href="#">Jobs</a></li>
-                <li><a href="#">Brand Assets</a></li>
-                <li><a href="#">Investor Relations</a></li>
-                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Contact</a></li>
               </ul>
             </div>
 
-            <div className="col-lg-2 col-md-6 single-footer-widget">
+            <div className="col-lg-3 col-md-6 single-footer-widget">
               <h4>Features</h4>
               <ul>
-                <li><a href="#">Jobs</a></li>
-                <li><a href="#">Brand Assets</a></li>
-                <li><a href="#">Investor Relations</a></li>
-                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Assignments</a></li>
+                <li><a href="#">Grades</a></li>
+                <li><a href="#">Attendance</a></li>
+                <li><a href="#">Reports</a></li>
               </ul>
             </div>
 
-            <div className="col-lg-2 col-md-6 single-footer-widget">
+            <div className="col-lg-3 col-md-6 single-footer-widget">
               <h4>Resources</h4>
               <ul>
-                <li><a href="#">Guides</a></li>
-                <li><a href="#">Research</a></li>
-                <li><a href="#">Experts</a></li>
-                <li><a href="#">Agencies</a></li>
+                <li><a href="#">Help Center</a></li>
+                <li><a href="#">User Guide</a></li>
+                <li><a href="#">Teacher Portal</a></li>
+                <li><a href="#">Student Guide</a></li>
               </ul>
             </div>
 
-            <div className="col-lg-4 col-md-6 single-footer-widget">
-              <h4>Newsletter</h4>
-              <p>You can trust us. We only send promo offers.</p>
-              <div className="form-wrap" id="mc_embed_signup">
-                <form
-                  target="_blank"
-                  action="#"
-                  method="get"
-                  className="form-inline"
-                >
-                  <input
-                    className="form-control"
-                    name="EMAIL"
-                    placeholder="Your Email Address"
-                    required
-                    type="email"
-                  />
-                  <button className="click-btn btn btn-default text-uppercase">
-                    SUBSCRIBE
-                  </button>
-                  <div style={{ position: "absolute", left: "-5000px" }}>
-                    <input name="b_fake_field" tabIndex="-1" value="" type="text" />
-                  </div>
-                </form>
-              </div>
+            <div className="col-lg-3 col-md-6 single-footer-widget">
+              <h4>Stay Updated</h4>
+              <p>Get StudyZen news and updates.</p>
+              <form className="d-flex align-items-center">
+                <input
+                  className="form-control me-2"
+                  type="email"
+                  placeholder="Your Email"
+                  required
+                  style={{ flex: 1, minWidth: "0" }}
+                />
+                <button className="click-btn btn btn-default text-uppercase" type="submit">
+                  SUBSCRIBE
+                </button>
+              </form>
             </div>
           </div>
 
-          <div className="footer-bottom row align-items-center">
-            <p className="footer-text m-0 col-lg-8 col-md-12">
-              Copyright © {new Date().getFullYear()} All rights reserved | Made with{" "}
-              <i className="fa fa-heart-o"></i> by{" "}
-              <a href="https://colorlib.com" target="_blank" rel="noreferrer">
-                Colorlib
-              </a>
+          <div className="footer-bottom row align-items-center mt-4">
+            <p className="footer-text m-0 col-lg-12 text-center">
+              © {new Date().getFullYear()} StudyZen | Empowering education with ❤️ by the StudyZen Team.
             </p>
           </div>
         </div>
       </footer>
+      {/* ================ End Footer Area ================= */}
     </>
   );
 }

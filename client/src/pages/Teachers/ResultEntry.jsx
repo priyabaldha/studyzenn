@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import TeacherSlidebar from "./components/TeacherSlidebar";
-import "../../css/ResultEntry.css"; // ✅ External CSS
+import "../../css/TeacherResultEntry.css"; // ✅ External CSS
 
 export default function ResultEntry() {
   const [exams, setExams] = useState([]);

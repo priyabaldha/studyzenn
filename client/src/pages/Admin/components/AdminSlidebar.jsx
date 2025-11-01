@@ -154,9 +154,6 @@ const AdminSidebar = () => {
               icon={Edit3}
               label="Assignments"
             />
-
-            {/* Notice */}
-            <NavItem to="/admin/notice" icon={Bell} label="Notice Board" />
           </ul>
         </aside>
       </div>

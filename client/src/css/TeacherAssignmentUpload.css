@@ -1,48 +1,61 @@
+/* === Teacher Upload Page (Unified with Subject Management Theme) === */
+
 .teacher-upload-wrapper {
   display: flex;
-  background-color: #f8f9fa;
+  background: linear-gradient(135deg, #ffffff 60%, #eef2ff);
   min-height: 100vh;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  color: #000;
 }
 
 .upload-container {
   flex-grow: 1;
-  padding: 50px;
+  padding: 100px 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+/* === Upload Card === */
 .upload-card {
   width: 100%;
-  max-width: 700px;
-  background: linear-gradient(135deg, #fefefe, #f2f7ff);
-  border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  padding: 40px;
-  text-align: center;
+  max-width: 800px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(127, 127, 213, 0.25);
+  padding: 40px 50px;
   border: 1px solid #e0e0e0;
-  transition: transform 0.3s ease;
+  text-align: center;
+  transition: all 0.3s ease;
 }
 
 .upload-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(127, 127, 213, 0.35);
 }
 
+/* === Title === */
 .upload-title {
-  background: linear-gradient(90deg, #007bff, #6f42c1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   font-weight: 700;
-  margin-bottom: 25px;
-  font-size: 2rem;
+  font-size: 2.4rem;
+  color: #3b3b98;
+  border-bottom: 3px solid #7f7fd5;
+  display: inline-block;
+  padding-bottom: 8px;
+  margin-bottom: 35px;
+  letter-spacing: 1px;
+  text-align: center;
 }
 
+/* === Message === */
 .message {
   font-weight: 500;
   margin-bottom: 20px;
-  color: #28a745;
+  color: #2d8a2d;
+  text-align: center;
 }
 
+/* === Form === */
 .upload-form {
   display: flex;
   flex-direction: column;
@@ -52,29 +65,32 @@
 
 .form-group label {
   font-weight: 600;
-  color: #333;
+  color: #3b3b98;
+  margin-bottom: 5px;
 }
 
 .form-group select,
 .form-group input[type="file"] {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ced4da;
-  border-radius: 8px;
-  outline: none;
-  font-size: 15px;
-  background-color: #fff;
-  transition: all 0.3s ease;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f8faff;
+  color: #000;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-group select:focus,
 .form-group input[type="file"]:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
+  border-color: #7f7fd5;
+  box-shadow: 0 0 6px rgba(127, 127, 213, 0.4);
+  outline: none;
 }
 
+/* === Upload Button === */
 .upload-btn {
-  background: linear-gradient(90deg, #007bff, #6610f2);
+  background: linear-gradient(90deg, #4e54c8, #8f94fb);
   color: white;
   border: none;
   padding: 12px 0;
@@ -86,41 +102,54 @@
 }
 
 .upload-btn:hover {
-  background: linear-gradient(90deg, #6610f2, #007bff);
-  transform: scale(1.02);
+  background: linear-gradient(90deg, #3e43b2, #6e72ff);
+  transform: scale(1.05);
 }
 
-/* Uploaded List */
+/* === Uploaded List Section === */
 .uploaded-list {
   width: 100%;
-  max-width: 850px;
+  max-width: 1000px;
   background: #fff;
-  border-radius: 18px;
-  margin-top: 40px;
-  padding: 30px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+  border-radius: 16px;
+  margin-top: 50px;
+  padding: 35px 45px;
+  box-shadow: 0 8px 24px rgba(127, 127, 213, 0.25);
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.uploaded-list:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(127, 127, 213, 0.35);
 }
 
 .uploaded-list h3 {
-  color: #333;
+  color: #3b3b98;
   font-weight: 700;
-  margin-bottom: 20px;
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #7f7fd5;
+  display: inline-block;
+  padding-bottom: 5px;
 }
 
+/* === Assignment Item === */
 .assignment-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #f7f9fc;
+  background: #f8faff;
   padding: 15px 20px;
   border-radius: 10px;
-  margin-bottom: 10px;
-  border-left: 4px solid #007bff;
-  transition: background 0.3s ease;
+  margin-bottom: 12px;
+  border-left: 4px solid #7f7fd5;
+  transition: all 0.3s ease;
 }
 
 .assignment-item:hover {
-  background: #eef3ff;
+  background: #eef2ff;
+  transform: scale(1.01);
 }
 
 .assignment-info {
@@ -128,6 +157,7 @@
   color: #333;
 }
 
+/* === Action Buttons === */
 .assignment-actions {
   display: flex;
   gap: 10px;
@@ -144,26 +174,56 @@
 }
 
 .view-btn {
-  color: #007bff;
-  border: 1px solid #007bff;
+  color: #4e54c8;
+  border: 1px solid #4e54c8;
 }
 
 .view-btn:hover {
-  background: #007bff;
+  background: linear-gradient(90deg, #4e54c8, #8f94fb);
   color: white;
+  transform: scale(1.05);
 }
 
 .grade-btn {
-  background: #dc3545;
+  background: linear-gradient(90deg, #ff5f6d, #ffc371);
   color: white;
+  border: none;
 }
 
 .grade-btn:hover {
-  background: #c82333;
+  background: linear-gradient(90deg, #f44b5d, #ffae42);
+  transform: scale(1.05);
 }
 
+/* === No Data Message === */
 .no-data {
   color: #777;
   text-align: center;
   font-style: italic;
+  padding: 20px 0;
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+  .upload-container {
+    padding: 80px 25px;
+  }
+
+  .upload-card {
+    padding: 30px 25px;
+  }
+
+  .uploaded-list {
+    padding: 25px 20px;
+  }
+
+  .assignment-item {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .upload-title {
+    font-size: 1.8rem;
+  }
 }
