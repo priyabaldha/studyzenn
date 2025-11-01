@@ -507,58 +507,104 @@ const StudentDashboard = () => {
         </div>
       </div>
       <div className="col-lg-4 col-md-6">
-        <div className="other-feature-item">
-          <i className="ti-book"></i>
-          <h4>Assignments</h4>
-          <div>
-            <p>Access, complete, and submit your homework with ease.</p>
+        <Link 
+          to="/student/assignments" // Set the destination path
+          style={{ textDecoration: 'none', color: 'inherit' }} // Optional: Style the link to look like a div
+        >
+          <div className="other-feature-item">
+            <i className="ti-book"></i>
+            <h4>Assignments</h4>
+            <div>
+              <p>Access, complete, and submit your homework with ease.</p>
+            </div>
           </div>
-        </div>
+        </Link>
       </div>
+
+      {/* Attendance Feature - Linked to /student/attendance */}
       <div className="col-lg-4 col-md-6 mt--160">
-        <div className="other-feature-item">
-          <i className="ti-bar-chart"></i>
-          <h4>Attendance</h4>
-          <div>
-            <p>Track your daily attendance with visual analytics.</p>
+        <Link 
+          to="/student/attendance" 
+          style={{ textDecoration: 'none', color: 'inherit' }}
+        >
+          <div className="other-feature-item">
+            <i className="ti-bar-chart"></i>
+            <h4>Attendance</h4>
+            <div>
+              <p>Track your daily attendance with visual analytics.</p>
+            </div>
           </div>
-        </div>
+        </Link>
       </div>
+
+      {/* Report Card Feature - Linked to /student/report-card */}
       <div className="col-lg-4 col-md-6 mt--260">
-        <div className="other-feature-item">
-          <i className="ti-clipboard"></i>
-          <h4>Report Card</h4>
-          <div>
-            <p>Monitor your academic progress across all subjects.</p>
+        <Link 
+          to="/student/report-card" 
+          style={{ textDecoration: 'none', color: 'inherit' }}
+        >
+          <div className="other-feature-item">
+            <i className="ti-clipboard"></i>
+            <h4>Report Card</h4>
+            <div>
+              <p>Monitor your academic progress across all subjects.</p>
+            </div>
           </div>
-        </div>
+        </Link>
       </div>
+
+      {/* Exam Schedule Feature - Linked to /student/exam-schedule */}
       <div className="col-lg-4 col-md-6">
-        <div className="other-feature-item">
-          <i className="ti-announcement"></i>
-          <h4>Notice Board</h4>
-          <div>
-            <p>Get instant updates from your teachers and school admin.</p>
+        <Link 
+          to="/student/exam-schedule" 
+          style={{ textDecoration: 'none', color: 'inherit' }}
+        >
+          <div className="other-feature-item">
+            {/* CHANGED ICON: ti-announcement to ti-calendar */}
+            <i className="ti-calendar"></i>
+            {/* CHANGED HEADING */}
+            <h4>Exam Schedule</h4>
+            <div>
+              {/* CHANGED PARAGRAPH */}
+              <p>View the complete timetable and dates for all upcoming examinations.</p>
+            </div>
           </div>
-        </div>
+        </Link>
       </div>
+
+      {/* Messages Feature - Linked to /messages (as per header) */}
       <div className="col-lg-4 col-md-6 mt--160">
-        <div className="other-feature-item">
-          <i className="ti-email"></i>
-          <h4>Messages</h4>
-          <div>
-            <p>Communicate with teachers and classmates securely.</p>
+        <Link 
+          to="/messages" 
+          style={{ textDecoration: 'none', color: 'inherit' }}
+        >
+          <div className="other-feature-item">
+            <i className="ti-email"></i>
+            <h4>Messages</h4>
+            <div>
+              <p>Communicate with teachers and classmates securely.</p>
+            </div>
           </div>
-        </div>
+        </Link>
       </div>
+
+      {/* Exam Results Feature - Linked to /student/results */}
       <div className="col-lg-4 col-md-6 mt--260">
-        <div className="other-feature-item">
-          <i className="ti-layers"></i>
-          <h4>Subjects</h4>
-          <div>
-            <p>Organize and manage your subject-wise resources.</p>
+        <Link 
+          to="/student/results" 
+          style={{ textDecoration: 'none', color: 'inherit' }}
+        >
+          <div className="other-feature-item">
+            {/* CHANGED ICON: ti-layers to ti-medall (similar to Marks icon used earlier) */}
+            <i className="ti-medall"></i>
+            {/* CHANGED HEADING */}
+            <h4>Exam Results</h4>
+            <div>
+              {/* CHANGED PARAGRAPH */}
+              <p>View your scores and detailed performance reports for all exams.</p>
+            </div>
           </div>
-        </div>
+        </Link>
       </div>
     </div>
   </div>
