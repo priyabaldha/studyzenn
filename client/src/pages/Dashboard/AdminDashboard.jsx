@@ -152,7 +152,7 @@ const AdminDashboard = () => {
         },
       });
     }
-
+x
     // === Chart 2: Bar ===
     if (chart2Ref.current) {
       const ctx = chart2Ref.current.getContext("2d");
