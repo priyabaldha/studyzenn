@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import TeacherSlidebar from "./components/TeacherSlidebar";
-import "../../css/TeacherAssignmentUpload.css"; // ✅ external CSS file
+import "../../css/TeacherAssignmentUpload.css";
 
 const SEMESTER_OPTIONS = ["1st", "2nd", "3rd", "4th", "5th", "6th"];
 const DIVISION_OPTIONS = ["A", "B", "C", "D"];
@@ -94,8 +94,33 @@ export default function TeacherAssignmentUpload() {
     <div className="teacher-upload-wrapper">
       <TeacherSlidebar />
 
-      <div className="upload-container">
-        <div className="upload-card">
+      {/* ✅ Centered Layout Wrapper */}
+      <div
+        className="upload-container"
+        style={{
+          marginLeft: "250px", // space for sidebar
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+          background: "linear-gradient(135deg, #ffffff 60%, #eef2ff)",
+          padding: "40px 20px",
+        }}
+      >
+        <div
+          className="upload-card"
+          style={{
+            width: "100%",
+            maxWidth: "800px",
+            background: "linear-gradient(135deg, #ffffff 70%, #f3f4ff)",
+            borderRadius: "20px",
+            boxShadow: "0 10px 30px rgba(127, 127, 213, 0.2)",
+            padding: "35px",
+            textAlign: "center",
+            marginBottom: "30px",
+          }}
+        >
           <h2 className="upload-title">Upload Assignment</h2>
           {message && <p className="message">{message}</p>}
 
@@ -173,8 +198,19 @@ export default function TeacherAssignmentUpload() {
           </form>
         </div>
 
-        {/* Uploaded Assignments */}
-        <div className="uploaded-list">
+        {/* ✅ Uploaded Assignments Card */}
+        <div
+          className="uploaded-list"
+          style={{
+            width: "100%",
+            maxWidth: "800px",
+            background: "linear-gradient(135deg, #ffffff 70%, #f3f4ff)",
+            borderRadius: "20px",
+            boxShadow: "0 10px 30px rgba(127, 127, 213, 0.2)",
+            padding: "25px 30px",
+            textAlign: "center",
+          }}
+        >
           <h3>📚 Uploaded Assignments</h3>
           {assignments.length === 0 ? (
             <p className="no-data">No assignments uploaded yet.</p>

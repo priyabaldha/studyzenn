@@ -88,92 +88,111 @@ const TeacherProfile = () => {
   if (!profile) return <p>Loading profile...</p>;
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        backgroundColor: "#f9f9f9",
+        minHeight: "100vh",
+      }}
+    >
+      {/* Sidebar */}
       <TeacherSlidebar />
 
-      <div className="profile-container">
-        <h2 className="profile-title">Teacher Profile</h2>
+      {/* Centered Profile Section */}
+      <div
+        style={{
+          flex: 1,
+          marginLeft: "250px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div className="profile-container">
+          <h2 className="profile-title">Teacher Profile</h2>
 
-        {profile.teacher_image && (
-          <img
-            src={`http://localhost:5000/uploads/teachers/${profile.teacher_image}`}
-            alt="Profile"
-            className="profile-image"
-          />
-        )}
+          {profile.teacher_image && (
+            <img
+              src={`http://localhost:5000/uploads/teachers/${profile.teacher_image}`}
+              alt="Profile"
+              className="profile-image"
+            />
+          )}
 
-        <form onSubmit={handleUploadImage} className="image-form">
-          <input type="file" onChange={handleImageChange} accept="image/*" />
-          <button type="submit" className="profile-btn upload">
-            Upload Image
-          </button>
-        </form>
-
-        {!isEditing ? (
-          <div className="profile-info">
-            <p>
-              <strong>Name:</strong> {profile.name}
-            </p>
-            <p>
-              <strong>Email:</strong> {profile.email}
-            </p>
-            <p>
-              <strong>Qualification:</strong> {profile.qualification}
-            </p>
-            <p>
-              <strong>Age:</strong> {profile.age}
-            </p>
-            <p>
-              <strong>Gender:</strong> {profile.gender}
-            </p>
-            <button
-              onClick={() => setIsEditing(true)}
-              className="profile-btn edit"
-            >
-              Edit Profile
+          <form onSubmit={handleUploadImage} className="image-form">
+            <input type="file" onChange={handleImageChange} accept="image/*" />
+            <button type="submit" className="profile-btn upload">
+              Upload Image
             </button>
-          </div>
-        ) : (
-          <form onSubmit={handleUpdate} className="profile-form">
-            <input
-              type="text"
-              name="qualification"
-              placeholder="Qualification"
-              value={form.qualification}
-              onChange={handleChange}
-              required
-              className="profile-input"
-            />
-            <input
-              type="number"
-              name="age"
-              placeholder="Age"
-              value={form.age}
-              onChange={handleChange}
-              className="profile-input"
-            />
-            <input
-              type="text"
-              name="gender"
-              placeholder="Gender"
-              value={form.gender}
-              onChange={handleChange}
-              className="profile-input"
-            />
-            <div>
-              <button type="submit" className="profile-btn save">
-                Save Changes
-              </button>
+          </form>
+
+          {!isEditing ? (
+            <div className="profile-info">
+              <p>
+                <strong>Name:</strong> {profile.name}
+              </p>
+              <p>
+                <strong>Email:</strong> {profile.email}
+              </p>
+              <p>
+                <strong>Qualification:</strong> {profile.qualification}
+              </p>
+              <p>
+                <strong>Age:</strong> {profile.age}
+              </p>
+              <p>
+                <strong>Gender:</strong> {profile.gender}
+              </p>
               <button
-                type="button"
-                onClick={() => setIsEditing(false)}
-                className="profile-btn cancel"
+                onClick={() => setIsEditing(true)}
+                className="profile-btn edit"
               >
-                Cancel
+                Edit Profile
               </button>
             </div>
-          </form>
-        )}
+          ) : (
+            <form onSubmit={handleUpdate} className="profile-form">
+              <input
+                type="text"
+                name="qualification"
+                placeholder="Qualification"
+                value={form.qualification}
+                onChange={handleChange}
+                required
+                className="profile-input"
+              />
+              <input
+                type="number"
+                name="age"
+                placeholder="Age"
+                value={form.age}
+                onChange={handleChange}
+                className="profile-input"
+              />
+              <input
+                type="text"
+                name="gender"
+                placeholder="Gender"
+                value={form.gender}
+                onChange={handleChange}
+                className="profile-input"
+              />
+              <div>
+                <button type="submit" className="profile-btn save">
+                  Save Changes
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsEditing(false)}
+                  className="profile-btn cancel"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          )}
+        </div>
       </div>
     </div>
   );

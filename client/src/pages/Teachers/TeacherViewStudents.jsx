@@ -11,7 +11,7 @@ const TeacherViewStudents = () => {
     const fetchStudents = async () => {
       try {
         const res = await axios.get("http://localhost:5000/api/students", {
-          headers: { Authorization: `Bearer ${token}` }, // ✅ Fixed backticks
+          headers: { Authorization: `Bearer ${token}` },
         });
         setStudents(res.data);
       } catch (err) {
@@ -19,12 +19,24 @@ const TeacherViewStudents = () => {
       }
     };
     fetchStudents();
-  }, [token]); // ✅ Include token in dependency array
+  }, [token]);
 
   return (
     <div className="teacher-view-container">
       <TeacherSlidebar />
-      <div className="teacher-view-main">
+
+      {/* ✅ Centered main section */}
+      <div
+        className="teacher-view-main"
+        style={{
+          marginLeft: "250px", // makes room for sidebar
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+          background: "linear-gradient(135deg, #ffffff 60%, #eef2ff)",
+        }}
+      >
         <div className="teacher-view-card">
           <h2 className="teacher-view-title">Students List (Read-Only)</h2>
 
@@ -70,7 +82,7 @@ const TeacherViewStudents = () => {
                       <td>
                         {student.student_image ? (
                           <img
-                            src={`http://localhost:5000/uploads/students/${student.student_image}`} // ✅ Fixed URL template
+                            src={`http://localhost:5000/uploads/students/${student.student_image}`}
                             alt="student"
                             className="teacher-view-image"
                           />

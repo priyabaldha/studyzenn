@@ -54,7 +54,7 @@ const TeacherSlidebar = () => {
     { to: "/teacher/schedule-exam", icon: CalendarDays, label: "Schedule Exam" },
     { to: "/teacher/result-entry", icon: FileText, label: "Result Entry" },
   ];
-
+  
   return (
     <>
       <TeacherHeader />

@@ -30,7 +30,7 @@ export default function TeacherAttendance() {
     try {
       const res = await axios.get(
         `http://localhost:5000/api/attendance/students/${filter.semester}/${filter.division}`,
-        { headers: { Authorization: `Bearer ${token}` } } // ✅ Fixed template literals
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       setStudents(res.data);
       const initialAttendance = {};
@@ -69,7 +69,7 @@ export default function TeacherAttendance() {
       await axios.post(
         "http://localhost:5000/api/attendance/save",
         { records },
-        { headers: { Authorization: `Bearer ${token}` } } // ✅ Fixed
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       setMessage(`✅ Attendance recorded for ${students.length} students!`);
     } catch (err) {
@@ -84,8 +84,31 @@ export default function TeacherAttendance() {
     <div className="teacher-attendance-wrapper">
       <TeacherSlidebar />
 
-      <div className="attendance-container">
-        <div className="attendance-card">
+      {/* ✅ Centered Wrapper */}
+      <div
+        className="attendance-container"
+        style={{
+          marginLeft: "250px", // make room for sidebar
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+          background: "linear-gradient(135deg, #ffffff 60%, #eef2ff)",
+          padding: "40px 20px",
+        }}
+      >
+        <div
+          className="attendance-card"
+          style={{
+            width: "100%",
+            maxWidth: "900px",
+            background: "linear-gradient(135deg, #ffffff 70%, #f3f4ff)",
+            borderRadius: "20px",
+            boxShadow: "0 10px 30px rgba(127, 127, 213, 0.2)",
+            padding: "35px",
+            textAlign: "center",
+          }}
+        >
           <h2 className="attendance-title">Record Daily Attendance</h2>
 
           <div className="filter-section">
@@ -123,7 +146,11 @@ export default function TeacherAttendance() {
               disabled={loading}
             />
 
-            <button className="fetch-btn" onClick={fetchStudents} disabled={loading}>
+            <button
+              className="fetch-btn"
+              onClick={fetchStudents}
+              disabled={loading}
+            >
               {loading ? "Loading..." : "Get Students"}
             </button>
           </div>
@@ -141,37 +168,45 @@ export default function TeacherAttendance() {
                 <strong>{filter.division}</strong> on {filter.date}
               </p>
 
-              <table className="attendance-table">
-                <thead>
-                  <tr>
-                    <th>Roll No</th>
-                    <th>Name</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {students.map((student) => (
-                    <tr key={student._id}>
-                      <td>{student.rollNo}</td>
-                      <td>{student.name}</td>
-                      <td>
-                        <select
-                          value={attendanceData[student._id]}
-                          onChange={(e) =>
-                            handleAttendanceChange(student._id, e.target.value)
-                          }
-                        >
-                          {STATUS_OPTIONS.map((status) => (
-                            <option key={status} value={status}>
-                              {status}
-                            </option>
-                          ))}
-                        </select>
-                      </td>
+              <div
+                style={{
+                  overflowX: "auto",
+                  marginTop: "20px",
+                  borderRadius: "10px",
+                }}
+              >
+                <table className="attendance-table">
+                  <thead>
+                    <tr>
+                      <th>Roll No</th>
+                      <th>Name</th>
+                      <th>Status</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {students.map((student) => (
+                      <tr key={student._id}>
+                        <td>{student.rollNo}</td>
+                        <td>{student.name}</td>
+                        <td>
+                          <select
+                            value={attendanceData[student._id]}
+                            onChange={(e) =>
+                              handleAttendanceChange(student._id, e.target.value)
+                            }
+                          >
+                            {STATUS_OPTIONS.map((status) => (
+                              <option key={status} value={status}>
+                                {status}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
 
               <button type="submit" className="save-btn" disabled={loading}>
                 {loading ? "Saving..." : "Save Attendance"}
