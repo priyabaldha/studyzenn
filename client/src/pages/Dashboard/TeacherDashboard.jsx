@@ -255,48 +255,89 @@ const TeacherDashboard = () => {
             </h2>
 
             {/* Stat Cards */}
-            <div className="row">
-              {[
-                {
-                  title: "Total Students",
-                  value: stats.totalStudents,
-                  color: "linear-gradient(135deg, #667eea, #a06ed2ff)",
-                },
-                {
-                  title: "Assignments",
-                  value: stats.totalAssignments,
-                  color: "linear-gradient(135deg, #58ecbdff, #507ca8ff)",
-                },
-                {
-                  title: "Attendance Records",
-                  value: stats.totalAttendance,
-                  color: "linear-gradient(135deg, #5ee7df, #b490ca)",
-                },
-              ].map((card, idx) => (
-                <div key={idx} className="col-xl-4 col-lg-6 col-md-6 col-sm-6 mb-4">
-                  <div
-                    className="card dashboard-card"
-                    style={{
-                      background: card.color,
-                      color: "white",
-                      borderRadius: "15px",
-                      boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
-                      transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-8px)")}
-                    onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0px)")}
-                  >
-                    <div className="card-body text-center p-4">
-                      <h5 className="font-16 mb-2">{card.title}</h5>
-                      <h2 className="font-22 mb-2" style={{ fontWeight: "700" }}>
-                        {card.value}
-                      </h2>
-                      <p style={{ opacity: 0.9 }}>Updated live</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+<div className="row">
+  {[
+    {
+      title: "Total Students",
+      value: stats.totalStudents,
+      image: "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", // 👨‍🎓
+      color: "#4c51bf",
+      size: 70,
+    },
+    {
+      title: "Assignments",
+      value: stats.totalAssignments,
+      image: "https://cdn-icons-png.flaticon.com/512/2921/2921222.png", // 📝
+      color: "#3182ce",
+      size: 70,
+    },
+    {
+      title: "Attendance Records",
+      value: stats.totalAttendance,
+      image:
+        "https://img.freepik.com/free-vector/attendance-paper-with-checklist-cartoon-vector-icon-illustration-education-business-isolated-flat_138676-10698.jpg?w=2000", // 📋 Updated image
+      color: "#ed8936",
+      size: 90, // increased size for visual balance
+    },
+  ].map((card, idx) => (
+    <div
+      key={idx}
+      className="col-xl-4 col-lg-6 col-md-6 col-sm-6 mb-4"
+      style={{ padding: "10px" }}
+    >
+      <div
+        style={{
+          background: "#fff",
+          borderRadius: "15px",
+          boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
+          padding: "25px 20px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          transition: "transform 0.3s ease, box-shadow 0.3s ease",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "translateY(-6px)";
+          e.currentTarget.style.boxShadow = "0 6px 20px rgba(0,0,0,0.1)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "translateY(0px)";
+          e.currentTarget.style.boxShadow = "0 4px 15px rgba(0,0,0,0.08)";
+        }}
+      >
+        <div>
+          <h5 style={{ color: "#333", fontSize: "15px", fontWeight: "600" }}>
+            {card.title}
+          </h5>
+          <h2
+            style={{
+              color: card.color,
+              fontWeight: "700",
+              fontSize: "30px",
+              margin: "10px 0",
+            }}
+          >
+            {card.value}
+          </h2>
+          <p style={{ color: "#888", fontSize: "13px" }}>Updated live</p>
+        </div>
+
+        <img
+          src={card.image}
+          alt={card.title}
+          style={{
+            width: `${card.size}px`,
+            height: `${card.size}px`,
+            objectFit: "contain",
+            borderRadius: "12px",
+            opacity: 0.95,
+          }}
+        />
+      </div>
+    </div>
+  ))}
+</div>
+
 
             {/* Charts */}
             <div className="row">

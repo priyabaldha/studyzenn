@@ -121,16 +121,16 @@ const AdminHeader = () => {
                 right: "0",
               }}
             >
-              6
+              2
             </span>
           </button>
         </li>
 
-        <li className="nav-item mr-3">
+        {/* <li className="nav-item mr-3">
           <button className="nav-link nav-link-lg btn btn-link" style={{ color: "#34395e" }}>
             <i data-feather="bell" />
           </button>
-        </li>
+        </li> */}
 
         <li className="nav-item dropdown">
           <button className="btn btn-link d-flex align-items-center" style={{ color: "#34395e" }}>

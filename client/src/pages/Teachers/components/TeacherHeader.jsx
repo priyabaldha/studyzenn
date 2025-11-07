@@ -134,25 +134,28 @@ const TeacherHeader = () => {
                 right: "0",
               }}
             >
-              6
+              2
             </span>
           </button>
         </li>
-        <li className="nav-item mr-3">
+        {/* <li className="nav-item mr-3">
           <button
             className="nav-link nav-link-lg btn btn-link"
             style={{ color: "#34395e" }}
           >
             <i data-feather="bell" />
           </button>
-        </li>
+        </li> */}
         <li className="nav-item dropdown">
           <button
             className="btn btn-link d-flex align-items-center"
             style={{ color: "#34395e" }}
           >
             <span className="ml-2 d-sm-none d-lg-inline-block">
-              Welcome, Teacher
+              Welcome,{" "}
+              {JSON.parse(localStorage.getItem("user"))?.name ||
+                JSON.parse(localStorage.getItem("user"))?.fullName ||
+                "Teacher"}
             </span>
           </button>
         </li>
