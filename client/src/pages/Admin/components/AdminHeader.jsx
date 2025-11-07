@@ -60,7 +60,7 @@ const AdminHeader = () => {
 
       <div className="form-inline mr-auto ml-3">
         <ul className="navbar-nav mr-3">
-          <li>
+          {/* <li>
             <button
               className="nav-link nav-link-lg btn btn-link"
               onClick={() => console.log("Toggle sidebar")}
@@ -68,8 +68,8 @@ const AdminHeader = () => {
             >
               <i data-feather="align-justify" />
             </button>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <button
               className="nav-link nav-link-lg btn btn-link"
               onClick={() => console.log("Fullscreen toggle")}
@@ -77,7 +77,7 @@ const AdminHeader = () => {
             >
               <i data-feather="maximize" />
             </button>
-          </li>
+          </li> */}
           <li>
             <form className="form-inline mr-auto" onSubmit={handleSearchSubmit}>
               <div className="search-element" style={{ display: "flex" }}>

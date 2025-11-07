@@ -114,9 +114,8 @@ const AdminDashboard = () => {
     if (chart1Ref.current) {
       const ctx = chart1Ref.current.getContext("2d");
       const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-      gradient.addColorStop(0, "#667eea");
-      gradient.addColorStop(1, "#764ba2");
-
+      gradient.addColorStop(0, "#59b5caff");
+      gradient.addColorStop(1, "#d1e6ebff");
       chartInstancesRef.current.chart1 = new Chart(ctx, {
         type: "line",
         data: {
@@ -126,7 +125,7 @@ const AdminDashboard = () => {
               label: "Students by Semester",
               data: chart1.data,
               fill: true,
-              borderColor: "#8e98f3ff",
+              borderColor: "#044861ff",
               backgroundColor: gradient,
               tension: 0.4,
               borderWidth: 3,
@@ -164,7 +163,7 @@ const AdminDashboard = () => {
             {
               label: "Assignments Uploaded",
               data: chart2.data,
-              backgroundColor: ["#98a2f8ff", "#7f9cf5", "#b794f4", "#9f7aea"],
+              backgroundColor: ["#1f6d72ff", "#82ccd7ff", "#a02f91ff", "#075ed0ff"],
               borderRadius: 10,
             },
           ],
@@ -257,22 +256,31 @@ const AdminDashboard = () => {
                 {
                   title: "Total Students",
                   value: counts.students,
-                  color: "linear-gradient(135deg, #687fe6ff, #b97af8ff)",
+                  color: "#4c51bf",
+                  image: "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", // 👨‍🎓 Students
+                  size: 70,
                 },
                 {
                   title: "Total Teachers",
                   value: counts.teachers,
-                  color: "linear-gradient(135deg, #43cea2, #5199e2ff)",
+                  color: "#d4d728ff",
+                  image: "https://cdn-icons-png.flaticon.com/512/4140/4140047.png", // 👩‍🏫 Teacher icon
+                  size: 70,
                 },
                 {
                   title: "Assignments",
                   value: counts.assignments,
-                  color: "linear-gradient(135deg, #5ee7df, #b490ca)",
+                  color: "#38a169",
+                  image: "https://cdn-icons-png.flaticon.com/512/2921/2921222.png", // 📝 Assignments
+                  size: 70,
                 },
                 {
                   title: "Attendance Records",
                   value: counts.attendance,
-                  color: "linear-gradient(135deg, #ec7a9cff, #d6c876ff)",
+                  color: "#ed8936",
+                  image:
+                    "https://img.freepik.com/free-vector/attendance-paper-with-checklist-cartoon-vector-icon-illustration-education-business-isolated-flat_138676-10698.jpg?w=2000", // 📋 Attendance
+                  size: 90, // larger for balance
                 },
               ].map((card, idx) => (
                 <div
@@ -282,26 +290,57 @@ const AdminDashboard = () => {
                 >
                   <div
                     style={{
-                      background: card.color,
-                      color: "white",
+                      background: "#fff",
                       borderRadius: "15px",
-                      boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+                      boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
+                      padding: "25px 20px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
                       transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                      textAlign: "center",
-                      padding: "25px 10px",
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-8px)")}
-                    onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0px)")}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "translateY(-6px)";
+                      e.currentTarget.style.boxShadow = "0 6px 20px rgba(0,0,0,0.1)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "translateY(0px)";
+                      e.currentTarget.style.boxShadow = "0 4px 15px rgba(0,0,0,0.08)";
+                    }}
                   >
-                    <h5 style={{ marginBottom: "10px", fontSize: "16px" }}>{card.title}</h5>
-                    <h2 style={{ fontWeight: "700", fontSize: "28px", marginBottom: "8px" }}>
-                      {card.value}
-                    </h2>
-                    <p style={{ opacity: 0.9, fontSize: "14px" }}>Updated live</p>
+                    <div>
+                      <h5 style={{ color: "#333", fontSize: "15px", fontWeight: "600" }}>
+                        {card.title}
+                      </h5>
+                      <h2
+                        style={{
+                          color: card.color,
+                          fontWeight: "700",
+                          fontSize: "30px",
+                          margin: "10px 0",
+                        }}
+                      >
+                        {card.value}
+                      </h2>
+                      <p style={{ color: "#888", fontSize: "13px" }}>Updated live</p>
+                    </div>
+
+                    <img
+                      src={card.image}
+                      alt={card.title}
+                      style={{
+                        width: `${card.size}px`,
+                        height: `${card.size}px`,
+                        objectFit: "contain",
+                        borderRadius: "12px",
+                        opacity: 0.95,
+                      }}
+                    />
                   </div>
                 </div>
               ))}
             </div>
+
 
             {/* Charts */}
             <div className="row">
