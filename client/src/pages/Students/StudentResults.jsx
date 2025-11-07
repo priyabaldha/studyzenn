@@ -100,7 +100,9 @@ export default function StudentResults() {
                   <li><Link to="/student/profile">Profile</Link></li>
 
                   <li className="nav-item d-flex align-items-center ms-3">
-                    👋 Welcome,&nbsp;<strong>{user.name}</strong>&nbsp;[{user.role}]
+                    <b><strong style={{ color: "#fff" }}>👋 Welcome,</strong></b>&nbsp;
+                    <b><strong style={{ color: "#fff" }}>{user.name}</strong></b>&nbsp;
+                    <b><span style={{ color: "#fff" }}>[{user.role}]</span></b>
                   </li>
 
                   <li className="nav-item ms-2">

@@ -211,6 +211,7 @@
   transition: all 0.3s ease;
   background: #f8faff;
   font-family: "Poppins", sans-serif;
+  color: #000; /* 🖋️ Added black text color */
 }
 
 .edit-input:focus {

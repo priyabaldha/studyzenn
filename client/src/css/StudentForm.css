@@ -63,6 +63,7 @@
   border: 1px solid #ccc;
   background: #f8faff;
   font-size: 0.95rem;
+  color: #000; /* 🖋️ Added black text color */
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 

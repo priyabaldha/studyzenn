@@ -209,7 +209,6 @@
 
 
 /* === Info Text === */
-
 .marking-info {
 
   text-align: center;
@@ -223,9 +222,7 @@
 }
 
 
-
 /* === Attendance Table === */
-
 .attendance-table {
 
   width: 100%;
@@ -239,8 +236,6 @@
   overflow: hidden;
 
 }
-
-
 
 .attendance-table th {
 
@@ -256,15 +251,11 @@
 
 }
 
-
-
 .attendance-table tr:nth-child(even) {
 
   background-color: #f6f6ff;
 
 }
-
-
 
 .attendance-table td {
 
@@ -278,8 +269,6 @@
 
 }
 
-
-
 .attendance-table select {
 
   border-radius: 8px;
@@ -290,24 +279,23 @@
 
   background: #fafbff;
 
+  color: #000;
+
   transition: border-color 0.3s ease;
 
 }
-
-
 
 .attendance-table select:focus {
 
   border-color: #7f7fd5;
 
+  color: #000;
+
   box-shadow: 0 0 6px rgba(127, 127, 213, 0.4);
 
 }
 
-
-
 /* === Save Button === */
-
 .save-btn {
 
   display: block;
@@ -332,8 +320,6 @@
 
 }
 
-
-
 .save-btn:hover {
 
   background: linear-gradient(90deg, #3e43b2, #6e72ff);
@@ -345,9 +331,7 @@
 }
 
 
-
 /* === No Data === */
-
 .no-data {
 
   text-align: center;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { hasRole } from "../../utils/roleCheck";
 
@@ -7,12 +7,107 @@ const StudentDashboard = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
   const [showSearch, setShowSearch] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     navigate("/");
   };
+
+  // ----------- HIGHLIGHT HELPERS (no UI changes) -----------
+  const HIGHLIGHT_ATTR = "data-ik-highlight";
+
+  const escapeRegExp = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+  const clearHighlights = () => {
+    document.querySelectorAll(`mark[${HIGHLIGHT_ATTR}="1"]`).forEach((m) => {
+      const parent = m.parentNode;
+      while (m.firstChild) parent.insertBefore(m.firstChild, m);
+      parent.removeChild(m);
+      parent.normalize?.();
+    });
+  };
+
+  const highlightInElement = (root, regex) => {
+    const walker = document.createTreeWalker(
+      root,
+      NodeFilter.SHOW_TEXT,
+      {
+        acceptNode(node) {
+          if (!node.nodeValue || !node.nodeValue.trim())
+            return NodeFilter.FILTER_REJECT;
+          if (
+            node.parentElement &&
+            node.parentElement.closest(`mark[${HIGHLIGHT_ATTR}="1"]`)
+          )
+            return NodeFilter.FILTER_REJECT;
+          return NodeFilter.FILTER_ACCEPT;
+        },
+      },
+      false
+    );
+
+    const toProcess = [];
+    while (walker.nextNode()) toProcess.push(walker.currentNode);
+
+    toProcess.forEach((textNode) => {
+      let text = textNode.nodeValue;
+      let match;
+      let currentNode = textNode;
+
+      regex.lastIndex = 0;
+      while ((match = regex.exec(text)) !== null) {
+        const before = currentNode.splitText(match.index);
+        const after = before.splitText(match[0].length);
+
+        const mark = document.createElement("mark");
+        mark.setAttribute(HIGHLIGHT_ATTR, "1");
+        mark.setAttribute(
+          "style",
+          "background:#ffe58f;padding:0 .15em;border-radius:2px;"
+        );
+        mark.appendChild(before.cloneNode(true));
+
+        before.parentNode.replaceChild(mark, before);
+
+        currentNode = after;
+        text = currentNode.nodeValue;
+        regex.lastIndex = 0;
+      }
+    });
+  };
+
+  const highlightAll = (term) => {
+    clearHighlights();
+    if (!term || term.trim().length < 1) return;
+
+    const regex = new RegExp(escapeRegExp(term.trim()), "gi");
+
+    // Scope to dashboard content (not overlay/header)
+    const containers = document.querySelectorAll(`
+      section.home-banner-area,
+      section.feature-area,
+      section.popular-course-area,
+      section.video-area,
+      section.other-feature-area,
+      section.testimonials-area,
+      footer.footer-area
+    `);
+
+    containers.forEach((el) => highlightInElement(el, regex));
+  };
+
+  useEffect(() => {
+    highlightAll(searchTerm);
+  }, [searchTerm]);
+
+  const closeSearch = () => {
+    setShowSearch(false);
+    setSearchTerm("");
+    clearHighlights();
+  };
+  // ----------------------------------------------------------
 
   if (!hasRole(["student"])) {
     return <h3>Access Denied: You do not have permission to view this page.</h3>;
@@ -82,7 +177,9 @@ const StudentDashboard = () => {
                     <Link to="/student/profile">Profile</Link>
                   </li>
                   <li className="nav-item d-flex align-items-center ms-3">
-                    👋 Welcome,&nbsp;<strong>{user.name}</strong>&nbsp;[{user.role}]
+                    <b><strong style={{ color: "#fff" }}>👋 Welcome,</strong></b>&nbsp;
+                    <b><strong style={{ color: "#fff" }}>{user.name}</strong></b>&nbsp;
+                    <b><span style={{ color: "#fff" }}>[{user.role}]</span></b>
                   </li>
                   <li className="nav-item ms-2">
                     <button
@@ -116,13 +213,15 @@ const StudentDashboard = () => {
                     className="form-control"
                     id="search-input"
                     placeholder="Search Here"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                   />
                   <button type="submit" className="btn"></button>
                   <span
                     className="lnr lnr-cross"
                     id="close-search"
                     title="Close Search"
-                    onClick={() => setShowSearch(false)}
+                    onClick={closeSearch}
                   ></span>
                 </form>
               </div>
