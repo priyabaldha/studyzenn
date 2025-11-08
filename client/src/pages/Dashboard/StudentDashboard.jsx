@@ -184,7 +184,7 @@ const StudentDashboard = () => {
                   <li className="nav-item ms-2">
                     <button
                       onClick={handleLogout}
-                      className="btn btn-outline-light btn-sm"
+                      className="btn btn-outline btn-sm"
                     >
                       Logout
                     </button>
