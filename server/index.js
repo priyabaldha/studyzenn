@@ -1,27 +1,28 @@
 // src/index.js
+require('dotenv').config();
 const express = require("express");
 const dotenv = require("dotenv");
-const connectDB = require("./config/db");
+const connectDB = require("./src/config/db");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const auth = require("./middleware/auth"); // make sure this file exists
-const studentRoutes = require("./routes/studentRoutes");
-const authRoutes = require("./routes/authRoutes");
-const teacherRoutes = require("./routes/teacherRoutes");
-const userRoutes = require("./routes/userRoutes");
+const auth = require("./src/middleware/auth"); // make sure this file exists
+const studentRoutes = require("./src/routes/studentRoutes");
+const authRoutes = require("./src/routes/authRoutes");
+const teacherRoutes = require("./src/routes/teacherRoutes");
+const userRoutes = require("./src/routes/userRoutes");
 const path = require("path");
-const assignmentRoutes = require("./routes/assignmentRoutes");
-const attendanceRoutes = require('./routes/attendanceRoutes');
-const messageRoutes = require('./routes/messageRoutes');
-const subjectRoutes = require('./routes/subjectRoutes');
-const examResultRoutes = require('./routes/examResultRoutes');
+const assignmentRoutes = require("./src/routes/assignmentRoutes");
+const attendanceRoutes = require('./src/routes/attendanceRoutes');
+const messageRoutes = require('./src/routes/messageRoutes');
+const subjectRoutes = require('./src/routes/subjectRoutes');
+const examResultRoutes = require('./src/routes/examResultRoutes');
 
 dotenv.config();
 connectDB();
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors());require('dotenv').config(); 
 app.use(cookieParser());
 
 app.use("/api/students", studentRoutes);

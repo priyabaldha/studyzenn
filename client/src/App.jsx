@@ -35,6 +35,7 @@ import StudentExamSchedule from "./pages/Students/StudentExamSchedule";
 import ResultEntry from "./pages/Teachers/ResultEntry";
 import StudentResults from "./pages/Students/StudentResults";
 import StudentReportCard from "./pages/Students/StudentReportCard";
+import ForgotPasswordPage from "./pages/Auth/ForgotPasswordPage";
 
 const App = () => {
   return (
@@ -239,7 +240,7 @@ const App = () => {
               <ResultEntry />
             </PrivateRoute>
           }
-        />\
+        />
 
         <Route
           path="/student/results"
@@ -259,6 +260,8 @@ const App = () => {
           }
         />
         
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+
         {/* Fallback */}
         <Route path="/unauthorized" element={<h2>🚫 Unauthorized Access</h2>} />
         <Route path="*" element={<h2>404 - Page not found</h2>} />
