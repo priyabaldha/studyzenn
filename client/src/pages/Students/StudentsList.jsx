@@ -11,6 +11,7 @@ const DIVISION_OPTIONS = ["A", "B", "C", "D"];
 const StudentsList = () => {
     const [students, setStudents] = useState([]);
     const [editStudent, setEditStudent] = useState(null);
+    const [csvFile, setCsvFile] = useState(null); // 🆕 New state for CSV file
     const navigate = useNavigate();
 
     const fetchStudents = async () => {
@@ -59,6 +60,40 @@ const StudentsList = () => {
             alert("Error updating student.");
         }
     };
+    
+    // 🆕 Handler for CSV file selection
+    const handleCsvFileChange = (e) => {
+        setCsvFile(e.target.files[0]);
+    };
+
+    // 🆕 Handler for CSV file upload submission
+    const handleCsvUpload = async () => {
+        if (!csvFile) return alert("Please select a CSV file.");
+        
+        if (!csvFile.name.endsWith('.csv')) {
+            return alert("Please upload a valid CSV file.");
+        }
+        
+        const formData = new FormData();
+        formData.append('file', csvFile); // Key 'file' must match backend router
+
+        try {
+            const token = localStorage.getItem("token");
+            const res = await axios.post(
+                'http://localhost:5000/api/students/upload-csv',
+                formData,
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+            alert(res.data.message);
+            setCsvFile(null); // Clear file selection
+            fetchStudents(); // Refresh the student list
+        } catch (err) {
+            console.error("CSV Upload Error:", err);
+            alert(err.response?.data?.error || "Failed to import students via CSV.");
+        }
+    };
+
 
     return (
         <div className="students-page-container">
@@ -69,13 +104,33 @@ const StudentsList = () => {
                 <div className="students-card">
                     <h2>Students List</h2>
 
-                    <div>
+                    <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '20px' }}>
+                        
+                        {/* 1. Add Student Button (Manual Entry) */}
                         <button
                             className="add-student-btn"
                             onClick={() => navigate("/admin/students/add")}
                         >
-                            ➕ Add Student
+                            ➕ Add Student (Manual)
                         </button>
+                        
+                        {/* 2. CSV Upload Section */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <input 
+                                type="file" 
+                                accept=".csv" 
+                                onChange={handleCsvFileChange} 
+                                style={{ maxWidth: '170px' }} 
+                            />
+                            <button
+                                className="add-student-btn"
+                                onClick={handleCsvUpload}
+                                disabled={!csvFile}
+                                style={{ backgroundColor: csvFile ? '#007bff' : '#ccc' }}
+                            >
+                                ⬆️ Upload CSV
+                            </button>
+                        </div>
                     </div>
 
                     <div className="table-container">
@@ -114,7 +169,7 @@ const StudentsList = () => {
                                                     <img
                                                         src={`http://localhost:5000/uploads/students/${student.student_image}`}
                                                         alt="student"
-                                                        className="student-img" // Assuming you have a class for styling images
+                                                        className="student-img" 
                                                     />
                                                 ) : (
                                                     "N/A"
@@ -141,125 +196,42 @@ const StudentsList = () => {
                         </table>
                     </div>
 
+                    {/* Edit Student Form Block */}
                     {editStudent && (
                         <div className="edit-form-container">
                             <h3>Edit Student: {editStudent.name}</h3>
                             <form className="edit-form" onSubmit={handleUpdate}>
-                                {/* Row 1: Name, Email */}
-                                <input
-                                    className="edit-input"
-                                    name="name"
-                                    value={editStudent.name}
-                                    onChange={handleChange}
-                                    placeholder="Full Name"
-                                    required
-                                />
-                                <input
-                                    className="edit-input"
-                                    name="email"
-                                    value={editStudent.email}
-                                    onChange={handleChange}
-                                    placeholder="Email"
-                                    required
-                                />
+                                <input className="edit-input" name="name" value={editStudent.name} onChange={handleChange} placeholder="Full Name" required />
+                                <input className="edit-input" name="email" value={editStudent.email} onChange={handleChange} placeholder="Email" required />
                                 
-                                {/* Row 2: Roll No, Password (Optional) */}
-                                <input
-                                    className="edit-input"
-                                    name="rollNo"
-                                    value={editStudent.rollNo}
-                                    onChange={handleChange}
-                                    placeholder="Roll No"
-                                    required
-                                />
-                                <input
-                                    className="edit-input"
-                                    name="password"
-                                    onChange={handleChange}
-                                    placeholder="New Password (optional)"
-                                />
+                                <input className="edit-input" name="rollNo" value={editStudent.rollNo} onChange={handleChange} placeholder="Roll No" required />
+                                <input className="edit-input" name="password" onChange={handleChange} placeholder="New Password (optional)" />
                                 
-                                {/* Row 3: Semester & Division Dropdowns */}
-                                <select
-                                    className="edit-input"
-                                    name="semester"
-                                    value={editStudent.semester}
-                                    onChange={handleChange}
-                                    required
-                                >
+                                <select className="edit-input" name="semester" value={editStudent.semester} onChange={handleChange} required>
                                     <option value="" disabled>Select Semester</option>
-                                    {SEMESTER_OPTIONS.map((sem) => (
-                                        <option key={sem} value={sem}>{sem}</option>
-                                    ))}
+                                    {SEMESTER_OPTIONS.map((sem) => (<option key={sem} value={sem}>{sem}</option>))}
                                 </select>
-                                <select
-                                    className="edit-input"
-                                    name="division"
-                                    value={editStudent.division}
-                                    onChange={handleChange}
-                                    required
-                                >
+                                <select className="edit-input" name="division" value={editStudent.division} onChange={handleChange} required>
                                     <option value="" disabled>Select Division</option>
-                                    {DIVISION_OPTIONS.map((div) => (
-                                        <option key={div} value={div}>Division {div}</option>
-                                    ))}
+                                    {DIVISION_OPTIONS.map((div) => (<option key={div} value={div}>Division {div}</option>))}
                                 </select>
 
-                                {/* Row 4: Age & Gender Dropdown */}
-                                <input
-                                    className="edit-input"
-                                    name="age"
-                                    type="number"
-                                    value={editStudent.age}
-                                    onChange={handleChange}
-                                    placeholder="Age"
-                                    required
-                                />
-                                <select
-                                    className="edit-input"
-                                    name="gender"
-                                    value={editStudent.gender}
-                                    onChange={handleChange}
-                                    required
-                                >
+                                <input className="edit-input" name="age" type="number" value={editStudent.age} onChange={handleChange} placeholder="Age" required />
+                                <select className="edit-input" name="gender" value={editStudent.gender} onChange={handleChange} required>
                                     <option value="" disabled>Select Gender</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                     <option value="other">Other</option>
                                 </select>
                                 
-                                {/* Row 5: Guardian Details */}
-                                <input
-                                    className="edit-input"
-                                    name="guardian"
-                                    value={editStudent.guardian}
-                                    onChange={handleChange}
-                                    placeholder="Guardian Name"
-                                    required
-                                />
-                                <input
-                                    className="edit-input"
-                                    name="guardian_phone"
-                                    value={editStudent.guardian_phone}
-                                    onChange={handleChange}
-                                    placeholder="Guardian Phone"
-                                    required
-                                />
+                                <input className="edit-input" name="guardian" value={editStudent.guardian} onChange={handleChange} placeholder="Guardian Name" required />
+                                <input className="edit-input" name="guardian_phone" value={editStudent.guardian_phone} onChange={handleChange} placeholder="Guardian Phone" required />
 
-                                {/* Row 6: Image URL (Placeholder for simpler update) */}
-                                <input
-                                    className="edit-input"
-                                    name="student_image"
-                                    placeholder="Image URL (optional)"
-                                    value={editStudent.student_image || ''}
-                                    onChange={handleChange}
-                                />
+                                <input className="edit-input" name="student_image" placeholder="Image URL (optional)" value={editStudent.student_image || ''} onChange={handleChange} />
 
 
                                 <div style={{ width: "100%", marginTop: "10px" }}>
-                                    <button type="submit" className="save-btn">
-                                        Save Changes
-                                    </button>
+                                    <button type="submit" className="save-btn">Save Changes</button>
                                     <button
                                         type="button"
                                         onClick={() => setEditStudent(null)}

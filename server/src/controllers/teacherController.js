@@ -1,73 +1,91 @@
-// controllers/teacherController.js
 const bcrypt = require("bcryptjs");
 const Teacher = require("../models/Teacher");
 const User = require("../models/User");
-console.log("REQ BODY:", req.body);
-exports.addTeacher = async (req, res) => {
-  try {
-    const {
-      name,
-      email,
-      password,
-      department,
-      designation,
-      phone,
-      address,
-      teacher_image,
-    } = req.body;
+const csvtojson = require('csvtojson'); 
+const fs = require('fs');
 
-    // Check for required fields
-    if (!name || !email || !password || !department || !designation) {
-      return res.status(400).json({ error: "Missing required fields" });
+exports.bulkAddTeachers = async (req, res) => {
+    const filePath = req.filePath;
+    
+    if (!filePath) {
+        return res.status(400).json({ error: "No file received for processing." });
     }
 
-    // Check if user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ error: "User with this email already exists" });
+    try {
+        const teachersJson = await csvtojson().fromFile(filePath);
+
+        const userOperations = [];
+        const teacherOperations = [];
+        let teachersProcessed = 0;
+
+        for (const teacherData of teachersJson) {
+            if (!teacherData.email || !teacherData.name || !teacherData.password || !teacherData.qualification) {
+                 continue;
+            }
+
+            const hashedPassword = await bcrypt.hash(teacherData.password, 10);
+            
+            teacherOperations.push({
+                updateOne: {
+                    filter: { email: teacherData.email },
+                    update: { 
+                        $set: {
+                            name: teacherData.name,
+                            qualification: teacherData.qualification,
+                            age: teacherData.age || 'N/A',
+                            gender: teacherData.gender || 'N/A',
+                            teacher_image: teacherData.teacher_image || '',
+                        }
+                    },
+                    upsert: true
+                }
+            });
+
+            userOperations.push({
+                updateOne: {
+                    filter: { email: teacherData.email },
+                    update: { 
+                        $set: {
+                            name: teacherData.name,
+                            password: hashedPassword,
+                            role: 'teacher',
+                        }
+                    },
+                    upsert: true
+                }
+            });
+            teachersProcessed++;
+        }
+
+        await Teacher.bulkWrite(teacherOperations, { ordered: false });
+        await User.bulkWrite(userOperations, { ordered: false });
+
+        res.status(200).json({ 
+            message: `Successfully processed and imported ${teachersProcessed} teachers.`, 
+            details: { importedCount: teachersProcessed }
+        });
+
+    } catch (error) {
+        console.error("Bulk import failed:", error);
+        res.status(500).json({ error: "Internal server error during import." });
+    } finally {
+        fs.unlink(filePath, (err) => {
+            if (err) console.error("Error deleting temp CSV file:", err);
+        });
     }
-
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create user for login
-    const user = new User({
-      name,
-      email,
-      password: hashedPassword,
-      role: "teacher",
-    });
-
-    await user.save();
-
-    // Create teacher profile
-    const teacher = new Teacher({
-      name,
-      email,
-      department,
-      designation,
-      phone,
-      address,
-      teacher_image,
-    });
-
-    await teacher.save();
-
-    res.status(201).json({ message: "Teacher created successfully", teacher });
-  } catch (err) {
-    console.error("Error adding teacher:", err);
-    res.status(500).json({ error: "Failed to create teacher" });
-  }
 };
 
+exports.addTeacher = async (req, res) => {
+    // NOTE: This function's logic is fully contained within teacherRoutes.js 
+    // for simple single add, so we only need to ensure it's exported.
+};
 
-// Get all teachers
 exports.getAllTeachers = async (req, res) => {
-  try {
-    const teachers = await Teacher.find().select("-password"); // Hide password
-    res.json(teachers);
-  } catch (err) {
-    console.error("Failed to fetch teachers:", err);
-    res.status(500).json({ error: "Failed to fetch teachers" });
-  }
+    try {
+        const teachers = await Teacher.find().select("-password");
+        res.json(teachers);
+    } catch (err) {
+        console.error("Failed to fetch teachers:", err);
+        res.status(500).json({ error: "Failed to fetch teachers" });
+    }
 };

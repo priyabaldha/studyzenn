@@ -7,10 +7,8 @@ const studentSchema = new mongoose.Schema({
   password: { type: String, required: true },
   rollNo: { type: String, required: true },
   
-  // ❌ Removed 'class'
-  // ✅ Added 'semester'
+
   semester: { type: String, required: true }, 
-  // ✅ Added 'division'
   division: { type: String, required: true }, 
 
   age: { type: Number, required: true },

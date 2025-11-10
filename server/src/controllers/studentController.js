@@ -1,6 +1,8 @@
 const Student = require("../models/Student");
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+const csvtojson = require('csvtojson'); 
+const fs = require('fs');
 
 const addStudent = async (req, res) => {
     try {
@@ -62,6 +64,81 @@ const addStudent = async (req, res) => {
     } catch (err) {
         console.error("Add student error:", err);
         res.status(500).json({ error: "Failed to add student" });
+    }
+};
+
+const bulkAddStudents = async (req, res) => {
+    const filePath = req.filePath;
+    
+    if (!filePath) {
+        return res.status(400).json({ error: "No file received for processing." });
+    }
+
+    try {
+        const studentsJson = await csvtojson().fromFile(filePath);
+
+        const userOperations = [];
+        const studentOperations = [];
+        let studentsProcessed = 0;
+
+        for (const studentData of studentsJson) {
+            if (!studentData.email || !studentData.name || !studentData.password || !studentData.rollNo || !studentData.semester) {
+                 continue;
+            }
+
+            const hashedPassword = await bcrypt.hash(studentData.password, 10);
+            
+            studentOperations.push({
+                updateOne: {
+                    filter: { email: studentData.email },
+                    update: { 
+                        $set: {
+                            name: studentData.name,
+                            semester: studentData.semester,
+                            division: studentData.division || 'A',
+                            rollNo: studentData.rollNo,
+                            age: studentData.age || 18,
+                            gender: studentData.gender || 'other',
+                            guardian: studentData.guardian || 'N/A',
+                            guardian_phone: studentData.guardian_phone || 'N/A',
+                            password: hashedPassword,
+                        }
+                    },
+                    upsert: true
+                }
+            });
+
+            userOperations.push({
+                updateOne: {
+                    filter: { email: studentData.email },
+                    update: { 
+                        $set: {
+                            name: studentData.name,
+                            password: hashedPassword,
+                            role: 'student',
+                        }
+                    },
+                    upsert: true
+                }
+            });
+            studentsProcessed++;
+        }
+
+        await Student.bulkWrite(studentOperations, { ordered: false });
+        await User.bulkWrite(userOperations, { ordered: false });
+
+        res.status(200).json({ 
+            message: `Successfully processed and imported ${studentsProcessed} students.`, 
+            details: { importedCount: studentsProcessed }
+        });
+
+    } catch (error) {
+        console.error("Bulk import failed:", error);
+        res.status(500).json({ error: "Internal server error during import." });
+    } finally {
+        fs.unlink(filePath, (err) => {
+            if (err) console.error("Error deleting temp CSV file:", err);
+        });
     }
 };
 
@@ -155,6 +232,7 @@ const getProfile = async (req, res) => {
 
 module.exports = {
     addStudent,
+    bulkAddStudents,
     getAllStudents,
     getStudentById,
     updateStudent,
