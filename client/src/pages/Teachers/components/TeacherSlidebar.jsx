@@ -51,7 +51,6 @@ const TeacherSlidebar = () => {
     { to: "/teacher/students", icon: Users, label: "Students" },
     { to: "/teacher/upload-assignment", icon: Upload, label: "Upload Assignment" },
     { to: "/teacher/attendance", icon: CheckSquare, label: "Attendance" },
-    { to: "/teacher/schedule-exam", icon: CalendarDays, label: "Schedule Exam" },
     { to: "/teacher/result-entry", icon: FileText, label: "Result Entry" },
   ];
   

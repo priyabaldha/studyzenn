@@ -92,7 +92,7 @@ const AdminSidebar = () => {
                 fontWeight: "bold",
                 fontSize: "18px",
                 letterSpacing: "1px",
-                color: "#000",
+                color: "#4e54c8",
               }}
             >
               ADMIN
