@@ -140,72 +140,110 @@ const StudentDashboard = () => {
                 className="collapse navbar-collapse justify-content-end align-items-center"
                 id="navbarSupportedContent"
               >
-                <ul className="navbar-nav">
-                  <li>
-                    <Link to="/dashboard/student">Home</Link>
-                  </li>
-                  <li>
-                    <Link to="/student/assignments">Assignments</Link>
-                  </li>
-                  <li>
-                    <Link to="/student/attendance">Attendance</Link>
-                  </li>
-                  <li className="dropdown">
-                    <a
-                      className="dropdown-toggle"
-                      href="#"
-                      data-bs-toggle="dropdown"
-                    >
-                      Exam
-                    </a>
-                    <div className="dropdown-menu">
-                      <Link className="dropdown-item" to="/student/exam-schedule">
-                        Exam Schedule
-                      </Link>
-                      <Link className="dropdown-item" to="/student/results">
-                        Exam Results
-                      </Link>
-                      <Link className="dropdown-item" to="/student/report-card">
-                        Report-card
-                      </Link>
-                    </div>
-                  </li>
-                  <li>
-                    <Link to="/student/profile">Profile</Link>
-                  </li>
-                  <li>
-                    <Link to="/messages">Notice</Link>
-                  </li>
-                  {/* <li className="nav-item mr-3">
-                    {/* 🔗 Added navigate to /messages */}
-                    {/* <button
-                      onClick={() => navigate("/messages")}
-                      className="nav-link nav-link-lg btn btn-link"
-                      style={{ color: "#eaebefff"}}
-                    ></button>0
-                  </li> */}
-                  <li className="nav-item d-flex align-items-center ms-3">
-                    <b><strong style={{ color: "#fff" }}>👋 Welcome,</strong></b>&nbsp;
-                    <b><strong style={{ color: "#fff" }}>{user.name}</strong></b>&nbsp;
-                    <b><span style={{ color: "#fff" }}>[{user.role}]</span></b>
-                  </li>
-                  <li className="nav-item ms-2">
-                    <button
-                      onClick={handleLogout}
-                      className="btn btn-outline btn-sm"
-                    >
-                      Logout
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      className="search"
-                      onClick={() => setShowSearch(true)}
-                    >
-                      <span className="lnr lnr-magnifier" id="search"></span>
-                    </button>
-                  </li>
-                </ul>
+               <ul
+                  className="navbar-nav d-flex align-items-center"
+                  style={{
+                    gap: "10px",
+                    fontWeight: "500",
+                  }}
+                >
+  <li>
+    <Link to="/dashboard/student" style={{ color: "#fff", textDecoration: "none" }}>
+      Home
+    </Link>
+  </li>
+
+  <li>
+    <Link to="/student/assignments" style={{ color: "#fff", textDecoration: "none" }}>
+      Assignments
+    </Link>
+  </li>
+
+  <li>
+    <Link to="/student/attendance" style={{ color: "#fff", textDecoration: "none" }}>
+      Attendance
+    </Link>
+  </li>
+
+  <li className="dropdown">
+    <a
+      className="dropdown-toggle"
+      href="#"
+      data-bs-toggle="dropdown"
+      style={{ color: "#fff", textDecoration: "none" }}
+    >
+      Exam
+    </a>
+    <div className="dropdown-menu">
+      <Link className="dropdown-item" to="/student/exam-schedule">
+        Exam Schedule
+      </Link>
+      <Link className="dropdown-item" to="/student/results">
+        Exam Results
+      </Link>
+      <Link className="dropdown-item" to="/student/report-card">
+        Report Card
+      </Link>
+    </div>
+  </li>
+
+  <li>
+    <Link to="/student/profile" style={{ color: "#fff", textDecoration: "none" }}>
+      Profile
+    </Link>
+  </li>
+
+  {/* Notice Icon */}
+  <li style={{ display: "flex", alignItems: "center" }}>
+    <Link
+      to="/messages"
+      style={{
+        color: "#fff",
+        textDecoration: "none",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: "18px",
+      }}
+      title="Notice Board"
+    >
+      <i className="lnr lnr-bullhorn"></i>
+    </Link>
+  </li>
+
+  {/* Welcome Text */}
+  <li
+    className="nav-item d-flex align-items-center"
+    style={{ color: "#fff", fontWeight: "600" }}
+  >
+    👋 Welcome,&nbsp;
+    <strong>{user.name}</strong>&nbsp;
+    [{user.role}]
+  </li>
+
+  {/* Logout Button */}
+  <li className="nav-item">
+    <button
+      onClick={handleLogout}
+      className="btn btn-outline-light btn-sm"
+      style={{ padding: "3px 10px" }}
+    >
+      Logout
+    </button>
+  </li>
+
+  {/* Search Icon */}
+  <li style={{ display: "flex", alignItems: "center" }}>
+    <button
+      className="search btn btn-link p-0"
+      onClick={() => setShowSearch(true)}
+      style={{ color: "#fff" }}
+    >
+      <span className="lnr lnr-magnifier" id="search"></span>
+    </button>
+  </li>
+</ul>
+
               </div>
             </div>
           </nav>

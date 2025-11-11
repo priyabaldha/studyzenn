@@ -205,7 +205,7 @@ const StudentsList = () => {
                                 <input className="edit-input" name="email" value={editStudent.email} onChange={handleChange} placeholder="Email" required />
                                 
                                 <input className="edit-input" name="rollNo" value={editStudent.rollNo} onChange={handleChange} placeholder="Roll No" required />
-                                <input className="edit-input" name="password" onChange={handleChange} placeholder="New Password (optional)" />
+                                {/* <input className="edit-input" name="password" onChange={handleChange} placeholder="New Password (optional)" /> */}
                                 
                                 <select className="edit-input" name="semester" value={editStudent.semester} onChange={handleChange} required>
                                     <option value="" disabled>Select Semester</option>

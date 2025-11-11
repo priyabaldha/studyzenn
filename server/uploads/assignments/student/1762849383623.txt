@@ -1,0 +1,50 @@
+### FOLDER STRUCTURE OF PROJECT ###
+tree /f /a > folder-stru.txt
+
+
+### 🚀 Fix Options
+
+#### Option 1: Start MongoDB Server manually
+
+1. Create the default database directory (only once):
+
+   ```powershell
+   mkdir C:\data\db
+   ```
+
+2. Start MongoDB server:
+
+   ```powershell
+   "C:\Program Files\MongoDB\Server\8.2\bin\mongod.exe" --dbpath "C:\data\db"
+   ```
+
+   > Leave this window running (it’s your DB server).
+
+3. Open **MongoDB Compass** and connect again:
+
+   ```
+   mongodb://localhost:27017
+   ```
+
+   This time it should work ✅.
+
+---
+
+#### Option 2: Install MongoDB Shell (mongosh)
+
+1. Download from official MongoDB site:
+   👉 [MongoDB Shell (mongosh)](https://www.mongodb.com/try/download/shell)
+2. Install it.
+3. After install, add its `/bin` folder to your PATH.
+4. Now you can use:
+
+   ```powershell
+   mongosh
+   ```
+
+   to connect and interact directly.
+
+---
+
+👉 For your MERN app, you only need the **server (`mongod`) running**.
+Do you want me to guide you on how to make MongoDB run **automatically as a Windows service** (so you don’t need to start `mongod.exe` manually each time)?
