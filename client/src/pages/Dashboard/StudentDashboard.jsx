@@ -150,9 +150,6 @@ const StudentDashboard = () => {
                   <li>
                     <Link to="/student/attendance">Attendance</Link>
                   </li>
-                  <li>
-                    <Link to="/messages">Notice</Link>
-                  </li>
                   <li className="dropdown">
                     <a
                       className="dropdown-toggle"
@@ -176,6 +173,17 @@ const StudentDashboard = () => {
                   <li>
                     <Link to="/student/profile">Profile</Link>
                   </li>
+                  <li>
+                    <Link to="/messages">Notice</Link>
+                  </li>
+                  {/* <li className="nav-item mr-3">
+                    {/* 🔗 Added navigate to /messages */}
+                    {/* <button
+                      onClick={() => navigate("/messages")}
+                      className="nav-link nav-link-lg btn btn-link"
+                      style={{ color: "#eaebefff"}}
+                    ></button>
+                  </li> */}
                   <li className="nav-item d-flex align-items-center ms-3">
                     <b><strong style={{ color: "#fff" }}>👋 Welcome,</strong></b>&nbsp;
                     <b><strong style={{ color: "#fff" }}>{user.name}</strong></b>&nbsp;
