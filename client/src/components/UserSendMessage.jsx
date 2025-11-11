@@ -168,10 +168,47 @@ export default function UserSendMessage({ onMessageSent }) {
             {isAdminOrTeacher && (
                 <div style={{ marginBottom: '15px' }}>
                     <strong>Send To:</strong>
-                    <button type="button" onClick={() => handleSendTypeChange('individual')} style={{ marginLeft: '10px', fontWeight: sendType === 'individual' ? 'bold' : 'normal', backgroundColor: sendType === 'individual' ? '#ced4da' : 'white', border: '1px solid #ced4da' }}>Individual</button>
-                    <button type="button" onClick={() => handleSendTypeChange('division')} style={{ fontWeight: sendType === 'division' ? 'bold' : 'normal', backgroundColor: sendType === 'division' ? '#ced4da' : 'white', border: '1px solid #ced4da' }}>Division</button>
+                    <button 
+                        type="button" 
+                        onClick={() => handleSendTypeChange('individual')} 
+                        style={{ 
+                            marginLeft: '10px', 
+                            fontWeight: sendType === 'individual' ? 'bold' : 'normal', 
+                            backgroundColor: sendType === 'individual' ? '#282829ff' : 'white', 
+                            // FIX: Set text color to white when active (dark background)
+                            color: sendType === 'individual' ? 'white' : '#282829ff', 
+                            border: '1px solid #282829ff' 
+                        }}
+                    >
+                        Individual
+                    </button>
+                    <button 
+                        type="button" 
+                        onClick={() => handleSendTypeChange('division')} 
+                        style={{ 
+                            fontWeight: sendType === 'division' ? 'bold' : 'normal', 
+                            backgroundColor: sendType === 'division' ? '#282829ff' : 'white', 
+                            // FIX: Set text color to white when active (dark background)
+                            color: sendType === 'division' ? 'white' : '#282829ff', 
+                            border: '1px solid #282829ff' 
+                        }}
+                    >
+                        Division
+                    </button>
                     {userRole === 'admin' && (
-                        <button type="button" onClick={() => handleSendTypeChange('group')} style={{ fontWeight: sendType === 'group' ? 'bold' : 'normal', backgroundColor: sendType === 'group' ? '#ced4da' : 'white', border: '1px solid #ced4da' }}>System Group</button>
+                        <button 
+                            type="button" 
+                            onClick={() => handleSendTypeChange('group')} 
+                            style={{ 
+                                fontWeight: sendType === 'group' ? 'bold' : 'normal', 
+                                backgroundColor: sendType === 'group' ? '#282829ff' : 'white', 
+                                // FIX: Set text color to white when active (dark background)
+                                color: sendType === 'group' ? 'white' : '#282829ff',
+                                border: '1px solid #282829ff' 
+                            }}
+                        >
+                            System Group
+                        </button>
                     )}
                 </div>
             )}

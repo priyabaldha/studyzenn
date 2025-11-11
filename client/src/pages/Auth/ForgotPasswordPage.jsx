@@ -96,7 +96,7 @@ export default function ForgotPasswordPage() {
                         {loading ? 'Sending...' : 'Send OTP'}
                     </button>
                     <div className="forgot-password-link mt-3">
-                         <Link to="/">Back to Login</Link>
+                        <Link to="/" style={{ color: 'white' }}>Back to Login</Link>
                     </div>
                 </form>
             );
