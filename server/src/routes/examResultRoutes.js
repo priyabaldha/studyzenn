@@ -7,11 +7,10 @@ const Result = require("../models/Result");
 const Student = require("../models/Student");
 const Subject = require("../models/Subject");
 
-// ✅ FIX: ADDED MISSING MODEL IMPORTS HERE
+// FIX: ADDED MISSING MODEL IMPORTS HERE
 const Attendance = require("../models/Attendance"); // Used in report
 const Giving_Assignments = require("../models/Giving_Assignments"); // Used in report
 const Student_Submission = require("../models/Student_Submission"); // Used in report
-
 
 // Middleware to check Admin/Teacher roles
 const isAdminOrTeacher = (req, res, next) => {
