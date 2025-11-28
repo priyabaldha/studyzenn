@@ -79,7 +79,7 @@ export default function StudentProfile() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    navigate("/login");
+    navigate("/");
   };
 
   if (loading) return <p>Loading profile...</p>;

@@ -57,7 +57,7 @@ export default function StudentReportCard() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    navigate("/login");
+    navigate("/");
   };
 
   const gradeCalc = (obtained, max) => {

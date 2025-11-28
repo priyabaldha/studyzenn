@@ -22,7 +22,7 @@ export default function StudentAttendance() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    navigate("/login");
+    navigate("/");
   };
 
   const fetchAttendance = async () => {

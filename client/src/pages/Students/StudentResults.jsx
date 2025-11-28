@@ -19,7 +19,7 @@ export default function StudentResults() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setUser(null);
-    navigate("/login");
+    navigate("/");
   };
 
   // 🔹 Fetch Student Results

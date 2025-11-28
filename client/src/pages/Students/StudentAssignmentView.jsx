@@ -21,7 +21,7 @@ export default function StudentAssignmentView() {
     const handleLogout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
-        navigate("/login");
+        navigate("/");
     };
 
     // Fetch user details from localStorage (if available)

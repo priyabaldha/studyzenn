@@ -15,7 +15,7 @@ export default function StudentExamSchedule() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    navigate("/login");
+    navigate("/");
   };
 
   useEffect(() => {
