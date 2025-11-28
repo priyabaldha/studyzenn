@@ -1,9 +1,7 @@
-// pages/Dashboard/UserMessageDashboard.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import UserSendMessage from '../../components/UserSendMessage'; 
+import UserSendMessage from '../../components/UserSendMessage';
 import { jwtDecode } from 'jwt-decode';
-// import TeacherSlidebar from "../Teachers/components/TeacherSlidebar";
 import '../../css/UserMessageDashboard.css';
 
 export default function UserMessageDashboard() {
@@ -14,7 +12,7 @@ export default function UserMessageDashboard() {
     const [loading, setLoading] = useState(true);
 
     const token = localStorage.getItem('token');
-    const [currentUserRole, setCurrentUserRole] = useState(localStorage.getItem('role') || 'student'); 
+    const [currentUserRole, setCurrentUserRole] = useState(localStorage.getItem('role') || 'student');
 
     const fetchMessages = async () => {
         setLoading(true);
@@ -67,19 +65,41 @@ export default function UserMessageDashboard() {
             console.error('Failed to fetch message details:', err);
         }
     };
+    
+    const handleDeleteMessage = async (messageId) => {
+        if (!window.confirm("Are you sure you want to delete this message?")) {
+            return;
+        }
+
+        try {
+            await axios.delete(
+                `http://localhost:5000/api/messages/${messageId}`,
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            
+            fetchMessages(); 
+            alert("Message successfully deleted!");
+            
+        } catch (err) {
+            console.error('Delete message error:', err);
+            alert(err.response?.data?.message || 'Failed to delete message.');
+        }
+    };
+
 
     const renderMessageList = (messages, type) => (
-        <table className="message-table">
+        <table className="message-table" role="table" aria-label={`${type} messages`}>
             <thead>
                 <tr>
                     <th>{type === 'inbox' ? 'From' : 'To Target'}</th>
                     <th>Subject</th>
                     <th>Date</th>
+                    <th>Actions</th> 
                 </tr>
             </thead>
             <tbody>
                 {messages.length === 0 ? (
-                    <tr><td colSpan="3" className="empty-msg">No messages in {type}.</td></tr>
+                    <tr><td colSpan="4" className="empty-msg">No messages in {type}.</td></tr>
                 ) : (
                     messages.map(msg => {
                         const correspondent = type === 'inbox' ? msg.senderId : msg;
@@ -93,14 +113,38 @@ export default function UserMessageDashboard() {
                         };
 
                         return (
-                            <tr 
+                            <tr
                                 key={msg._id}
-                                onClick={() => handleViewMessage(msg)}
                                 className={isUnread ? 'unread-row' : ''}
+                                role="row"
                             >
-                                <td>{type === 'inbox' ? `${correspondent.name} (${correspondent.role})` : getTargetLabel(msg)}</td>
-                                <td>{msg.subject}</td>
-                                <td>{new Date(msg.sentDate).toLocaleDateString()}</td>
+                                <td onClick={() => handleViewMessage(msg)} style={{cursor: 'pointer'}}>{type === 'inbox' ? `${correspondent.name} (${correspondent.role})` : getTargetLabel(msg)}</td>
+                                <td onClick={() => handleViewMessage(msg)} style={{cursor: 'pointer'}}>{msg.subject}</td>
+                                <td className="date-col" onClick={() => handleViewMessage(msg)} style={{cursor: 'pointer'}}>
+                                    {new Date(msg.sentDate).toLocaleDateString()}
+                                </td>
+
+                                <td className="delete-col">
+                                    <button
+                                        className="delete-btn"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleDeleteMessage(msg._id);
+                                        }}
+                                    >
+                                        {/* Trash Icon SVG */}
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                            strokeLinejoin="round">
+                                            <polyline points="3 6 5 6 21 6" />
+                                            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                                            <path d="M10 11v6" />
+                                            <path d="M14 11v6" />
+                                            <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+                                        </svg>
+                                    </button>
+                                </td>
+
                             </tr>
                         );
                     })
@@ -115,7 +159,7 @@ export default function UserMessageDashboard() {
                 <button className="back-btn" onClick={() => setView('inbox')}>
                     &larr; Back to List
                 </button>
-                <h3>Subject: {selectedMessage.subject}</h3>
+                <h3 style={{ marginTop: 12 }}>Subject: {selectedMessage.subject}</h3>
                 <p><strong>From:</strong> {selectedMessage.senderId.name} ({selectedMessage.senderId.role})</p>
                 {selectedMessage.recipientId ? (
                     <p><strong>To:</strong> {selectedMessage.recipientId.name} ({selectedMessage.recipientId.role})</p>
@@ -129,51 +173,58 @@ export default function UserMessageDashboard() {
         )
     );
 
-    const canCompose = currentUserRole !== 'student'; 
+    const canCompose = currentUserRole !== 'student';
 
     return (
-        <div className="teacher-upload-wrapper">
-        {/* ✅ Sidebar added */}
-        {/* <TeacherSlidebar /> */}
-        <div className="message-dashboard-container">
-            <h2 className="page-title">Messaging Dashboard</h2>
-            <div className="message-nav">
-                <button 
-                    onClick={() => setView('inbox')}
-                    className={`nav-btn ${view === 'inbox' ? 'active' : ''}`}
-                >
-                    Inbox ({inbox.filter(m => !m.readStatus).length} Unread)
-                </button>
-                {canCompose && (
-                    <>
-                        <button 
-                            onClick={() => setView('sent')}
-                            className={`nav-btn ${view === 'sent' ? 'active' : ''}`}
-                        >
-                            Sent
-                        </button>
-                        <button 
-                            onClick={() => setView('compose')}
-                            className="nav-btn compose-btn"
-                        >
-                            Compose Message
-                        </button>
-                    </>
-                )}
-            </div>
+        <div className="revamp-root">
+            <div className="revamp-content">
+                <div className="message-dashboard-container">
+                    <h2 className="page-title">Messaging Dashboard</h2>
 
-            {loading ? (
-                <p className="loading">Loading messages...</p>
-            ) : view === 'inbox' ? (
-                renderMessageList(inbox, 'inbox')
-            ) : view === 'sent' ? (
-                renderMessageList(sent, 'sent')
-            ) : view === 'compose' ? (
-                <UserSendMessage onMessageSent={() => { setView('sent'); fetchMessages(); }} />
-            ) : (
-                renderSingleMessage()
-            )}
-        </div>
+                    <div className="message-nav">
+                        <button
+                            onClick={() => setView('inbox')}
+                            className={`nav-btn ${view === 'inbox' ? 'active' : ''}`}
+                            aria-pressed={view === 'inbox'}
+                        >
+                            Inbox ({inbox.filter(m => !m.readStatus).length} Unread)
+                        </button>
+
+                        {canCompose && (
+                            <>
+                                <button
+                                    onClick={() => setView('sent')}
+                                    className={`nav-btn ${view === 'sent' ? 'active' : ''}`}
+                                    aria-pressed={view === 'sent'}
+                                >
+                                    Sent
+                                </button>
+
+                                <button
+                                    onClick={() => setView('compose')}
+                                    className="nav-btn compose-btn"
+                                >
+                                    Compose Message
+                                </button>
+                            </>
+                        )}
+                    </div>
+
+                    {loading ? (
+                        <p className="loading">Loading messages...</p>
+                    ) : view === 'inbox' ? (
+                        renderMessageList(inbox, 'inbox')
+                    ) : view === 'sent' ? (
+                        renderMessageList(sent, 'sent')
+                    ) : view === 'compose' ? (
+                        <div className="compose-card">
+                            <UserSendMessage onMessageSent={() => { setView('sent'); fetchMessages(); }} />
+                        </div>
+                    ) : (
+                        renderSingleMessage()
+                    )}
+                </div>
+            </div>
         </div>
     );
-}
+} 

@@ -208,6 +208,34 @@ router.get("/:id", auth, async (req, res) => {
     }
 });
 
+// 6. DELETE /api/messages/:id (Delete a message record)
+router.delete("/:id", auth, async (req, res) => {
+    try {
+        const messageId = req.params.id;
+        const userId = req.user.id;
+
+        const message = await Message.findById(messageId);
+
+        if (!message) {
+            return res.status(404).json({ message: "Message not found." });
+        }
+
+        // Security check: Only the sender or the specific recipient can delete their copy.
+        if (message.senderId.toString() !== userId && message.recipientId?.toString() !== userId) {
+             return res.status(403).json({ message: "Access denied. Not authorized to delete this message." });
+        }
+        
+        // Delete the single message record (this removes the copy from sender/recipient who initiated delete)
+        await Message.findByIdAndDelete(messageId);
+
+        res.json({ message: "Message deleted successfully." });
+
+    } catch (error) {
+        console.error("Delete message error:", error);
+        res.status(500).json({ message: "Failed to delete message." });
+    }
+});
+ 
 router.post("/", auth, async (req, res) => {
     try {
         const { recipientId, targetGroup, targetSemester, targetDivision, subject, body } = req.body;

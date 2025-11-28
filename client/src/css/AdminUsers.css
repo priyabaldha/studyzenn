@@ -1,85 +1,86 @@
-/* === Admin Users Page (Elegant Gradient Theme) === */
+:root {
+  --sidebar-width: 260px;
+  --header-height: 80px;
+}
+
+/* Global reset inside this page */
+* {
+  box-sizing: border-box;
+}
+
+/* ===== MAIN FULL-SCREEN LAYOUT ===== */
 .admin-users-container {
-  margin-left: 260px;
-  padding-top: 110px;
-  min-height: 100vh;
+  margin-left: var(--sidebar-width);
+  padding-top: calc(var(--header-height) + 20px);
+
+  width: calc(100% - var(--sidebar-width));
+  min-height: calc(100vh - var(--header-height));
+
+  padding-left: 40px;
+  padding-right: 40px;
+
   background: linear-gradient(135deg, #ffffff 60%, #eef2ff);
   font-family: "Poppins", sans-serif;
+
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding-bottom: 50px;
   animation: fadeIn 0.6s ease-in-out;
 }
 
-/* === Title Section === */
+/* ===== TITLE SECTION ===== */
 .admin-users-header {
   width: 100%;
-  text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
+  text-align: left;
 }
 
-.admin-users-header h1,
 .admin-users-header h2 {
   font-size: 2rem;
   font-weight: 700;
   color: #4e54c8;
-  text-transform: capitalize;
-  letter-spacing: 0.5px;
-  display: inline-block;
-  padding-bottom: 5px;
   border-bottom: 3px solid #8f94fb;
-  transition: all 0.3s ease;
+  padding-bottom: 6px;
+  display: inline-block;
 }
 
-.admin-users-header h1:hover,
-.admin-users-header h2:hover {
-  color: #3e43b2;
-  transform: scale(1.03);
-}
-
-/* === Table Wrapper === */
+/* ===== FULL WIDTH TABLE CONTAINER ===== */
 .admin-users-table-container {
-  width: 90%;
+  width: 100%;
   background: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 8px 28px rgba(127, 127, 213, 0.25);
-  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 28px rgba(127, 127, 213, 0.2);
+  padding: 20px 25px;
   overflow-x: auto;
-  text-align: center;
-  transition: all 0.3s ease;
+  transition: 0.3s;
 }
 
 .admin-users-table-container:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 35px rgba(127, 127, 213, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px rgba(127, 127, 213, 0.28);
 }
 
-/* === Table Styling === */
+/* ===== TABLE ===== */
 .admin-users-table {
   width: 100%;
   border-collapse: collapse;
-  text-align: center;
   font-size: 15px;
   border-radius: 12px;
   overflow: hidden;
 }
 
-/* Changed header color here */
 .admin-users-table thead tr {
   background: linear-gradient(90deg, #4e54c8, #8f94fb);
-  color: #fff;
-  font-size: 16px;
+  color: white;
+  height: 50px;
 }
 
 .admin-users-table th,
 .admin-users-table td {
-  padding: 16px;
-  border-bottom: 1px solid #e6e6fa;
-  transition: all 0.3s ease;
+  padding: 14px 12px;
+  border-bottom: 1px solid #e3e6ff;
+  text-align: left;
 }
 
-/* Alternate row color + hover */
 .admin-users-table tbody tr:nth-child(even) {
   background-color: #f8faff;
 }
@@ -87,12 +88,11 @@
 .admin-users-table tbody tr:hover {
   background-color: #eef2ff;
   transform: scale(1.01);
-  box-shadow: 0 0 10px rgba(127, 127, 213, 0.25);
 }
 
-/* === Role Colors === */
+/* ===== ROLE COLOR BADGES ===== */
 .role-admin {
-  color: #43cea2;
+  color: #00b341;
   font-weight: 700;
 }
 
@@ -102,58 +102,19 @@
 }
 
 .role-student {
-  color: #ff5f6d;
+  color: #ff3e7f;
   font-weight: 700;
 }
 
-/* === Buttons === */
-.admin-btn {
-  padding: 0.6rem 1.2rem;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  margin: 0 0.3rem;
-}
-
-/* Edit Button */
-.admin-btn.edit {
-  background: linear-gradient(90deg, #43cea2, #185a9d);
-  box-shadow: 0 3px 10px rgba(34, 139, 230, 0.2);
-}
-
-.admin-btn.edit:hover {
-  background: linear-gradient(90deg, #2c7b87, #144c87);
-  transform: scale(1.05);
-  box-shadow: 0 5px 14px rgba(34, 139, 230, 0.3);
-}
-
-/* Delete Button */
-.admin-btn.delete {
-  background: linear-gradient(90deg, #ff5f6d, #ffc371);
-  box-shadow: 0 3px 10px rgba(255, 95, 109, 0.25);
-}
-
-.admin-btn.delete:hover {
-  background: linear-gradient(90deg, #f44b5d, #ffae42);
-  transform: scale(1.05);
-  box-shadow: 0 5px 14px rgba(255, 95, 109, 0.3);
-}
-
-/* === Empty State === */
+/* ===== EMPTY STATE ===== */
 .no-users {
   text-align: center;
   padding: 25px;
   color: #777;
   font-style: italic;
-  background: #f9f9ff;
-  border-radius: 12px;
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.05);
 }
 
-/* === Fade-in Animation === */
+/* ===== Fade Animation ===== */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -162,5 +123,35 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* ===== Small Screens ===== */
+@media (max-width: 900px) {
+  :root {
+    --sidebar-width: 0px;
+  }
+
+  .admin-users-container {
+    margin-left: 0;
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .admin-users-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .admin-users-table-container {
+    padding: 12px;
+  }
+
+  .admin-users-table th,
+  .admin-users-table td {
+    padding: 10px;
+    font-size: 14px;
   }
 }

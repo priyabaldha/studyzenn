@@ -146,19 +146,21 @@ const TeacherHeader = () => {
             <i data-feather="bell" />
           </button>
         </li> */}
-        <li className="nav-item dropdown">
-          <button
-            className="btn btn-link d-flex align-items-center"
-            style={{ color: "#34395e" }}
-          >
-            <span className="ml-2 d-sm-none d-lg-inline-block">
-              Welcome,{" "}
-              {JSON.parse(localStorage.getItem("user"))?.name ||
-                JSON.parse(localStorage.getItem("user"))?.fullName ||
-                "Teacher"}
-            </span>
-          </button>
-        </li>
+       <li className="nav-item">
+  <button
+    className="btn btn-link d-flex align-items-center"
+    style={{ color: "#34395e" }}
+    onClick={() => (window.location.href = "/teacher/profile")}
+  >
+    <span className="ml-2 d-sm-none d-lg-inline-block" style={{ cursor: "pointer" }}>
+      Welcome,{" "}
+      {JSON.parse(localStorage.getItem("user"))?.name ||
+        JSON.parse(localStorage.getItem("user"))?.fullName ||
+        "Teacher"}
+    </span>
+  </button>
+</li>
+
         <li className="nav-item ml-3">
           <button onClick={handleLogout} className="btn btn-danger ml-2">
             <i className="fas fa-sign-out-alt mr-1"></i> Logout

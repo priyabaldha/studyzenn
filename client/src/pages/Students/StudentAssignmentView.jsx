@@ -469,16 +469,16 @@ export default function StudentAssignmentView() {
                 className="footer-area section-gap"
                 style={{
                     position: "relative",
-                    width: "190%", // Default width should be sufficient if container is fluid
-                    marginTop: "-150px", // Pull the footer up the page to align the wave correctly
-                    paddingTop: "250px", // Add space for the wave image peak
+                    width: "190%", 
+                    marginTop: "50px", 
+                    paddingTop: "250px",
                     paddingBottom: "50px",
                     // Apply the dark background color for the bottom section
-                    color: "#fbfafaff", // Set default text color to BLACK for visibility on the white wave
+                    color: "#fbfafaff", 
                     overflow: "hidden",
                     zIndex: 0, 
                     // Add the wave image background
-                    backgroundImage: "url('/img/footer-bg.png')", // Assuming this path is correct for the wave
+                    backgroundImage: "url('/img/footer-bg.png')", 
                     backgroundSize: "cover",
                     backgroundPosition: "top",
                     backgroundRepeat: "no-repeat",
