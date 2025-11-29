@@ -24,7 +24,7 @@ const assignmentSchema = new mongoose.Schema({
     assignment_file_q: { type: String }, // uploaded question file (by teacher)
     uploadDate: { type: Date, default: Date.now },
 
-    // ✅ NEW FIELDS FOR STUDENT SUBMISSION TRACKING
+    // NEW FIELDS FOR STUDENT SUBMISSION TRACKING
     submitted_file: { type: String, default: null }, // Student's uploaded file name
     submissionDate: { type: Date, default: null },   // Date student submitted
     upload_status: { type: Boolean, default: false }, // Status flag
