@@ -18422,6 +18422,9 @@ D:.
     |   |       bcrypt
     |   |       bcrypt.cmd
     |   |       bcrypt.ps1
+    |   |       csvtojson
+    |   |       csvtojson.cmd
+    |   |       csvtojson.ps1
     |   |       mkdirp
     |   |       mkdirp.cmd
     |   |       mkdirp.ps1
@@ -19187,6 +19190,99 @@ D:.
     |   |   \---lib
     |   |           index.js
     |   |           
+    |   +---csvtojson
+    |   |   |   index.d.ts
+    |   |   |   LICENSE
+    |   |   |   package.json
+    |   |   |   readme.md
+    |   |   |   typings.d.ts
+    |   |   |   
+    |   |   +---bin
+    |   |   |       csvtojson
+    |   |   |       csvtojson.bat
+    |   |   |       csvtojson.js
+    |   |   |       genCsv.js
+    |   |   |       options.json
+    |   |   |       
+    |   |   +---browser
+    |   |   |       browser.js
+    |   |   |       csvtojson.min.js
+    |   |   |       
+    |   |   +---v1
+    |   |   |   |   index.js
+    |   |   |   |   
+    |   |   |   +---core
+    |   |   |   |   |   Converter.js
+    |   |   |   |   |   CSVError.js
+    |   |   |   |   |   csvline.js
+    |   |   |   |   |   dataToCSVLine.js
+    |   |   |   |   |   defParam.js
+    |   |   |   |   |   fileline.js
+    |   |   |   |   |   fileLineToCSVLine.js
+    |   |   |   |   |   filterRow.js
+    |   |   |   |   |   getDelimiter.js
+    |   |   |   |   |   getEol.js
+    |   |   |   |   |   index.js
+    |   |   |   |   |   linesToJson.js
+    |   |   |   |   |   parser.js
+    |   |   |   |   |   parserMgr.js
+    |   |   |   |   |   rowSplit.js
+    |   |   |   |   |   worker.js
+    |   |   |   |   |   workerMgr.js
+    |   |   |   |   |   
+    |   |   |   |   \---defaultParsers
+    |   |   |   |           index.js
+    |   |   |   |           parser_array.js
+    |   |   |   |           parser_flat.js
+    |   |   |   |           parser_json.js
+    |   |   |   |           parser_jsonarray.js
+    |   |   |   |           parser_omit.js
+    |   |   |   |           
+    |   |   |   \---interfaces
+    |   |   |       |   index.js
+    |   |   |       |   
+    |   |   |       +---cli
+    |   |   |       |       index.js
+    |   |   |       |       main.js
+    |   |   |       |       
+    |   |   |       \---web
+    |   |   |               index.js
+    |   |   |               webServer.js
+    |   |   |               
+    |   |   \---v2
+    |   |           Converter.d.ts
+    |   |           Converter.js
+    |   |           CSVError.d.ts
+    |   |           CSVError.js
+    |   |           dataClean.d.ts
+    |   |           dataClean.js
+    |   |           fileline.d.ts
+    |   |           fileline.js
+    |   |           getEol.d.ts
+    |   |           getEol.js
+    |   |           index.d.ts
+    |   |           index.js
+    |   |           lineToJson.d.ts
+    |   |           lineToJson.js
+    |   |           Parameters.d.ts
+    |   |           Parameters.js
+    |   |           ParseRuntime.d.ts
+    |   |           ParseRuntime.js
+    |   |           ProcessFork.d.ts
+    |   |           ProcessFork.js
+    |   |           Processor.d.ts
+    |   |           Processor.js
+    |   |           ProcessorLocal.d.ts
+    |   |           ProcessorLocal.js
+    |   |           Result.d.ts
+    |   |           Result.js
+    |   |           rowSplit.d.ts
+    |   |           rowSplit.js
+    |   |           util.d.ts
+    |   |           util.js
+    |   |           worker.d.ts
+    |   |           worker.js
+    |   |           
     |   +---debug
     |   |   |   LICENSE
     |   |   |   package.json
@@ -19856,21 +19952,6 @@ D:.
     |   |           tostring.js
     |   |           verify-stream.js
     |   |           
-    |   +---jwt-decode
-    |   |   |   LICENSE
-    |   |   |   package.json
-    |   |   |   README.md
-    |   |   |   
-    |   |   \---build
-    |   |       +---cjs
-    |   |       |       index.d.ts
-    |   |       |       index.js
-    |   |       |       package.json
-    |   |       |       
-    |   |       \---esm
-    |   |               index.d.ts
-    |   |               index.js
-    |   |               
     |   +---kareem
     |   |       CHANGELOG.md
     |   |       index.d.ts
@@ -23267,6 +23348,8 @@ D:.
         |   |       1761803942693.pdf
         |   |       1761807320249.pdf
         |   |       1762531255351.jpg
+        |   |       1762849383623.txt
+        |   |       1762849575368.txt
         |   |       
         |   \---teacher
         |           1761386014218.pdf
@@ -23279,6 +23362,11 @@ D:.
         |           1761829994903.pdf
         |           1762503041839.jpg
         |           1762765586594.png
+        |           1762848496790.pdf
+        |           1762850089411.pdf
+        |           1762870108408.pdf
+        |           1762942211068.png
+        |           1763757050936.jpg
         |           
         +---students
         |       1761298784997.jpeg
@@ -23293,10 +23381,20 @@ D:.
         |       1761823821288.png
         |       1762531384630.png
         |       1762707561980.jpeg
+        |       1762845814869.jpg
+        |       1762847393172.png
+        |       1762847469151.png
+        |       1762849479090.jpg
+        |       1762941873681.png
+        |       1762942433555.png
+        |       1764338510872.png
         |       
-        \---teachers
-                1761298292068.jpeg
-                1761897306672.png
-                1761897328573.jpg
-                1761991825893.png
-                
+        +---teachers
+        |       1761298292068.jpeg
+        |       1761897306672.png
+        |       1761897328573.jpg
+        |       1761991825893.png
+        |       1762942117080.jpg
+        |       
+        +---temp_csv
+        \---temp_csv_teachers

@@ -160,7 +160,8 @@ const SubmissionReview = () => {
           padding: 8px;
           border-radius: 8px;
           border: 1px solid #ccc;
-          background: #fafaff;
+          background: #fdfdfeff;
+          color: black
         }
 
         .grade-textarea {
